@@ -1,0 +1,56 @@
+2012-07-09 04:54:45,780 [5] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 04:55:00,198 [6] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Search
+2012-07-09 04:55:01,653 [15] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
+2012-07-09 04:55:17,991 [5] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 04:58:18,085 [5] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 04:58:43,386 [6] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Search
+2012-07-09 04:58:55,748 [14] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 04:58:57,368 [7] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 05:00:06,014 [5] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 05:01:44,713 [15] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 05:03:17,469 [17] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 05:16:40,844 [5] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 05:19:30,840 [15] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 05:41:43,207 [30] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 05:41:49,811 [36] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 05:44:02,688 [36] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
+2012-07-09 05:44:05,689 [14] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
+2012-07-09 05:46:21,624 [9] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 05:47:19,814 [10] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 05:47:37,372 [14] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 05:47:37,842 [14] ERROR otr_project.MvcApplication [(null)] - System.Web.HttpException Exception in Register Action - Account
+2012-07-09 20:56:00,241 [5] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 20:56:24,894 [13] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 20:56:39,192 [11] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Search
+2012-07-09 20:56:40,439 [13] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Search
+2012-07-09 20:56:44,518 [5] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 20:57:46,600 [12] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 20:57:46,770 [12] ERROR otr_project.MvcApplication [(null)] - System.Web.HttpException Exception in Register Action - Account
+2012-07-09 21:02:58,458 [23] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 21:02:58,573 [23] ERROR otr_project.MvcApplication [(null)] - System.Web.HttpException Exception in Register Action - Account
+2012-07-09 21:06:56,951 [29] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 21:06:57,068 [29] ERROR otr_project.MvcApplication [(null)] - System.Web.HttpException Exception in Register Action - Account
+2012-07-09 21:07:25,280 [5] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 21:07:28,137 [6] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 21:07:48,965 [8] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 21:07:49,127 [8] ERROR otr_project.MvcApplication [(null)] - System.Web.HttpException Exception in Register Action - Account
+2012-07-09 21:09:18,653 [7] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-09 21:09:33,334 [7] INFO  otr_project.MvcApplication.Controllers [(null)] - Account - New user registered (makeithomeintime@mailinator.com)
+2012-07-09 21:09:56,038 [7] INFO  otr_project.MvcApplication [(null)] - Executing activateaccount Action - Account
+2012-07-09 21:09:56,093 [7] INFO  otr_project.MvcApplication.Controllers [(null)] - Account - User account activated (makeithomeintime@mailinator.com)
+2012-07-09 21:09:56,100 [17] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 21:09:59,429 [20] INFO  otr_project.MvcApplication [(null)] - Executing MessageBox Action - User
+2012-07-09 21:10:00,108 [20] INFO  otr_project.MvcApplication [(null)] - Executing Inbox Action - User
+2012-07-09 21:14:00,557 [5] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 21:14:04,826 [8] INFO  otr_project.MvcApplication [(null)] - Executing LogOff Action - Account
+2012-07-09 21:14:04,872 [10] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 21:14:07,114 [8] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
+2012-07-09 21:14:19,770 [14] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
+2012-07-09 21:14:20,007 [14] INFO  otr_project.MvcApplication.Controllers [(null)] - Account - User logged in (makeithomeintime@mailinator.com)
+2012-07-09 21:14:20,013 [9] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 21:14:51,543 [14] INFO  otr_project.MvcApplication [(null)] - Executing LogOff Action - Account
+2012-07-09 21:14:51,551 [5] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 21:16:40,931 [16] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 21:17:14,936 [10] INFO  otr_project.MvcApplication [(null)] - Executing activateaccount Action - Account
+2012-07-09 21:17:15,251 [15] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-09 21:17:45,414 [18] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
