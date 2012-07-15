@@ -1,0 +1,9 @@
+syntax: glob
+*.suo
+*.user
+*.MDF
+*.ldf
+*.cache
+*_Log-*
+Logs/
+obj/
