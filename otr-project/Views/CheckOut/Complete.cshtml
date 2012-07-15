@@ -1,0 +1,86 @@
+﻿@model IEnumerable<otr_project.Models.OrderDetailModel>
+
+@{
+    ViewBag.Title = "Rambla | CheckOut Complete";
+}
+
+<div class="container_12">
+    <div class="header_to_body_gap"></div>
+    <div class="grid_12">
+        <div>
+            <div id="Check_Out_Complete_Title" class="title_container">
+                <h1>
+                    Congratulations!
+                </h1>
+                <h2 id="Check_Out_Complete_Subtitle" class="page_subtitle">
+                    Your rental order is complete. Here is a summary.
+                </h2>
+            </div>
+        </div>
+        <div id="checkout-container" class="container">
+            <table class="check_out_complete">
+                <thead>
+                    <tr>
+                        <th>Item Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Rented From</th>
+                        <th>Pickup Date</th>
+                        <th>Return Date</th>
+                        <th>Price/Day</th>
+                        <th>Security Deposit</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        decimal OrderTotal = 0;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        OrderTotal += (item.UnitPrice * item.NumberOfDays) + item.SecurityDeposit;
+                        <tr>
+                            <td class="items_justify_center">
+                                @if (item.Item.ItemImages.Count > 0)
+                                {
+                                    <img src="@Url.Content("~/Item/GetItemImage/" + item.Item.ItemImages.ToList()[0].Id)" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                                }    
+                            </td>
+                            <td class="item_name">@item.ItemName</td>
+                            <td class="item_desc">
+                                @if (item.ItemDesc.Length > 50)
+                                {
+                                    <span>@(item.ItemDesc.Substring(0, 50) + "...")</span>
+                                }
+                                else
+                                {
+                                    <span>@item.ItemDesc</span> 
+                                }
+                            </td>
+                            <td class="items_justify_center">@(item.Item.Owner.FirstName + " " + item.Item.Owner.LastName)</td>
+                            <td class="items_justify_center">@item.PickupDate.ToLongDateString()</td>
+                            <td class="items_justify_center">@item.DrofoffDate.ToLongDateString()</td>
+                            <td class="items_justify_right">@item.UnitPrice.ToString("C")</td>
+                            <td class="items_justify_right">@item.SecurityDeposit.ToString("C")</td>
+                            <td class="items_justify_right">
+                                @(((item.UnitPrice * item.NumberOfDays) + item.SecurityDeposit).ToString("C"))
+                            </td>
+                        </tr>
+                    }
+                    <tr class="order_total_row">
+                        <td colspan="8" class="items_justify_right">
+                            <strong>Order Total</strong>
+                        </td>
+                        <td class="items_justify_right">
+                            @OrderTotal.ToString("C")
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

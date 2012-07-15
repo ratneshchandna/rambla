@@ -1,0 +1,1653 @@
+﻿/* Purpose: Stylesheet for all CSS grid - employing a 960 12 column structure */
+
+
+/* Variable Declarations 
+----------------------------------------------------------------------------------------------------*/
+@grid_container_default_width: 960px;
+
+/* Colour Theme 1 */
+@color-text: #333333; /* Very Dark Grey */
+@color-text-inverted: @color-primary-one;
+@color-bg: white;
+@color-bg-container: @color-primary-one; /* Very Light Grey */
+@color-bg-side-container: @color-primary-three; /* Light Grey */
+@color-primary-six: #FCFCFC; /* Very, Very Light Grey */
+@color-primary-one: #F7F7F7; /* Very Light Grey */
+@color-primary-two: #E8E8E8; /* Light Grey */
+@color-primary-three: #DDDDDD; /* Medium Grey */
+@color-primary-four: #757575; /* Dark Grey */
+@color-primary-five: #909090; /* Between Medium and Dark */
+@color-primary-four-rgba: rgba(51,51,51,0.75); /* Dark Grey, 75% Transparency*/
+@color-secondary-six: #CA36F8; /* Purple */
+@color-secondary-six-border: #DB7CF8; /* Light Purple, Sat: 50*/
+@color-secondary-four: #ADF836; /* Lime */
+@color-secondary-four-border: #C8F87C; /* Light Lime, Sat: 50*/
+@color-secondary-three: #F83677; /* Pink */
+@color-secondary-three-border: #F87CA5; /* Light Pink, Sat: 50*/
+@color-secondary-one: #36C5F8; /* Blue */
+@color-secondary-one-border: #7CD7F8; /* Light Blue, Sat: 50*/
+@color-secondary-five: #F83636; /* Red */
+@color-secondary-five-border: #F87C7C; /* Light Red, Sat: 50*/
+@color-secondary-two: #F8B836; /* Amber */
+@color-secondary-two-border: #F7CE7C; /* Light Amber, Sat: 50*/
+@color-hyperlink: #368DF8;
+@color-hyperlink-hover: @color-secondary-two;
+@color-hyperlink-secondary: @color-primary-five;
+@color-hyperlink-secondary-hover: #BBBBBB;
+@color-placeholder: #C7C7C7;
+@color-error: #FF4040;
+@color-error-light: #FF8080;
+
+/* Font Theme 1 */
+@font-family-header: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-main: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-size: 16px;
+@line-height: 1.3em;
+@line-height-title: 1.1em;
+@font-size-very-large: @font-size + 20px;
+@font-size-large: @font-size + 13px;
+@font-size-medium: @font-size + 8px;
+@font-size-small: @font-size + 3px;
+@font-size-very-small: @font-size - 2px;
+@font-size-ultra-small: @font-size - 4px;
+
+/* Mixin Declarations
+----------------------------------------------------------------------------------------------------*/
+/* To create horizontal 50%-50% gradients */
+.gradient (@fore-color, @bg-color) {
+    background-color: @bg-color;
+    background-repeat: repeat-x;
+    background-image: -moz-linear-gradient(top,@fore-color 0,@bg-color 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,@fore-color),color-stop(100%,@bg-color));
+    background-image: -webkit-linear-gradient(top,@fore-color 0,@bg-color 100%);
+    background-image: -ms-linear-gradient(top,@fore-color 0,@bg-color 100%);
+    background-image: -o-linear-gradient(top,@fore-color 0,@bg-color 100%);
+    background-image: linear-gradient(top,@fore-color 0,@bg-color 100%);
+}
+
+/* For all medium sized buttons */
+.button-medium (@fore-color, @bg-color, @font-sz, @line-ht, @bt-width)
+{
+    cursor: pointer;
+    color: white;
+    width: @bt-width;
+    font-family: @font-family-main;
+    font-size: @font-sz;
+    font-weight: bold;
+    line-height: @line-ht;
+    text-align:center;
+    text-decoration:none;
+    text-shadow: 0 1px 1px @bg-color;
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+    border: 1px solid @fore-color;
+    .gradient (@fore-color, @bg-color);
+    -webkit-box-shadow: 0 1px 0 @fore-color;
+    -moz-box-shadow: 0 1px 0 @fore-color;
+    box-shadow: 0 1px 0 @fore-color;
+}
+
+.header-container (@fore-color, @bg-color, @font-sz, @line-ht, @cntr-width)
+{
+    width: @cntr-width;
+    font-family: @font-family-main;
+    font-size: @font-sz;
+    font-weight: bold;
+    line-height: @line-ht;
+    text-decoration:none;
+    border: 0px solid @fore-color;
+    .gradient (@fore-color, @bg-color);
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+}
+
+/* For all form text boxes */
+.text-box (@txt-box-width) {
+    color: @color-text;
+    width: @txt-box-width;
+    padding: 0.4em;
+    font-family: @font-family-main;
+    font-size: @font-size-small;
+    line-height: @line-height;
+    background-color: white;
+    border: 2px solid @color-primary-two;
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+    outline-color:transparent;
+    cursor: text;
+}
+
+.text-box-medium (@txt-box-width) {
+    color: @color-text;
+    width: @txt-box-width;
+    padding: 0.33em;
+    font-family: @font-family-main;
+    font-size: @font-size-medium;
+    line-height: @line-height;
+    background-color: white;
+    border: 2px solid @color-primary-two;
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+    outline-color:transparent;
+    cursor: text;
+}
+
+
+/* For all form text box hover / focus effects */
+.text-box-hover{
+    border: 2px solid @color-secondary-two;
+}
+
+/* For all form drop downs */
+.drop-down (@txt-box-width) {
+    color: @color-text;
+    width: @txt-box-width;
+    padding: 0.4em;
+    font-family: @font-family-main;
+    font-size: @font-size-small;
+    line-height: @line-height;
+    background-color: white;
+    border: 2px solid @color-primary-two;
+	//-webkit-appearance: none;
+	//background: white url("images/1.jpg");
+	//background-repeat: no-repeat;
+	//background-position: 97%;
+    //-webkit-border-radius: 0.4em;
+	//-moz-border-radius: 0.4em;
+	//border-radius: 0.4em;
+    outline-color:transparent;
+}
+
+/* For all form drop down hover / focus effects */
+.drop-down-hover{
+    border: 2px solid @color-secondary-two;
+}
+
+/* For line dividders */
+.line-divider
+{
+    border-right-width: 1px;
+    border-right-color: @color-primary-two;
+    border-right-style: inset;
+}
+
+/* For all background boxes with a shadow */
+.background-box-with-shadow
+{
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+	background-color: @color-bg-container;
+    .text-box-hover;
+}
+
+.guide-container
+{
+	padding: 5px 5px 5px 5px;
+	background-color: @color-text;
+	color: @color-text-inverted;
+	text-align: center;
+	-webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+}
+
+.image-thumbnail {
+	width: auto;
+	height: 100px;
+	padding: 10px;
+}
+
+
+/* Base Elements
+----------------------------------------------------------------------------------------------------*/
+/* Header formatting */
+h1 {
+	font-family: @font-family-header;
+	font-size: @font-size-very-large;
+	color: @color-text;
+	padding: 5px 0 5px 5px;
+}
+
+h2
+{
+    font-family: @font-family-header;
+    font-size: @font-size-medium;
+    padding: 10px 0 15px 0;
+}
+
+.title_container {
+	.header-container(@color-primary-four, @color-primary-four, @font-size-small, @line-height, 95%);
+    margin: 0 auto 0 auto;
+	padding: 20px 20px 20px 20px;
+	border: 1px solid @color-primary-four;
+	-moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.title_container h1, .title_container_item_left h1, .title_container_item_right h1{
+	color:@color-bg;
+}
+
+.page_subtitle {
+	font-family: @font-family-header;
+	font-size: @font-size-medium - 1px;
+	font-weight: normal;
+	color: @color-secondary-two;
+	padding: 10px 0 5px 5px;
+}
+
+.header_to_body_gap {
+	margin-top: 20px;
+}
+
+/* Generic body formatting */
+body  {
+  font-family: @font-family-main;
+  font-size: @font-size;
+  color: @color-text;
+  background-color: @color-bg;
+  line-height: @line-height;
+}
+
+.container {
+	margin: 0 auto 0 auto;
+    padding: 20px 20px 20px 20px;
+	.header-container(@color-primary-one, @color-primary-one, @font-size-small, @line-height, 95%);
+	border: 1px solid @color-primary-three;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/*
+.side_container {
+    padding: 20px 0px 20px 10px;
+    width: 100%;
+	height: 500px;
+	float: right;
+    background-color: @color-primary-three;
+}
+
+*/
+/*
+.header_background {
+	margin-top: 20px;
+	background-color: @color-primary-five;
+	-moz-border-radius-topleft: 0.4em;
+    -webkit-border-top-left-radius: 0.4em;
+    border-top-left-radius: 0.4em;
+    -moz-border-radius-topright: 0.4em;
+    -webkit-border-top-right-radius: 0.4em;
+    border-top-right-radius: 0.4em;
+}
+*/
+
+.form_background {
+	background-color: transparent;
+	padding: 10px 10px;
+}
+
+.box_header
+{
+	font-family: @font-family-main;
+	font-size: @font-size-medium;
+	color: @color-primary-four;
+	margin-left: 5px;
+	padding: 10px 0 5px 5px;
+}
+
+/* Abbreviations formatting upon hover */
+abbr {
+  font-size: 90%;
+  text-transform: uppercase;
+  border-bottom: 1px dotted @color-primary-three;
+  cursor: help;
+}
+
+/* Hyperlinks */
+a {
+  color: @color-hyperlink;
+  text-decoration: none;
+}
+
+/* Hyperlinks hover formatting */
+a:hover {
+  color: @color-hyperlink-hover;
+}
+
+/* To style placeholders within textboxes, for Chrome, Firefox and Safari */
+::-webkit-input-placeholder {
+    color : @color-placeholder;
+}
+
+// Changed Mozilla placeholder (replace :-moz-placeholder with below)
+div input:-moz-placeholder, 
+.form_field input:-moz-placeholder, 
+#Pickup_Location_Box div input[type="text"]:-moz-placeholder, 
+#Item_Details_Box div input[type="text"]:-moz-placeholder, 
+#Item_Details_Box div textarea:-moz-placeholder, 
+#search_display form #search_box:-moz-placeholder {
+    color: @color-placeholder;
+}
+
+/* Validation related */
+.field-validation-valid{
+	outine:none;
+}
+
+.validation-summary-errors, .field-validation-error {
+	font-size:@font-size-very-small;
+	font-weight: normal;
+    color: @color-error;
+}
+
+/* Getting rid of galleria errors in production */
+.galleria-errors {
+	display: none;
+}
+
+.de-emphasise {
+	font-weight: normal;
+	font-size: 90%;
+}
+
+
+/* Masthead Layout Elements
+----------------------------------------------------------------------------------------------------*/
+/* Top layout strip - left most strip */
+#header #top_left{
+    height: 10px;
+    vertical-align:top;
+    background-color: @color-secondary-one;
+    border-bottom-left-radius: 0.4em;
+
+}
+
+/* Top layout strip - middle four strips */
+#header #top_centre_one, #header #top_centre_two, #header #top_centre_three, #header #top_centre_four
+{
+    height: 10px;
+    margin-left:-10px;
+    vertical-align:top;
+}
+
+/* Top layout strip - second from the left */
+#header #top_centre_one
+{
+    background-color: @color-secondary-one;
+}
+
+/* Top layout strip - third from the left */
+#header #top_centre_two
+{
+    background-color: @color-secondary-one;
+}
+
+/* Top layout strip - fourth from the left */
+#header #top_centre_three
+{
+    background-color: @color-secondary-two;
+}
+
+/* Top layout strip - fifth from the left */
+#header #top_centre_four
+{
+    background-color: @color-secondary-two;
+}
+
+/* Top layout strip - first from the right */
+#header #top_right
+{
+    height: 10px;
+    vertical-align:top;
+    margin: 0 0 10px -10px;
+    padding-right: 100px;
+    border-bottom-right-radius: 0.4em;
+    background-color: @color-secondary-two;
+}
+
+/* Top header background strip */
+#header{
+    display: block;
+    padding: 0px;
+    margin: auto;
+    background-color: @color-primary-one;
+    background-repeat: repeat-x;
+}
+
+/* Top header bottom divider strip */
+#header_bottom_strip {
+    height: 1px;
+    background-color:@color-bg;
+    border-bottom: 2px inset @color-primary-two;
+}
+
+/* Top header background strip shadow gradient */
+#header_shadow {
+    height: 7px;
+    .gradient (@color-primary-two, #FFF);
+    margin-bottom:10px;
+}
+
+#body_container
+{
+    background-color: @color-bg;
+}
+
+/* Bottom footer background strip shadow gradient */
+#footer_shadow {
+    height: 7px;
+    margin: 100px auto auto auto;
+    .gradient (#FFF, @color-primary-one);
+}
+
+/* Bottom footer background strip */
+#footer{
+    display: block;
+    height: 45px;
+    background-color: @color-primary-three;
+    background-repeat: repeat-x;
+}
+
+#comodo_ssl_seal {
+	float: right;
+}
+
+
+/* Header Specific Layout Elements
+----------------------------------------------------------------------------------------------------*/
+/* Top header logo */
+#header #logo a {
+    font-family: @font-family-header;
+    color: @color-primary-three;
+    font-size: @font-size-very-large;
+    letter-spacing: 0.2em;
+}
+
+/* Top header logo - landing page*/
+#header #logo_landing a {
+    font-family: @font-family-header;
+    color: @color-primary-three;
+    font-size: @font-size-very-large;
+    letter-spacing: 0.2em;
+}
+
+
+/* Top header searchbar */
+#searchdisplay {
+    text-align: right;
+}
+
+/* Top header right-most links */
+.nav_links li {
+    float: right;
+    margin-right: 15px;
+    padding-right: 15px;
+}
+
+/* Top header right-most links */
+.nav_right {
+    margin-left: 35px;
+}
+
+/* Adding a line divider (e.g. top header right-most links) */
+#header .navbar, .navbar li
+{
+	.line-divider;
+}
+
+/* Top header left-most links, sets the width of the hover effect for the Log In drop down menu */
+.navbar_dropdown 
+{
+    width: 11em;
+}
+
+/* This is a fix so that the unorded list element always positions itself right below the relative dropdown grid div */
+#dropdown_grid {
+	position: relative;
+}
+
+/* Downward arrow beside the first name of the logged in user */
+#down_arrow {
+	font-size: @font-size-very-small;
+}
+
+/* Top header left-most links, adjusts the Log In text to align with the drop down menu options */
+#navbar_ddtop{
+    padding: 0 0 0 .3em;
+}
+
+/* Top header left-most links, turns the links into larger clickable boxes */
+.navbar_dropdown:hover #navbar_ddtop a{
+    display: inline-block;
+    color: @color-bg;
+    background-color: @color-secondary-two;
+    text-decoration: none;
+}
+
+/* Top header left-most links, turns the links into larger clickable boxes */
+.navbar_dropdown ul li a {
+    display: block;
+    padding: 0.3em 1.5em 0.3em 0.3em;
+    color: @color-bg;
+    text-decoration: none;
+    background-color: @color-primary-four-rgba;
+    border: none;
+}
+
+/* Top header left-most links, pseudo selector used for a usability aid, so you know when you can click */
+.navbar_dropdown ul li a:hover 
+{
+    padding: 0.3em 1.5em 0.3em 0.3em;
+    background-color: @color-primary-three;
+    color: @color-text;
+    text-decoration: none;
+    border: none;
+    -webkit-transition: background-color .1s ease-in;
+    transition: background-color .1s ease-in;
+}
+
+/* Top header left-most links, hides nested hierarchy links by default */
+.navbar_dropdown ul {
+    display: none;
+    padding: 0;
+	position: absolute;
+	left: 22px; /* Hardcoded (not proud of it) */
+}
+
+/* Top header left-most links, shows nested hierarchy links when we mouseover the parent */
+.navbar_dropdown:hover ul{
+    display: block;
+    z-index:2;
+}
+
+/* Top header left-most links, overrides the style on line 23 for nested link collections */
+.navbar_dropdown li {
+    float: none;
+    border-bottom: 1px solid @color-primary-two; /* border-top causes IE bug */
+}
+
+.navbar_dropdown li#bottom_item {
+    border-bottom: none;
+}
+
+#search_display form #search_box {
+    display: inline-block;
+    margin: 0 -30px 0 -125px;
+    .text-box(290px);
+	padding: 0.4em 2.2em 0.4em 0.4em;
+	background: white url("images/search_icon.png");
+	background-repeat: no-repeat;
+	background-position: 98% 3px;
+}
+
+#search_display form #search_box:hover, #search_display form #search_box:focus {
+    .text-box-hover;
+}
+
+#cart_num {
+	margin-right: 5px;
+}
+
+#search_display form #search_box_landing {
+    display: inline-block;
+    margin: 0 -40px 0 0;
+    .text-box-medium(660px);
+}
+
+#search_display form #search_box_landing:hover, #search_display form #search_box_landing:focus {
+    .text-box-hover;
+}
+
+
+/* Buttons
+----------------------------------------------------------------------------------------------------*/
+/* List It Button - top header */
+#btn_list a {
+    display: block;
+    padding: 0.35em 0;
+    .button-medium (@color-secondary-one-border, @color-secondary-one, @font-size-small, @line-height, 120px);
+}
+
+/* List It Button Hover - top header */
+#btn_list a:hover {
+    .button-medium (@color-secondary-one, @color-secondary-one-border, @font-size-small, @line-height, 120px);
+}
+
+/* Search Button - top header */
+#search_display form #btn_search  {
+    padding: 0.35em 0;
+    display: inline-block;
+    .button-medium (@color-secondary-one-border, @color-secondary-one, @font-size-small, @line-height, 33px);
+    margin-left: -8px;
+	opacity: 0;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+ 
+ /* Search Button Hover - top header */
+#search_display form #btn_search:hover {
+    .button-medium (@color-secondary-one,@color-secondary-one-border, @font-size-small, @line-height, 33px);
+    margin-left: -8px;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Search Button - landing page */
+#search_display form #btn_search_landing {
+    padding: 0.35em 0;
+    display: inline-block;
+    .button-medium (@color-secondary-two-border, @color-secondary-two, @font-size-medium, @line-height, 100px);
+    margin-left: 23px;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+ 
+ /* Search Button Hover - landing page */
+#search_display form #btn_search_landing:hover {
+    .button-medium (@color-secondary-two, @color-secondary-two-border, @font-size-medium, @line-height, 100px);
+    margin-left: 23px;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Submit button on login page */
+.btn_submit input {
+    display: block;
+    margin: 18px auto 0 auto;
+    padding: 0.35em 0;
+    .button-medium (@color-secondary-two-border, @color-secondary-two, @font-size-medium, @line-height, 334px);
+}
+
+.btn_submit input:hover {
+    .button-medium (@color-secondary-two, @color-secondary-two-border, @font-size-medium, @line-height, 334px);
+}
+
+.btn_listit_page input, .btn_edititem_page input{
+	display: block;
+    margin: 70px auto 20px auto;
+    padding: 0.35em 0;
+	.button-medium (@color-secondary-two-border, @color-secondary-two, @font-size-large, @line-height, 334px);
+}
+
+.btn_listit_page input:hover, .btn_listit_page input:focus, .btn_edititem_page input:hover, .btn_edititem_page input:focus {
+	.button-medium (@color-secondary-two, @color-secondary-two-border, @font-size-large, @line-height, 334px);
+}
+
+#btn_delete_item a {
+	display: block;
+	float: right;
+	margin-top: 2px;
+    padding: 0.35em 0;
+    .button-medium (@color-secondary-five-border, @color-secondary-five, @font-size-small, @line-height, 120px);
+}
+
+#btn_delete_item a:hover {
+    .button-medium (@color-secondary-five, @color-secondary-five-border, @font-size-small, @line-height, 120px);
+}
+
+#AddToCartBtn input {
+	display: block;
+    margin: 30px auto 10px auto;
+    padding: 0.2em 0;
+	.button-medium(@color-secondary-one-border, @color-secondary-one, @font-size-small, @line-height, 120px);
+}
+
+#AddToCartBtn input:hover {
+	.button-medium(@color-secondary-one, @color-secondary-one-border, @font-size-small, @line-height, 120px);
+}
+
+#Edit_Item_Details a {
+	display: block;
+    margin: 0 auto 10px auto;
+    padding: 0.4em 0;
+	.button-medium(@color-secondary-one-border, @color-secondary-one, @font-size-medium, @line-height, 180px);
+}
+
+#Edit_Item_Details a:hover {
+	.button-medium(@color-secondary-one, @color-secondary-one-border, @font-size-medium, @line-height, 180px);
+}
+
+#Contact_Owner input {
+	display: block;
+    margin: 0 auto 10px auto;
+    padding: 0.4em 0;
+	.button-medium(@color-secondary-two-border, @color-secondary-two, @font-size-medium, @line-height, 180px);
+}
+
+#Contact_Owner input:hover {
+	.button-medium(@color-secondary-two, @color-secondary-two-border, @font-size-medium, @line-height, 180px);
+}
+
+/* Common Input Elements
+- Text boxes
+- Password boxes
+- Dropdown boxes
+- Textarea boxes
+- Form labels for other input elements
+----------------------------------------------------------------------------------------------------*/
+/* For all text fields */
+.form_field input[type="text"], .form_field input[type="password"]{
+    display:block;
+    margin: 10px auto 10px auto;
+    .text-box (320px);
+}
+
+/* For all text field hover and focus events */
+.form_field input[type="text"]:hover, .form_field input[type="text"]:focus, .form_field input[type="password"]:hover, .form_field input[type="password"]:focus {
+    .text-box-hover;
+}
+
+.form_dropdown select{
+    display:block;
+    margin: 10px auto 10px auto;
+    .drop-down (339px);
+}
+
+/* For all drop down hover and focus events */
+.form_dropdown select:hover, .form_dropdown select:focus {
+    .drop-down-hover;
+}
+
+select[state="selected_none"] {
+	color: @color-placeholder;
+}
+
+select {
+	color: @color-text;
+}
+
+option {
+	color: @color-text;
+}
+
+.form_field textarea {
+	display: block;
+	height: 100px;
+	margin: 10px auto 10px auto;
+	.text-box(320px);
+}
+
+/* For all textarea field hover and focus events */
+.form_field textarea:hover, .form_field textarea:focus {
+    .text-box-hover;
+}
+
+.form_field input[type="checkbox"] {
+	float: left;
+}
+
+.form_label_small {
+	display:block;
+	font-size:@font-size;
+	font-weight:bold;
+	text-align: left;
+	margin: 30px 0 0 5px;
+}
+
+.form_label_small_2 {
+	display:inline-block;
+	font-size:@font-size;
+	text-align: left;
+}
+
+
+/* Login & Sign Up Page Elements
+----------------------------------------------------------------------------------------------------*/
+/* For the login and sign-up container boxes */
+#login_container {
+    .header-container(@color-primary-two, @color-primary-one, @font-size-small, @line-height, 450px);
+	margin: 60px auto 60px auto;
+    padding: 20px 0 10px 0;
+    text-align: center;
+}
+
+/* To stylize the 'or' in the login container */
+#login_container p 
+{
+    font-family: @font-family-main;
+    font-size: @font-size;
+    letter-spacing:0.15em;
+    text-transform: lowercase;
+    margin: 10px auto 10px auto;
+}
+
+/* To position the Facebook login option */
+#login_facebook {
+    display:block;
+    text-align: center;
+    margin: 20px auto 0 auto;
+}
+
+/* Links on logon and register pages */
+#account_exists, #forgot_pwd {
+	margin-top: 20px;
+}
+
+#account_exists a {
+	font-size: @font-size-small;
+}
+
+#forgot_pwd a{
+	font-size:@font-size-very-small;
+	font-weight: normal;
+	color: @color-hyperlink-secondary;
+}
+
+#forgot_pwd a:hover{
+	color: @color-hyperlink-secondary-hover;
+}
+
+a#location {
+	font-size: @font-size-small;
+}
+
+
+/* Item Details page
+----------------------------------------------------------------------------------------------------*/
+#Item_Details_Title {
+	/* Doing some hacks here (not proud of it) */
+	padding: 20px 0 20px 0;
+	margin-left: -10px - 1px;
+	width: @grid_container_default_width;
+}
+
+#Item_Details_Title h1{
+	margin-left: 20px;
+}
+
+#map_container {
+	padding: 10px 0;
+}
+
+#item_details_body_container {
+	.header-container(@color-primary-one, @color-primary-one, @font-size-small, @line-height, @grid_container_default_width);
+	//margin: 0 auto 0 auto;
+    padding-bottom: 10px;
+	border: 1px solid @color-primary-three;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.social_plugins {
+	float: right;
+}
+
+#no_images {
+	text-align: center;
+	margin: 150px 0;
+}
+
+#item_description
+{	
+	margin: 30px 0 0 0;
+	padding: 20px;
+	-moz-border-radius: 0.4em;
+    -webkit-border-radius: 0.4em;
+    border-radius: 0.4em;
+	color: @color-bg;
+	background-color: @color-primary-four;
+}
+
+#item_description label {
+	display: block;
+	margin-bottom: 10px;
+}
+
+#item_description_content {
+	font-weight: normal;
+	white-space: pre-line;
+}
+
+#Item_Details_Info_Box {
+	margin: auto 0 auto 0;
+	padding: 10px;
+	text-align: center;
+	color: @color-bg;
+	background-color: @color-primary-four;
+	-moz-border-radius: 0.4em;
+    -webkit-border-radius: 0.4em;
+    border-radius: 0.4em;
+}
+
+#Item_Details_Info_Box .display_label {
+	font-size: @font-size;
+	font-weight: normal;
+}
+
+#Item_Details_Info_Box .display_field {
+	line-height: 0.67 * @line-height;
+	font-size: @font-size + 1px;
+}
+
+#Item_Details_Info_Box #category_field {
+	font-size: @font-size-small;
+	font-weight: bold;
+}
+
+#Item_Details_Info_Box .form_label {
+	margin-top: 30px;
+}
+
+#item_cost
+{   
+    font-family: @font-family-main;
+    font-size: @font-size-very-large;
+    font-weight: bold;
+	display: inline-block;
+	margin: 30px 0 10px 0;
+    /*
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    */
+}
+
+#pickupdate, #dropoffdate {
+	width: 180px;
+	cursor: pointer;
+}
+
+.validation_errors {
+	font-weight: normal;
+	color: @color-error-light;
+}
+
+/* List It / Edit Page
+----------------------------------------------------------------------------------------------------*/
+.right_col {
+	padding: 0 0 0 100px;
+}
+
+#Item_Details_Box select {
+	padding: 0.4em 0.4em 0.4em 0.3em;
+}
+
+#Pickup_Location_Box input[type="checkbox"] {
+	margin: 6px 10px 5px 5px;
+}
+
+#multiple_datepicker {
+	margin-top: 10px;
+}
+
+#item_pictures {
+	margin-left: 10px;
+}
+
+#item_pictures p {
+	margin: 60px 0;
+	text-align: center;
+	font-weight: normal;
+}
+
+.item_thumbnail_container {
+	float: left;
+	text-align: center;
+}
+
+.item_thumbnail {
+	display: block;
+	padding: 5px;
+	.image-thumbnail;
+}
+
+.item_thumbnail_container a {
+	color: @color-error-light;
+	cursor: pointer;
+}
+
+.item_thumbnail_container a:hover {
+	color: @color-error;
+}
+
+#item_thumbnail_container_last {
+	height: 144px;
+	text-align: center;
+}
+
+#no_images_left_message {
+	display: inline-block;
+}
+
+#upload_item_picture {
+	text-align: center;
+	margin: 30px 0 40px 0;
+}
+
+#upload_item_picture_input {
+	margin: 5px 0 0 5px;
+	width: 175px;
+	//background-image:url("images/upload_icon.jpg");
+	//width:100px;
+	//height:97px;
+}
+
+.WhatsThis {
+	font-size:@font-size-very-small;
+	float: right;
+	margin: 12px 10px 0 0;
+	color: @color-primary-four;
+}
+
+.WhatsThis:hover {
+	color: @color-primary-five;
+}
+
+#pickup_location_guide {
+	float: right;
+	margin-top: 50px;
+	width: 225px;
+	.guide-container;
+}
+
+#blackout_dates_guide {
+	float: right;
+	margin-top: -160px;
+	width: 225px;
+	.guide-container;
+}
+
+.guide_container_hidden
+{
+	display: none;
+}
+
+
+/* User Page Generic Elements
+----------------------------------------------------------------------------------------------------*/
+.user_nav_links li {
+    float: right;
+    margin-right: 0px;
+    padding: 15px;
+}
+
+
+/* User Edit Page
+----------------------------------------------------------------------------------------------------*/
+#user-edit-container table #Price_Box {
+	margin-left: 100px;
+}
+
+#upload_user_picture_input {
+	margin: 5px 0 20px 0;
+	width: 175px;
+	//background-image:url("images/upload_icon.jpg");
+	//width:100px;
+	//height:97px;
+}
+
+#user-edit-container img {
+	width: 350px;
+	height: auto;
+}
+
+.title_container_item_left {
+	.header-container(@color-primary-four, @color-primary-four, @font-size-small, @line-height, 95%);
+    margin: 0 auto 0 auto;
+	padding: 20px 20px 20px 20px;
+	border: 0px solid @color-primary-four;
+	-moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.title_container_item_right {
+	.header-container(@color-secondary-two, @color-secondary-two, @font-size-small, @line-height, 88%);
+	padding: 35px 20px 20px 19px;
+	margin-left:-15px;
+	height:58px;
+    color:@color-bg;
+	border: 0px solid @color-primary-four;
+	-moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+/* User Items Listed Page
+----------------------------------------------------------------------------------------------------*
+#user-items-listed-container {
+    padding: 20px 20px 20px 20px;
+	.header-container(@color-primary-one, @color-primary-one, @font-size-medium, @line-height, 100%);
+	border: 1px solid @color-primary-three;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
+*/
+#user-items-listed-container .user_items_listed {
+    border: 1px solid @color-primary-three;
+	width: 100%;
+	table-layout: fixed;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#user-items-listed-container thead th {
+	padding: 5px;
+    border: 1px solid @color-primary-three;
+	background: @color-primary-five;
+	text-align: center;
+	font-size: @font-size-small;
+	color: White;
+}
+
+#user-items-listed-container .user_items_listed img {
+	width: 80px;
+	height: auto;
+}
+
+#user-items-listed-container .user_items_listed td {
+	font-size: @font-size;
+	padding: 10px;
+	word-wrap: break-word;
+}
+
+#user-items-listed-container .user_items_listed tr {
+	border-bottom: 1px solid @color-primary-three;
+}
+
+#user-items-listed-container table .items_justify_center {
+	text-align: center;
+	width: 10%;
+}
+
+#user-items-listed-container table .item_name {
+	width: 10%;
+}
+
+#user-items-listed-container table .item_desc {
+	width: 30%;
+}
+
+#user-items-listed-container table .item_location {
+	width: 30%;
+}
+
+/* User Agreement Page
+----------------------------------------------------------------------------------------------------*
+#user-agreement-container {
+    padding: 20px 20px 20px 20px;
+	.header-container(@color-primary-one, @color-primary-one, @font-size-medium, @line-height, 100%);
+	border: 1px solid @color-primary-three;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+	font-size: @font-size;
+	text-decoration: none;
+}
+*/
+/* Rental Cart Listed Page
+----------------------------------------------------------------------------------------------------*/
+#rental_cart_container .main-rental-cart {
+    border: 1px solid @color-primary-three;
+	width: 100%;
+	table-layout: fixed;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#rental_cart_container .cart_date_field input[type="text"] {
+    display:block;
+    margin: 10px auto 10px auto;
+    .text-box (100px);
+}
+
+#rental_cart_container .main-rental-cart thead th {
+	padding: 5px;
+    border: 1px solid @color-primary-three;
+	background: @color-primary-five;
+	text-align: center;
+	font-size: @font-size-small;
+	color: White;
+}
+
+#rental_cart_container .main-rental-cart img {
+	width: 80px;
+	height: auto;
+}
+
+#rental_cart_container .main-rental-cart td {
+	font-size: @font-size;
+	padding: 5px;
+	word-wrap: break-word;
+	vertical-align: middle;
+}
+
+#rental_cart_container .cart_table_row {
+	border-bottom: 1px solid @color-primary-three;
+}
+
+#rental_cart_container .cart_table_total_row {
+	border-top: 3px solid @color-secondary-two-border;
+}
+
+#rental_cart_container .items_justify_center {
+	text-align: center;
+	width: 10%;
+}
+
+#rental_cart_container .items_justify_right {
+	text-align: right;
+	width: 10%;
+}
+
+#rental_cart_container .item-details {
+    border: 0px;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+	width: 90%;
+	table-layout: fixed;
+}
+
+#rental_cart_container .item-details td {
+    word-wrap: break-word;
+	vertical-align: middle;
+}
+
+#rental_cart_container .item-details #delete_row{
+	width: 20%;
+}
+
+#rental_cart_container .cart_valign_center {
+	vertical-align: middle;
+	text-align: center;
+}
+
+/* Search Page
+----------------------------------------------------------------------------------------------------*/
+#search_custom_container {
+	margin: 0 auto 0 auto;
+    padding: 10px;
+	width: 100%;
+	border: 1px solid @color-primary-three;
+	background-color: @color-primary-one;
+	-webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+}
+
+/* All of this has to do with the left filter box on the search page */
+#configureSearch {
+	padding: 10px 10px 10px 10px;
+	width: 210px;
+	font-size: @font-size;
+	background-color: @color-primary-four;
+	color: @color-bg;
+	-webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+}
+
+#PickupDropoffDates td {
+	vertical-align: middle;
+	width: 100%;
+	//height: 65px;
+}
+
+#price, #securitydeposit, 
+#price:hover, #securitydeposit:hover {
+	color: @color-bg;
+	float:right;
+	width: 50px;
+	border: 0;
+	font-weight: bold;
+	background-color: transparent;
+	cursor: normal;
+}
+
+#price-slider, #securitydeposit-slider {
+	width: 95%;
+	margin-bottom: 30px;
+}
+
+#Search_MaxSecurityDeposit_Label, 
+#Search_MaxPrice_Label {
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+#Search_PickupDate_Label, 
+#Search_DropoffDate_Label {
+	margin-top: 10px;
+	text-align: left;
+	//font-size: @font-size-small;
+	font-weight: bold;
+}
+
+#pickup, #dropoff {
+	width: 190px;
+	cursor: pointer;
+}
+
+.checkboxes {
+	margin-top: 20px;
+}
+
+.checkboxes tr {
+	height: 30px;
+	font-size: @font-size-very-small;
+}
+
+.cell_with_checkbox {
+	width: 35px;
+	text-align: center;
+}
+
+#UpdateButton {
+	margin-top: 20px;
+	text-align: center;
+}
+
+/* All of this has to do with the filter bar on the top of the search page */
+#Search_Filter_Bar {
+	padding: 10px;
+	background-color: @color-primary-four;
+	color: @color-bg;
+	-moz-border-radius: 0.4em;
+    -webkit-border-radius: 0.4em;
+    border-radius: 0.4em;
+	/*-moz-border-radius-topleft: 0.4em;
+    -webkit-border-top-left-radius: 0.4em;
+    border-top-left-radius: 0.4em;
+    -moz-border-radius-topright: 0.4em;
+    -webkit-border-top-right-radius: 0.4em;
+    border-top-right-radius: 0.4em;*/
+}
+
+#Search_Filter_Bar td {
+	padding: 0 8px;
+	vertical-align: middle;
+	font-size: @font-size;
+	font-weight: bold;
+}
+
+#Search_Filter_Bar .editor-label {
+	margin-left: 50px;
+}
+
+#Search_Filter_Bar select {
+	font-size: @font-size;
+	margin: 0;
+	padding: 0.1em 0.4em;
+	width: 160px;
+}
+
+/* Formatting the actual search results */
+#searchResults tr {
+	border-bottom: 1px solid @color-primary-three;
+	cursor: pointer;
+}
+ 
+#searchResults tr:hover {
+	background-color: @color-primary-three;
+}
+
+#no_results {
+	text-align: center;
+	margin-top: 50px;
+	font-weight: bold;
+}
+
+#dvOrders td {
+	padding: 5px 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.Search_Item_Image {
+	width: 100px;
+	height: auto;
+}
+
+#dvOrders td.search_item_details {
+	text-align: left;
+	width: 300px;
+}
+
+#ItemIsBlocked {
+	font-size: @font-size - 1;
+	color: @color-error;
+}
+
+.Search_Owner_Image {
+	height: 50px;
+	width: auto;
+}
+
+.search_item_price_amount {
+	font-size: @font-size-medium;
+}
+
+.search_item_details a, .search_item_city_province, #dvOrders td.search_item_owner_image, .search_item_price_amount {
+	font-weight: bold;
+}
+
+/* Checkout Complete Page
+----------------------------------------------------------------------------------------------------*
+*/
+#checkout-container .check_out_complete {
+    border: 1px solid @color-primary-three;
+	width: 100%;
+	table-layout: fixed;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#checkout-container .check_out_complete thead th {
+	padding: 5px;
+    border: 1px solid @color-primary-three;
+	background: @color-primary-five;
+	text-align: center;
+	font-size: @font-size-small;
+	color: White;
+}
+
+#checkout-container .check_out_complete img {
+	width: 80px;
+	height: auto;
+}
+
+#checkout-container .check_out_complete td {
+	font-size: @font-size;
+	padding: 10px;
+	word-wrap: break-word;
+}
+
+#checkout-container .check_out_complete tr {
+	border-bottom: 1px solid @color-primary-three;
+}
+
+#checkout-container table .items_justify_center {
+	text-align: center;
+	width: 10%;
+}
+
+#checkout-container table .items_justify_right {
+	text-align: right;
+	width: 10%;
+}
+
+#checkout-container table .item_name {
+	width: 10%;
+}
+
+#checkout-container table .item_desc {
+	width: 30%;
+}
+
+#checkout-container table .order_total_row {
+	border-top: 3px solid @color-secondary-two-border;
+}
+
+/* Post Checkout Enter Security Code Page
+----------------------------------------------------------------------------------------------------*
+*/
+#process_security_code_container .item_details_table {
+    border: 1px solid @color-primary-three;
+	width: 100%;
+	table-layout: fixed;
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#process_security_code_container .item_details_table thead th {
+	padding: 5px;
+    border: 1px solid @color-primary-three;
+	background: @color-primary-five;
+	text-align: center;
+	font-size: @font-size-small;
+	color: White;
+}
+
+#process_security_code_container .item_details_table img {
+	width: 80px;
+	height: auto;
+}
+
+#process_security_code_container .item_details_table td {
+	font-size: @font-size;
+	padding: 10px;
+	word-wrap: break-word;
+}
+
+#process_security_code_container .item_details_table tr {
+	border-bottom: 1px solid @color-primary-three;
+}
+
+#process_security_code_container table .items_justify_center {
+	text-align: center;
+	width: 10%;
+}
+
+#process_security_code_container table .items_justify_right {
+	text-align: right;
+	width: 10%;
+}
+
+#process_security_code_container table .item_name {
+	width: 10%;
+}
+
+#process_security_code_container table .item_desc {
+	width: 30%;
+}
+
+#process_security_code_container table .order_total_row {
+	border-top: 3px solid @color-secondary-two-border;
+}
+
+/* Header spacing for the landing page */
+.landing_spacer 
+{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+/* Footer links formatting */
+#footer .footer_links
+{
+    font-family: @font-family-main;
+    font-size: @font-size-ultra-small;
+    color: @color-primary-four;
+    padding:0 10px 0 10px;
+}
+
+.tag_line
+{
+    font-family: @font-family-main;
+    font-size: @font-size-very-large+5px;
+    color: @color-primary-five;
+    font-weight:bold;
+    text-align:center;
+    margin: 0 auto;
+    padding: 0 0 20px 0;   
+}
+
+/* To fix footer positionining */
+#wrapper 
+{
+    min-height: 100%;
+    margin-bottom: -45px;
+    position: relative;
+}
+
+#footer_all {
+height: 45px;
+position: relative;
+}
+
+.clearfooter {
+height: 45px;
+clear: both;
+}

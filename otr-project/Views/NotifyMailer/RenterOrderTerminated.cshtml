@@ -1,0 +1,23 @@
+Hi @ViewData.Model.Order.User.FirstName, <br /><br />
+
+We regret to inform you that we have cancelled the below order since item pickup was not confirmed:<br/><br/>
+
+<strong>Order ID</strong>: @ViewData.Model.OrderDetailId <br/>
+<strong>Item Name</strong>: @ViewData.Model.Item.Name<br/>
+<strong>Item Pickup Date</strong>: @ViewData.Model.PickupDate.Date<br/>
+<strong>Item Drop-off Date</strong>: @ViewData.Model.DrofoffDate.Date<br />
+<strong>Number of Days</strong>: @ViewData.Model.NumberOfDays<br />
+<strong>Rental Total</strong>: @((ViewData.Model.NumberOfDays * ViewData.Model.UnitPrice).ToString("C"))<br /><br />
+<strong>Pickup Location</strong>: <br />
+@ViewData.Model.Item.PickupLocation.StreetAddress1<br />
+@if (ViewData.Model.Item.PickupLocation.StreetAddress2 != null){
+    <span>@ViewData.Model.Item.PickupLocation.StreetAddress2</span>
+    <br />
+}
+@ViewData.Model.Item.PickupLocation.City, @ViewData.Model.Item.ItemRegion.Name,<br />
+@ViewData.Model.Item.ItemCountry.Name<br /><br/>
+
+Please log back in to Rambla if you want to rent @ViewData.Model.Item.Name (subject to availability) or any other item.<br /><br />
+
+Regards,<br />
+Rambla Team

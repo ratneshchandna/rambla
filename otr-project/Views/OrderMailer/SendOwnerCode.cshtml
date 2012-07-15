@@ -1,0 +1,28 @@
+Hi @ViewData.Model.Item.Owner.FirstName, <br /><br />
+
+Your item, @ViewData.Model.Item.Name, has been rented by Rambla user, @ViewData.Model.Order.User.FirstName. Here are the order details:<br/><br/>
+
+<strong>Order ID</strong>: @ViewData.Model.OrderDetailId <br/>
+<strong>Item Name</strong>: @ViewData.Model.Item.Name<br/>
+<strong>Item Pickup Date</strong>: @ViewData.Model.PickupDate<br/>
+<strong>Item Return Date</strong>: @ViewData.Model.DrofoffDate<br />
+<strong>Number of Days</strong>: @ViewData.Model.NumberOfDays<br />
+<strong>Rental Total</strong>: @((ViewData.Model.NumberOfDays * ViewData.Model.UnitPrice).ToString("C"))<br /><br />
+
+Your Rambla Code is: <strong>@ViewData.Model.OwnerCode</strong>.<br />
+@{
+    RouteValueDictionary route = new RouteValueDictionary(new
+    {
+        order = ViewData.Model.OrderId,
+        item = ViewData.Model.OrderDetailId
+    });
+
+    string baseURL = Url.Action("processsecuritycode", "PostCheckOut", route, Request.Url.Scheme.ToString(), Request.Url.Host);
+}
+
+Please exchange rental codes with @ViewData.Model.Order.User.FirstName when the item has been picked up.<br />
+
+Click <a href="@baseURL">here</a> to enter the @ViewData.Model.Order.User.FirstName's Rambla Code to confirm that your item has been picked up and to get paid.<br/><br />
+
+Regards,<br />
+Rambla Team
