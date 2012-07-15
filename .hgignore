@@ -4,6 +4,9 @@ syntax: glob
 *.MDF
 *.ldf
 *.cache
-*_Log-*
+*.[Pp]ublish.xml
 Logs/
 obj/
+bin/
+Debug/
+Release/
