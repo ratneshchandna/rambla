@@ -1,0 +1,16 @@
+2012-07-15 00:03:49,053 [11] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-15 00:05:35,982 [19] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-15 00:07:05,793 [19] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-15 00:07:30,525 [19] INFO  otr_project.MvcApplication.Controllers [(null)] - Account - New user registered (lenderone@mailinator.com)
+2012-07-15 00:11:27,698 [22] INFO  otr_project.MvcApplication [(null)] - Executing Register Action - Account
+2012-07-15 00:11:27,701 [22] ERROR otr_project.MvcApplication.Controllers [(null)] - Account - Error registering new user. DuplicateUserName
+2012-07-15 00:11:27,703 [22] ERROR otr_project.MvcApplication.Controllers [(null)] - Account - RegisterModel Error.
+2012-07-15 00:11:33,947 [22] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-15 00:12:31,202 [7] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-15 00:12:32,870 [25] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
+2012-07-15 00:12:40,487 [7] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
+2012-07-15 00:12:40,515 [7] ERROR otr_project.MvcApplication.Controllers [(null)] - Account - Incorrect login attempt (ratneshchandna@gmail.com/Kk1r2s3v4)
+2012-07-15 00:12:50,996 [23] INFO  otr_project.MvcApplication [(null)] - Executing LogOn Action - Account
+2012-07-15 00:12:50,998 [23] ERROR otr_project.MvcApplication.Controllers [(null)] - Account - Incorrect login attempt (lenderone@mailinator.com/asdfasdf)
+2012-07-15 00:17:53,025 [28] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Home
+2012-07-15 00:18:00,713 [31] INFO  otr_project.MvcApplication [(null)] - Executing Index Action - Search
