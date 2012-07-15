@@ -7,7 +7,7 @@ syntax: glob
 *.[Pp]ublish.xml
 Logs/
 obj/
-bin/
+[Bb]in
 Debug/
 Release/
 Uploads/
