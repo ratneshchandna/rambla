@@ -282,6 +282,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\App_LocalResources\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Uploads\Agreements\" />
   </ItemGroup>
   <ItemGroup>
@@ -401,9 +402,6 @@
     <Content Include="Content\rambla.pdf" />
     <Content Include="Content\Rental_Agreement.pdf" />
     <Content Include="Views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\PublishProfiles\Rambla - Staging.pubxml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
