@@ -34,7 +34,7 @@ namespace otr_project.Utils
         private const string CVV2 = "CVV2";
 
         //Flag that determines the PayPal environment (live or sandbox)
-        private const bool bSandbox = false;
+        private const bool bSandbox = true;
 
         private const string SIGNATURE = "SIGNATURE";
         private const string PWD = "PWD";
@@ -45,20 +45,20 @@ namespace otr_project.Utils
         //Replace <API_PASSWORD> with your API Password
         //Replace <API_SIGNATURE> with your Signature
 
-        /* Subu's API credentials
+        // Subu's API credentials (Sandbox)
         public string APIUsername = "seller_1316286746_biz_api1.gmail.com";
         private string APIPassword = "1316286791";
         private string APISignature = "AFWhlTuogu.Dp3IoiJdWzRmrFDQiA9OnAyXrOU7bmrY8cfcKhLIIk7ff";
-        */
         
+        /* // Non Sandbox (Live) Admin API credentials
         public string APIUsername = "admin_api1.rambla.ca";
         private string APIPassword = "7QB7Q2ZU4N5SKQAB";
         private string APISignature = "AFcWxV21C7fd0v3bYYYRCpSSRl31A2U9P67j5sjmGOP3FQiYLbF9NuuZ";
 
-        // Rattu's API credentials
-        // public string APIUsername = "me_1328686156_biz_api1.ascensioncap.ca";
-        // private string APIPassword = "1328686179";
-        // private string APISignature = "A9fPlbDWfaCuadSUUFJydlp7J.c6A6d18Jj78z9e.JMsJzeClL5efcdk";
+        /* // Rattu's API credentials
+        public string APIUsername = "me_1328686156_biz_api1.ascensioncap.ca";
+        private string APIPassword = "1328686179";
+        private string APISignature = "A9fPlbDWfaCuadSUUFJydlp7J.c6A6d18Jj78z9e.JMsJzeClL5efcdk"; */
 
         private string Subject = "";
         private string BNCode = "PP-ECWizard";
