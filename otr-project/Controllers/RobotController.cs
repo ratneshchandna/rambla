@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Mvc.Mailer;
 using otr_project.Mailers;
 using otr_project.Models;
+using log4net;
 
 namespace otr_project.Controllers
 {
@@ -15,7 +16,8 @@ namespace otr_project.Controllers
         // GET: /Robot/
         private MarketPlaceEntities market = new MarketPlaceEntities();
         private INotifyMailer _notifyMailer = new NotifyMailer();
-        
+        private static readonly ILog log = LogManager.GetLogger("otr_project.MvcApplication.Controllers");
+
         public INotifyMailer NotifyMailer
         {
             get { return _notifyMailer; }
@@ -41,6 +43,7 @@ namespace otr_project.Controllers
                 {
                     market.OrderDetails.Remove(order);
                     market.SaveChanges();
+                    log.Info("Order for " + order.ItemName + " removed (ID: " + order.OrderDetailId + ")");
                     continue;
                 }
 
@@ -62,7 +65,9 @@ namespace otr_project.Controllers
                             {
                                 // Send reminder email with links to complete the order
                                 SendNotificationEmail(EmailType.PICKUP_REMINDER, true, order);
+                                log.Info("Pickup reminder sent to owner for ordered item " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 SendNotificationEmail(EmailType.PICKUP_REMINDER, false, order);
+                                log.Info("Pickup reminder sent to borrower for ordered item " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 break;
                             }
                             if ((DateTime.Today.Date - order.PickupDate.Date).Days > 0)
@@ -71,6 +76,7 @@ namespace otr_project.Controllers
                                 order.Status = (int) OrderStatus.ORDER_LATE;
                                 market.Entry(order).State = System.Data.EntityState.Modified;
                                 market.SaveChanges();
+                                log.Info("Order for " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 break;
                             }
                             break;
@@ -85,7 +91,9 @@ namespace otr_project.Controllers
 
                                 // Send email to owner and renter informing them of the news
                                 SendNotificationEmail(EmailType.ORDER_TERMINATED, true, order);
+                                log.Info("Order Terminated Notification sent to owner for ordered item " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 SendNotificationEmail(EmailType.ORDER_TERMINATED, false, order);
+                                log.Info("Order Terminated Notification sent to borrower for ordered item " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 
                                 // Todo: Refund the renter for the full amount
                                 break;
@@ -97,7 +105,9 @@ namespace otr_project.Controllers
                             {
                                 // Todo: Send reminder email with links to Owner to close the order and indicate receipt of items
                                 SendNotificationEmail(EmailType.RETURN_REMINDER, true, order);
+                                log.Info("Return reminder sent to owner for ordered item " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 SendNotificationEmail(EmailType.RETURN_REMINDER, false, order);
+                                log.Info("Return reminder sent to borrower for ordered item " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 break;
                             }
                             if ((DateTime.Today.Date - order.DrofoffDate.Date).Days > 0)
@@ -106,6 +116,7 @@ namespace otr_project.Controllers
                                 order.Status = (int) OrderStatus.ORDER_DELAYED_RETURN;
                                 market.Entry(order).State = System.Data.EntityState.Modified;
                                 market.SaveChanges();
+                                log.Info("Order for " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 break;
                             }
                             break;
@@ -117,10 +128,13 @@ namespace otr_project.Controllers
                                 order.Status = (int) OrderStatus.ORDER_CLOSED_HAPPY;
                                 market.Entry(order).State = System.Data.EntityState.Modified;
                                 market.SaveChanges();
+                                log.Info("Order for " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
 
                                 // Send thank you email to owner and renter informing them that order was successful.
                                 SendNotificationEmail(EmailType.ORDER_CLOSED, true, order);
+                                log.Info("Order closed notification sent to owner for ordered item " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
                                 SendNotificationEmail(EmailType.ORDER_CLOSED, false, order);
+                                log.Info("Order closed notification sent to borrower for ordered item " + order.ItemName + " (ID: " + order.OrderDetailId + "; Status: " + order.Status.ToString() + ")");
 
                                 break;
                             }
