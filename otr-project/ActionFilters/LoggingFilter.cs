@@ -16,18 +16,18 @@ using Elmah;
 public class LoggingFilter : ActionFilterAttribute, IExceptionFilter
 {
     private static readonly ILog log = LogManager.GetLogger(typeof(otr_project.MvcApplication));
-    
+
     public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
         /*
         filterContext.HttpContext.Trace.Write("(Logging Filter)Action Executing: " +
             filterContext.ActionDescriptor.ActionName);
         */
-        log.Info("Executing " + filterContext.ActionDescriptor.ActionName + " Action - " + 
+        log.Info("Executing " + filterContext.ActionDescriptor.ActionName + " Action - " +
             filterContext.ActionDescriptor.ControllerDescriptor.ControllerName);
         base.OnActionExecuting(filterContext);
     }
-    
+
     public override void OnActionExecuted(ActionExecutedContext filterContext)
     {
         if (filterContext.Exception != null)
@@ -41,9 +41,10 @@ public class LoggingFilter : ActionFilterAttribute, IExceptionFilter
 
         base.OnActionExecuted(filterContext);
     }
-    
+
     void IExceptionFilter.OnException(ExceptionContext filterContext)
     {
+        log.Error("Unhandled exception raised", filterContext.Exception);
         //Raise the exception signal so ELMAH can log the fucker. Otherwise ELMAH doesn't log when CustomErrors is turned on.
         ErrorSignal.FromCurrentContext().Raise(filterContext.Exception);
     }
