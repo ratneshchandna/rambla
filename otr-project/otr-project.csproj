@@ -179,6 +179,7 @@
     <Compile Include="Utils\FileUploadFunctions.cs" />
     <Compile Include="Utils\PayPalFunctions.cs" />
     <Compile Include="ViewModels\BasicSearchViewModel.cs" />
+    <Compile Include="ViewModels\LogOnAjaxViewModel.cs" />
     <Compile Include="ViewModels\ErrorMessageViewModel.cs" />
     <Compile Include="ViewModels\SearchItemViewModel.cs" />
     <Compile Include="ViewModels\ProcessSecurityCodeViewModel.cs" />
@@ -402,6 +403,9 @@
     <Content Include="Content\rambla.pdf" />
     <Content Include="Content\Rental_Agreement.pdf" />
     <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

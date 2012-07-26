@@ -29,6 +29,10 @@
         <meta http-equiv="cache-control" content="no-cache, no-store" />
     </head>
     <body>
+    <!-- New login form is on all pages now and is running AJAX -->
+    <div id="logon_partial">
+        @{Html.RenderPartial("_LogOnPartial", new otr_project.Models.LogOnModel());}
+    </div>
     <div id = "wrapper">
         <!------ Page Container - 960, 12 Column ------>
         <!------ Hello Bar ------>
@@ -49,13 +53,13 @@
             {
                 search_box_value = Session["SEARCH_KEYWORD"].ToString();
             }
-        
+
             otr_project.Models.RentalCart cart = otr_project.Models.RentalCart.GetCart(this.Context);
             if (cart.GetCartItems().Count > 0)
             {
                 Session["RentalCartItems"] = cart.GetCartItems().Count;
             }
-        
+
             if (Session["RentalCartItems"] == null)
             {
                 Session["RentalCartItems"] = 0;
