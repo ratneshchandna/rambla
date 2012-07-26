@@ -33,6 +33,9 @@
     <meta http-equiv="cache-control" content="no-cache, no-store" />
 </head>
 <body>
+    <div id="logon_partial">
+        @{Html.RenderPartial("_LogOnPartial", new otr_project.Models.LogOnModel());}
+    </div>
     <div id="wrapper">
         <!------ Page Container - 960, 12 Column ------>
         <!------ Header ------>

@@ -142,6 +142,35 @@ namespace otr_project.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult LogOnAjax(LogOnModel model)
+        {
+            var result = new LogOnAjaxViewModel();
+            if (ModelState.IsValid)
+            {
+                if (MembershipService.ValidateUser(model.Email.ToLower(), model.Password))
+                {
+                    FormsService.SignIn(model.Email.ToLower(), model.RememberMe);
+                    Session["USER_F_NAME"] = market.Users.Find(model.Email.ToLower()).FirstName;
+                    log.Info("Account - User logged in (" + model.Email.ToLower() + ")");
+                    result.Error = false;
+                    return Json(result);
+                }
+                else
+                {
+                    log.Error("Account - Incorrect login attempt (" + model.Email.ToLower() + "/" + model.Password + ")");
+                    ModelState.AddModelError("", "The email address and/or password provided is incorrect.");
+                    result.Error = true;
+                    result.Message = "The email address and/or password provided is incorrect.";
+                    return Json(result);
+                }
+            }
+            log.Error("Account - LogOnModel Error (" + model.Email + "/" + model.Password + "/" + model.RememberMe + ")");
+            result.Error = true;
+            result.Message = "Username and password are required fields.";
+            return Json(result);
+        }
+
         // **************************************
         // URL: /Account/LogOff
         // **************************************
