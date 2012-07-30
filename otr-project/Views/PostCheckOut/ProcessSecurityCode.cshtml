@@ -1,0 +1,130 @@
+﻿@model otr_project.ViewModels.ProcessSecurityCodeViewModel
+
+@{
+    ViewBag.Title = "Rambla | Confirm Item Pickup";
+}
+
+<div class="container_12">
+    <div class="header_to_body_gap"></div>
+    <div class="grid_12">
+        <div>
+            <div id="Process_Security_Code_Title" class="title_container">
+                <h1>
+                    Confirm Item Pickup
+                </h1>
+                <h2 id="Process_Security_Code_Subtitle" class="page_subtitle">
+                    @if (Model.IsOwner)
+                    {
+                        <span>Rambla security code ensures safety and security when renting items you own.</span>
+                    }
+                    else
+                    {
+                        <span>Rambla security code ensures you are protected as a renter.</span>
+                    }
+                </h2>
+            </div>
+        </div>
+        <div id="process_security_code_container" class="container">
+            <div class="header_background">
+                <h2 class="box_header">
+                    Order Details
+                </h2>
+            </div>
+            <table class="item_details_table">
+                <thead>
+                    <tr>
+                        <th>Item Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Pickup Date</th>
+                        <th>Return Date</th>
+                        <th>Price/Day</th>
+                        <th>Security Deposit</th>
+                        <th>Total</th>
+                        <th>Order Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="items_justify_center">
+                            @{
+                                if (Model.OrderDetail.Item.ItemImages.Count > 0)
+                                {
+                                    <img src="@Url.Content("~/Item/GetItemImage/" + Model.OrderDetail.Item.ItemImages.ToList()[0].Id)" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                                }    
+                            }
+                        </td>
+                        <td class="items_justify_center">@Model.OrderDetail.ItemName</td>
+                        <td class="item_desc">
+                            @if (Model.OrderDetail.ItemDesc.Length > 50)
+                            {
+                            <span>@(Model.OrderDetail.ItemDesc.Substring(0, 50) + "...")</span>
+                            }
+                            else
+                            {
+                            <span>@Model.OrderDetail.ItemDesc</span> 
+                            }
+                        </td>
+                        <td class="items_justify_center">@Model.OrderDetail.PickupDate.ToLongDateString()</td>
+                        <td class="items_justify_center">@Model.OrderDetail.DrofoffDate.ToLongDateString()</td>
+                        <td class="items_justify_right">@Model.OrderDetail.UnitPrice.ToString("C")</td>
+                        <td class="items_justify_right">@Model.OrderDetail.SecurityDeposit.ToString("C")</td>
+                        <td class="items_justify_right">
+                            @(((Model.OrderDetail.UnitPrice * Model.OrderDetail.NumberOfDays) + Model.OrderDetail.SecurityDeposit).ToString("C"))
+                        </td>
+                        <td class="items_justify_center">Tentative</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <div class="security_code_container">
+                @if (!Model.IsOwner)
+                {
+                    <h3>Please enter the owner's security code to confirm this order after pickup:</h3>
+                }
+                else
+                {
+                    <h3>Please enter the renter's security code to confirm this order after pickup:</h3>
+                }
+            </div>
+            <div id="process_security_code_subcontainer" class="subcontainer">
+                <table>
+                    <tr>
+                        <td>
+                            <div id="Security_Code_Box" class="form-background">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.ValidationSummary(true, "Oops. Looks like you entered the wrong information.")
+                                    <!--
+                                    <div class="editor-label">
+                                        @Html.LabelFor(model => model.OrderDetail.OrderDetailId)
+                                    </div>
+                                    <div class="form_field">
+                                        @Model.OrderDetail.OrderDetailId
+                                    </div>
+
+                                    <div class="editor-label">
+                                        @Html.LabelFor(model => model.SecurityCode)
+                                    </div>
+                                    -->
+                                    <div class="form_field">
+                                        @Html.TextBoxFor(model => model.SecurityCode, new { placeholder="Security Code" })
+                                        @Html.ValidationMessageFor(model => model.SecurityCode)
+                                    </div>
+                                    <div class="btn_listit_page">
+                                        <input type="submit" value="Confirm Order" />
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>

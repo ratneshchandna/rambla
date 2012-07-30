@@ -1,0 +1,26 @@
+﻿@model otr_project.ViewModels.ProcessSecurityCodeViewModel
+
+@{
+    ViewBag.Title = "Rambla | Rental Confirmed";
+}
+
+<div class="container_12">
+    <div class="header_to_body_gap"></div>
+    <div class="grid_12">
+        <div>
+            <div id="Rental_Confirmed_Title" class="title_container">
+                <h1>
+                    Rental Confirmed
+                </h1>
+                <h2 id="Rental_Confirmed_Subtitle" class="page_subtitle">
+                    Your rental order is already confirmed.
+                </h2>
+            </div>
+        </div>
+        <div id="rental_already_complete_container" class="container">
+            <div id="rental_already_complete_subcontainer" class="subcontainer">
+                Your rental order for item "@Model.OrderDetail.Item.Name" with a pickup date of @Model.OrderDetail.PickupDate.Date.ToLongDateString(), has already been confirmed. 
+            </div>
+        </div>
+    </div>
+</div>

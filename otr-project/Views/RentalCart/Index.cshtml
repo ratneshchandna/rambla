@@ -1,0 +1,262 @@
+﻿@model otr_project.ViewModels.RentalCartViewModel
+@{
+    ViewBag.Title = "Rambla | Rental Cart";
+}
+
+<script type="text/javascript">
+    var bOutDates;
+
+    function isSelectableDate(date) {
+        for (i = 0; i < bOutDates.length; i++) {
+            var strDate = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+            if (strDate == bOutDates[i])
+                return [false];
+        }
+
+        return [true];
+    }
+
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+
+            if (recordToDelete != '') {
+
+                // Perform the ajax post
+                $.post('@Url.Content("~/RentalCart/RemoveFromCart")', { "id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.CartTotal == 0) {
+                            $('#rental_cart_sub_container').fadeOut('slow');
+                            $('#update-message').text("Uh oh, looks like you have an empty cart. Go ahead, try renting on Rambla.");
+                        }
+                        else {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                            $('#cart-total').text(data.CartTotal);
+                            $('#update-message').text(data.Message);
+                            //$('#cart-status').text('Cart (' + data.CartCount + ')');
+                        }
+                        $('#cart_num').text("Cart (" + data.CartCount + ")");
+                    });
+            }
+        });
+
+    });
+
+    $(function () {
+        $(".datepicker").each(function (index) {
+            $.post('@Url.Content("~/Item/GetBlockedDates/")' + $(this).attr("item-id"), function (data) {
+                //call back happens here.
+                bOutDates = data;
+            });
+            var tagID = this.id.toString();
+            var rowId = $(this).attr("data-id");
+            if (tagID.indexOf("pickupdate") != -1) {
+                var dropoff = new Date($("#dropoffdate-" + rowId).val());
+                $(this).datepicker({
+                    minDate: 1,
+                    maxDate: new Date(dropoff.setDate(dropoff.getDate() - 1)),
+                    dateFormat: "dd-MM-y",
+                    beforeShowDay: isSelectableDate
+                });
+            }
+            else {
+                var pickup = new Date($("#pickupdate-" + rowId).val());
+                $(this).datepicker({
+                    minDate: new Date(pickup.setDate(pickup.getDate() + 1)),
+                    dateFormat: "dd-MM-y",
+                    beforeShowDay: isSelectableDate
+                });
+            }
+        });
+    });
+
+
+    $(function () {
+        $(".datepicker").change(function () {
+            var recordToUpdate = $(this).attr("data-id");
+
+            if (recordToUpdate != '' && $(this).attr("id") == "dropoffdate-" + recordToUpdate) {
+                // Perform the ajax post
+                $.post('@Url.Content("~/RentalCart/EditCartItem")', {
+                    "id": recordToUpdate,
+                    "pickupdate": $(this).parent().parent().prev().children(".cart_date_field").children("#pickupdate-" + recordToUpdate).attr("value"),
+                    "dropoffdate": $(this).attr("value")
+                },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.Error == true) {
+                            $('#update-message').text(data.Message);
+                        }
+                        else {
+                            $('#item-total-' + data.UpdatedId).text("$" + data.UpdatedItemTotal.toFixed(2));
+                            $('#item-count-' + data.UpdatedId).text(data.NumberOfDays);
+                            $('#cart-total').text("$" + data.CartTotal.toFixed(2));
+                            $('#update-message').text(data.Message);
+                        }
+                    });
+            }
+            else if (recordToUpdate != '' && $(this).attr("id") == "pickupdate-" + recordToUpdate) {
+                // Perform the ajax post
+                $.post('@Url.Content("~/RentalCart/EditCartItem")', {
+                    "id": recordToUpdate,
+                    "pickupdate": $(this).attr("value"),
+                    "dropoffdate": $(this).parent().parent().next().children(".cart_date_field").children("#dropoffdate-" + recordToUpdate).attr("value")
+                },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.Error == true) {
+                            $('#update-message').text(data.Message);
+                        }
+                        else {
+                            $('#item-total-' + data.UpdatedId).text("$" + data.UpdatedItemTotal.toFixed(2));
+                            $('#item-count-' + data.UpdatedId).text(data.NumberOfDays);
+                            $('#cart-total').text("$" + data.CartTotal.toFixed(2));
+                            $('#update-message').text(data.Message);
+                        }
+                    });
+            }
+        });
+    });
+       
+</script>
+
+<div class="container_12">
+    <div class="header_to_body_gap"></div>
+    <div class="grid_12">
+        <div>
+            <div id="Rental_Cart_Title" class="title_container">
+                <h1>
+                    Your Rental Cart
+                </h1>
+                <h2 id="Rental_Cart_Subtitle" class="page_subtitle">
+                    Review your items and checkout securely using PayPal.
+                </h2>
+            </div>
+        </div>
+        <div id="rental_cart_container" class="container">
+            <div id="update-message"></div>
+            <div id="rental_cart_sub_container">
+                @if (Model.CartItems.Count() <= 0)
+                {
+                    <span>Uh oh, looks like you have an empty cart. Go ahead, try renting on Rambla.</span>
+                }
+                else
+                {
+                <table id="Cart_Summary">
+                    <tbody>
+                        <tr>
+                            <td id="Order-Summary">
+                                <div>
+                                
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="rental-cart" class="main-rental-cart">
+                    <thead>
+                        <tr>
+                            <th>
+                                Item Details
+                            </th>
+                            <th>
+                                Pickup Date
+                            </th>
+                            <th>
+                                Return Date
+                            </th>
+                            <th>
+                                Price/Day
+                            </th>
+                            <th>
+                                Days
+                            </th>
+                            <th>
+                                Security Deposit
+                            </th>
+                            <th>
+                                Item Total
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (otr_project.Models.CartItemModel item in Model.CartItems)
+                        {
+                        <tr id="row-@item.id" class="cart_table_row">
+                            <td class="items_justify_center">
+                                <div id="Cart_Item_Name">
+                                    <table class="item-details">
+                                        <tr>
+                                            <td id="delete_row" class="cart_valign_center">
+                                                <a href="#" id="RemoveLink" class="RemoveLink" data-id="@item.id">
+                                                    <span class="ui-state-default ui-corner-all">
+                                                        <span class="ui-icon ui-icon-trash"></span>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                            <td class="cart_valign_center">
+                                                @Html.ActionLink(item.Item.Name, "Details", "Item", new { id = item.Item.Id }, null)                                            
+                                                @if (item.Item.ItemImages.Count > 0)
+                                                {
+                                                    <img src="@Url.Content("~/Item/GetItemImage/" + item.Item.ItemImages.ToList()[0].Id)" />
+                                                }
+                                            </td>
+                                        </tr>
+                                
+                                    </table>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="cart_date_field">
+                                    <input id="pickupdate-@item.id" name="pickupdate-@item.id" class="datepicker" type="text" value="@item.PickupDate.Date.ToString("dd-MMMM-yy")" data-id="@item.id" item-id="@item.Item.Id" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="cart_date_field">
+                                    <input id="dropoffdate-@item.id" name="dropoffdate-@item.id" class="datepicker" type="text" value="@item.DropoffDate.Date.ToString("dd-MMMM-yy")" data-id="@item.id" item-id="@item.Item.Id" />
+                                </div>
+                            </td>
+                            <td class="items_justify_right">
+                                @item.Item.CostPerDay.ToString("C")
+                            </td>
+                            <td id="item-count-@item.id" class="items_justify_center">
+                                @((item.DropoffDate - item.PickupDate).Days)
+                            </td>
+                            <td class="items_justify_right">
+                                @item.Item.SecurityDeposit.ToString("C")
+                            </td>
+                            <td id="item-total-@item.id" class="items_justify_right">
+                                @item.itemTotal.ToString("C")
+                            </td>
+                        </tr>
+                        }
+                        <tr class="cart_table_total_row">
+                            <td colspan="6" class="items_justify_right">
+                                <strong>Cart Total</strong>
+                            </td>
+                            <td id="cart-total" class="items_justify_right">
+                                @Model.CartTotal.ToString("C")
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <table><tr><td class="items_justify_right">
+                    <div class="paypal_checkout_button">
+                        <form action='@Url.Content("~/CheckOut/PayPalCheckOut")' METHOD='POST'>
+                            <input type='image' name='submit' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif' alt='Check out with PayPal'/>
+                        </form>
+                    </div>
+                </td></tr></table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
