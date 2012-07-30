@@ -111,6 +111,74 @@ namespace otr_project.Controllers
             return View();
         }
 
+        public ActionResult LogOnAjaxFacebook()
+        {
+            var result = new LogOnAjaxViewModel();
+            if (FacebookWebContext.Current.IsAuthenticated() && FacebookWebContext.Current.IsAuthorized())
+            {
+                FacebookClient fbClient = new FacebookClient(FacebookWebContext.Current.AccessToken);
+                dynamic me = fbClient.Get("me");
+                string facebookId = (string)me.id;
+
+                var fbUser = market.FacebookUsers.SingleOrDefault(f => f.Id == facebookId);
+
+                if (fbUser == null)
+                {
+                    var location = me.location;
+                    if (location == null)
+                    {
+                        location = me.hometown;
+                        if (location == null)
+                        {
+                            result.Error = true;
+                            result.Message = "Facebook authentication failed.";
+                            return Json(result);
+                        }
+                    }
+                    string[] address = ((string)location.name).Split(',');
+                    string city = address[0].Trim();
+                    string prov = address[1].Trim();
+
+                    //User doesnt exist. Let us create one
+                    //Creating a regular user profile
+                    market.Users.Add(new UserModel
+                    {
+                        Email = (string)me.email,
+                        FirstName = (string)me.first_name,
+                        LastName = (string)me.last_name,
+                        City = city,
+                        RegionId = market.Regions.SingleOrDefault(r => r.Name.Contains(prov)).Id,
+                        CountryId = 1,
+                        isFacebookUser = true,
+                        FacebookUserId = facebookId
+                    });
+
+                    //market.SaveChanges();
+
+                    //Now creating the facebook user profile. We can wire this to the regular user by using a foreign key
+                    market.FacebookUsers.Add(new FacebookUser
+                    {
+                        Id = facebookId,
+                        UserModelEmail = (string)me.email,
+                        AccessToken = FacebookWebContext.Current.AccessToken,
+                        Expires = FacebookWebContext.Current.Session.Expires
+                    });
+                    log.Info("Account - Creating new Facebook user (" + (string)me.first_name + " " + (string)me.last_name + ")");
+                    market.SaveChanges();
+                }
+
+                //User is either created or he/she exists. Let us sign them in using email as the username.
+                FormsAuthentication.SetAuthCookie((string)me.email, false);
+                Session["USER_F_NAME"] = (string)me.first_name;
+                log.Info("Account - User logged in (" + (string)me.email + ")");
+                result.Error = false;
+                return Json(result);
+            }
+            result.Error = true;
+            result.Message = "Facebook authentication failed.";
+            return Json(result);
+        }
+
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
