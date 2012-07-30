@@ -33,9 +33,17 @@
     <meta http-equiv="cache-control" content="no-cache, no-store" />
 </head>
 <body>
-    <div id="logon_partial">
-        @{Html.RenderPartial("_LogOnPartial", new otr_project.Models.LogOnModel());}
-    </div>
+    @{ 
+        if (Request.IsAuthenticated != true)
+        {
+            <div id="logon_partial">
+                <div id="login_facebook_shared">
+                    <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Login with Facebook</fb:login-button>
+                </div>
+                @{Html.RenderPartial("_LogOnPartial", new otr_project.Models.LogOnModel());}
+            </div>
+        }
+    }
     <div id="wrapper">
         <!------ Page Container - 960, 12 Column ------>
         <!------ Header ------>

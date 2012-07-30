@@ -30,9 +30,17 @@
     </head>
     <body>
     <!-- New login form is on all pages now and is running AJAX -->
-    <div id="logon_partial">
-        @{Html.RenderPartial("_LogOnPartial", new otr_project.Models.LogOnModel());}
-    </div>
+    @{ 
+        if (Request.IsAuthenticated != true)
+        {
+            <div id="logon_partial">
+                <div id="login_facebook_shared">
+                    <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Login with Facebook</fb:login-button>
+                </div>
+                @{Html.RenderPartial("_LogOnPartial", new otr_project.Models.LogOnModel());}
+            </div>
+        }
+    }
     <div id = "wrapper">
         <!------ Page Container - 960, 12 Column ------>
         <!------ Hello Bar ------>
@@ -171,8 +179,6 @@
             </div>
         </div>
     </div>
-    <!------ Facebook Script ------>
-    @{Html.RenderPartial("FacebookInit");}
     <!------ Pinterest Script ------>
     <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
     <!------ GooglePlus Script ------>
@@ -192,5 +198,7 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
         })();
     </script>
+    <!------ Facebook Script ------>
+    @{Html.RenderPartial("FacebookInit");}
 </body>
 </html>
