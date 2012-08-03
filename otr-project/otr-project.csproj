@@ -190,6 +190,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\designfrmk\bootstrap.css" />
+    <Content Include="Content\designfrmk\bootstrap.js" />
+    <Content Include="Content\designfrmk\bootstrap.min.css" />
+    <Content Include="Content\designfrmk\bootstrap.min.js" />
+    <Content Include="Content\designfrmk\glyphicons-halflings-white.png" />
+    <Content Include="Content\designfrmk\glyphicons-halflings.png" />
     <Content Include="Content\images\1.JPG" />
     <Content Include="Content\images\comodo_secure.gif" />
     <Content Include="Content\images\default_item_image.jpg" />
