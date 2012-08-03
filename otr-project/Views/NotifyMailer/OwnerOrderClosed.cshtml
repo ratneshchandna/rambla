@@ -1,0 +1,23 @@
+Hi @ViewData.Model.Item.Owner.FirstName, <br /><br />
+
+Congratulations, your rental transaction with Rambla user, @ViewData.Model.Order.User.FirstName, is now complete. Here are the order details:<br/><br/>
+
+<strong>Order ID</strong>: @ViewData.Model.OrderDetailId <br/>
+<strong>Item Name</strong>: @ViewData.Model.Item.Name<br/>
+<strong>Item Pickup Date</strong>: @ViewData.Model.PickupDate<br/>
+<strong>Item Return Date</strong>: @ViewData.Model.DrofoffDate<br />
+<strong>Number of Days</strong>: @ViewData.Model.NumberOfDays<br />
+<strong>Rental Total</strong>: @((ViewData.Model.NumberOfDays * ViewData.Model.UnitPrice).ToString("C"))<br /><br />
+<strong>Pickup Location</strong>: <br />
+@ViewData.Model.Item.PickupLocation.StreetAddress1<br />
+@if (ViewData.Model.Item.PickupLocation.StreetAddress2 != null){
+    <span>@ViewData.Model.Item.PickupLocation.StreetAddress2</span>
+    <br />
+}
+@ViewData.Model.Item.PickupLocation.City, @ViewData.Model.Item.ItemRegion.Name,<br />
+@ViewData.Model.Item.ItemCountry.Name<br /><br/>
+
+We hope to see you soon back on Rambla!<br />
+
+Regards,<br />
+Rambla Team
