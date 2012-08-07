@@ -200,6 +200,7 @@
     <Content Include="Content\images\comodo_secure.gif" />
     <Content Include="Content\images\default_item_image.jpg" />
     <Content Include="Content\images\empty_profile_picture.png" />
+    <Content Include="Content\images\Logo.png" />
     <Content Include="Content\images\search_icon.png" />
     <Content Include="Content\images\img1.png" />
     <Content Include="Content\images\img2.png" />
@@ -207,6 +208,7 @@
     <Content Include="Content\grid.css" />
     <Content Include="Content\mdp.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Pages\header.css" />
     <Content Include="Content\pbar-ani.gif" />
     <Content Include="Content\print.css" />
     <Content Include="Content\reset.css" />
