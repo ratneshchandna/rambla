@@ -1,0 +1,22 @@
+﻿@model otr_project.Models.MessageModel
+
+<div>
+    <div class="display-field">
+    @foreach (var item in Model.Messages)
+    {
+        <p><strong>[@item.Author.FirstName @item.Author.LastName]</strong> @item.Message</p><hr />
+    }
+    </div>
+
+    @using (Html.BeginForm("SubmitReply", "User", FormMethod.Post))
+    {
+        <div class="form_field">
+            <textarea id="Reply" name="Reply" placeholder="Reply Contents"></textarea>
+        </div>
+        <input type="hidden" id="Id" name="Id" value="@Model.Id" /><br />
+        
+        <div class="btn_listit_page">
+            <input type="submit" value="Reply" />
+        </div>
+    }
+</div>

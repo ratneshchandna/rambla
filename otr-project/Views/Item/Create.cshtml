@@ -1,0 +1,51 @@
+﻿@model otr_project.Models.ItemModel
+
+@{
+    ViewBag.Title = "Rambla | Add Item";
+    var categoryList = Session["CategoryId"] as SelectList;
+    var agreementList = Session["AgreementId"] as SelectList;
+    var regionList = Session["RegionId"] as SelectList;
+}
+
+@using (Html.BeginForm("Create", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="span12">
+            List Your Item
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            Form
+            <div class="row">
+                <div class="span2">
+                    Label 1
+                </div>
+                <div class="span7">
+                    Input 1
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            Q & A
+        </div>
+    </div>
+}
+
+<script src="@Url.Content("~/Scripts/dropdown-colour.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#multiple_datepicker").multiDatesPicker({
+            altField: '#datepicker'
+        });
+        /*
+        $("#datepicker").datepicker({
+        minDate: 0,
+        dateFormat: "d MM, yy"
+        });
+        */
+        CategoryColour();
+        //AgreementColour();
+        RegionColour();
+    });
+</script>

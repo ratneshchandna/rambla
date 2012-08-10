@@ -1,0 +1,288 @@
+﻿@model PagedList<otr_project.ViewModels.SearchItemViewModel>
+@using Webdiyer.WebControls.Mvc;
+
+@{
+    ViewBag.Title = "Rambla | Search";
+}
+
+@{
+    int price_filter = 500;
+    int security_deposit_filter = 500;
+    string requireImages = Session["SEARCH_REQUIRE_IMAGES"].ToString();
+    string pickup = "";
+    string dropoff = "";
+    
+    if (Session["SEARCH_PRICE"] != null)
+    {
+        if (Session["SEARCH_PRICE"].ToString() != "")
+        {
+            price_filter = Int32.Parse(Session["SEARCH_PRICE"].ToString());
+        }
+    }
+    if (Session["SEARCH_SECURITY_DEPOSIT"] != null)
+    {
+        if (Session["SEARCH_SECURITY_DEPOSIT"].ToString() != "")
+        {
+            security_deposit_filter = Int32.Parse(Session["SEARCH_SECURITY_DEPOSIT"].ToString());
+        }
+    }
+    if (Session["SEARCH_PICKUP"] != null)
+    {
+        if (Session["SEARCH_PICKUP"].ToString() != "")
+        {
+            pickup = Session["SEARCH_PICKUP"].ToString();
+        }
+    }
+    if (Session["SEARCH_DROPOFF"] != null)
+    {
+        if (Session["SEARCH_DROPOFF"].ToString() != "")
+        {
+            dropoff = Session["SEARCH_DROPOFF"].ToString();
+        }
+    }
+}
+
+@using (Ajax.BeginForm("Basic", null, null, new { id = "basic-search" }))
+{
+<div class="container_12">
+    <div class="header_to_body_gap"></div>
+    <div id="search_custom_container" class="grid_12">
+        <div class="grid_3">
+            <div id="configureSearch">
+                <!--div class="editor-label">Location</div>
+        
+                <div class="form_field"> Doesn't Work!
+                    <input id="location"  name="location" type="text" />
+                </div-->
+                <input id="price" name="price" type="text" />
+                <div id="Search_MaxPrice_Label" class="editor-label">
+                    Maximum Price
+                </div>
+                <div id="price-slider" class="slider"></div>
+        
+                <input id="securitydeposit" name="securitydeposit" type="text" />
+                <div id="Search_MaxSecurityDeposit_Label" class="editor-label">
+                    Maximum Security Deposit
+                </div>
+                <div id="securitydeposit-slider" class="slider"></div>
+
+                <table id="PickupDropoffDates">
+                    <tr>
+                        <td>
+                            <div id="Search_PickupDate_Label" class="editor-label">
+                                Available for pickup on:
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="Search_Pickup_Input" class="form_field">
+                                <input id="pickup"  name="pickup" class="datepicker" type="text" value="@((!String.IsNullOrEmpty(pickup)) ? DateTime.Parse(pickup).ToLongDateString() : "")"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="Search_DropoffDate_Label" class="editor-label">
+                                & free until:
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="Search_Dropoff_Input" class="form_field">
+                                <input id="dropoff" name="dropoff" class="datepicker" type="text" value="@((!String.IsNullOrEmpty(dropoff)) ? DateTime.Parse(dropoff).ToLongDateString() : "")"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="checkboxes">
+                    <tr>
+                        <td class="cell_with_checkbox">
+                            <input type="checkbox" id="requireImages" name="requireImages"/>
+                        </td>
+                        <td class="cell_with_checkbox_description">
+                            <span id="requireImagesDesc">Only show items with images</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <div id="UpdateButton">
+                    <button id="refresh">Update</button>
+                </div>
+            </div>
+        </div>
+        <div class="grid_9">
+            <div id="Search_Filter_Bar">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
+                                Category
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form_dropdown">
+                                @Html.DropDownList("CategoryId", "All Categories")
+                            </div>
+                        </td>
+                        <td>
+                            <div class="editor-label">
+                                Sort by
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form_dropdown">
+                                @Html.DropDownList("SortType")
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="searchResults">
+                @{Html.RenderPartial("_PaginatedSearchResults", Model);}
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<script type="text/javascript">
+    var changeURL = true;
+    var stateObj = { page: "1" };
+
+    function doAjax() {
+        $.blockUI({
+            message: "<strong>" + "<img src=" + '@Url.Content("~/Content/themes/classic/classic-loader.gif")' + " \/>" + "  Loading...</strong>",
+            css: { 
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            }
+        });
+
+        // to fix checkbox issue - need to serialize when unchecked as well
+        var serialized = $('#basic-search').serialize();
+        if(serialized.indexOf("requireImages") == -1)
+        {
+            serialized = serialized + "&requireImages=off";
+        }
+        $.post('@Url.Content("~/Search/Index")', serialized, function (data) {
+            //call back happens here.  Unblock form/show result
+            //var serialized = $('#basic-search').serialize();
+            $('#searchResults').html(data);
+            /*$(".gallery").each(function () {
+                $(this).galleria({
+                    width: 200,
+                    height: 200,
+                    thumbnails: false
+                });
+            })*/
+            if (changeURL == true) {
+                history.pushState(stateObj, "Page 1", "@(Url.Content("~/"))Search/Index/1");
+                changeURL = false;
+            }
+            $.unblockUI();
+        });
+    }
+
+    $(function () {
+        /*Galleria.loadTheme('@Url.Content("~/Content/themes/classic/galleria.classic.min.js")');
+
+        $(".gallery").each(function () {
+            $(this).galleria({
+                width: 200,
+                height: 200,
+                thumbnails: false
+            });
+        });*/
+
+        //$("button").button();
+        $("button").click(function (event) {
+            event.preventDefault();
+            doAjax();
+        });
+
+        $("#CategoryId, #SortType").change(function () {
+            doAjax();
+        });
+
+        var requireImages = "@(requireImages)";
+        var prev_state;
+        if (requireImages == "on")
+        {
+            $("#requireImages").attr('checked', 'true');
+            prev_state = "on";
+        }
+        else
+        {
+            $("#requireImages").removeAttr('checked');
+            prev_state = "off";
+        }
+        $("#requireImages").change(function() {
+            if (prev_state == "on")
+            {
+                $("#requireImages").val("off");
+                prev_state = "off";
+            }
+            else
+            {
+                $("#requireImages").val("on");
+                prev_state = "on";
+            }
+            doAjax();
+        });
+
+        var dates = $(".datepicker").datepicker({
+            minDate: 0,
+            dateFormat: "d MM, yy",
+            onSelect: function (selectedDate) {
+                var option = this.id == "pickup" ? "minDate" : "maxDate",
+					instance = $(this).data("datepicker"),
+					date = $.datepicker.parseDate(
+						instance.settings.dateFormat ||
+						$.datepicker._defaults.dateFormat,
+						selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        });
+
+        var max_price = @(price_filter);
+        var max_secutiry_deposit = @(security_deposit_filter);
+        $("#price-slider").slider({
+            range: "min",
+            min: 0,
+            max: 500,
+            value: max_price,
+            step: 1,
+            slide: function (event, ui) {
+                $(this).prev().prev().val("$" + ui.value);
+            },
+            stop: function (event, ui) {
+                doAjax();
+            }
+        });
+        $("#securitydeposit-slider").slider({
+            range: "min",
+            min: 0,
+            max: 500,
+            value: max_secutiry_deposit,
+            step: 1,
+            slide: function (event, ui) {
+                $(this).prev().prev().val("$" + ui.value);
+            },
+            stop: function (event, ui) {
+                doAjax();
+            }
+        });
+        $("#price").val("$" + $("#price-slider").slider("value"));
+        $("#securitydeposit").val("$" + $("#securitydeposit-slider").slider("value"));
+
+        //$("div#pagination > a").attr("onclick", "Sys.Mvc.AsyncHyperlink.handleClick(this, new Sys.UI.DomEvent(event), { insertionMode: Sys.Mvc.InsertionMode.replace,updateTargetId: 'dvOrders' });");
+    });
+</script>

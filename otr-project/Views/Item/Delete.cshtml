@@ -1,0 +1,71 @@
+﻿@model otr_project.Models.ItemModel
+
+@{
+    ViewBag.Title = "Rambla | Delete " + @Model.Name;
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>ItemModel</legend>
+
+    <h2>@Model.Name</h2>
+    <p>
+        @Html.LabelFor(m => m.Name):
+        @Model.Category.Name
+    </p>
+    <p>
+        @Html.LabelFor(m => m.Desc):
+        @Model.Desc
+    </p>
+    <p>
+        @Html.LabelFor(m => m.CostPerDay):
+        $@String.Format("{0:F}", Model.CostPerDay)
+        /day
+    </p>
+    <p>
+        @Html.LabelFor(m => m.Owner):
+        @Model.Owner.Email
+    </p>
+    
+    <div class="display-label">Item Images:</div>
+    <div class="display-field">
+    @{
+            IEnumerable<string> files;
+
+            if (Model.ImageCount > 0)
+            {
+                files = Directory.EnumerateFiles(Path.Combine(HttpContext.Current.Server.MapPath("~/Uploads"), Model.Id));
+                int count = 0;
+                foreach (string s in files)
+                {
+                    string dir = Model.Id;
+                    string src = "~/Uploads/" + dir + "/" + Path.GetFileName(s);
+                    count++;
+                        <td id="@("image-" + count)" align="center">    
+                            <img src="@Url.Content(src)" id="Item Image" alt="Item Image" class="display_image" />
+                                <input id="FileName" type="hidden" value="@Path.GetFileName(s)" />
+                                <input id="ItemID" type="hidden" value="@Model.Id" /><br />
+                                <a href="#" id="DeleteImageLink" class="DeleteImageLink" data-id="@("image-" + count)">Delete Image</a>
+                        </td>
+                }
+            }
+            else
+            {
+                <td>Item has no images.</td>
+            }
+     }
+    </div>
+
+    <div class="display-label">DateCreated</div>
+    <div class="display-field">@String.Format("{0:g}", Model.DateCreated)</div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to My Items", "Items","User")
+    </p>
+}
+
+
