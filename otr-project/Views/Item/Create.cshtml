@@ -7,217 +7,27 @@
     var regionList = Session["RegionId"] as SelectList;
 }
 
-<!--
-<h2>AddItem</h2>
-<p>
-    Use the form below to list an item with OTR. 
-</p>
--->
-
 @using (Html.BeginForm("Create", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="container_12">
-        <div class="header_to_body_gap"></div>
-        <div class="grid_12">
-            <div id="List_It_Title" class="title_container">
-                <h1>
-                    List your item
-                </h1>
-                <h2 id="List_It_Subtitle" class="page_subtitle">
-                    Rambla allows you to make money from your item without having to sell it!
-                </h2>
-            </div>
-            <div id="list-it-container" class="container">
-                @Html.ValidationSummary(true)
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="header_background">
-                                    <h2 class="box_header">
-                                        Item Details
-                                    </h2>
-                                </div>
-                            </td>
-                            <td class="right_col">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div id="Item_Details_Box" class="form_background">
-                                    <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.Name)
-                                    </div-->
-                                    <div class="form_field">
-                                        @Html.TextBoxFor(m => m.Name, new { placeholder = "Item" })
-                                        @Html.ValidationMessageFor(m => m.Name)
-                                    </div>
-
-                                    <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.CategoryId)
-                                    </div-->
-                                    <div class="form_dropdown">
-                                        @Html.DropDownList("CategoryId", categoryList, "Category", new { onchange = "CategoryColour()" })
-                                        @Html.ValidationMessageFor(m => m.CategoryId)
-                                    </div>
-
-                                    <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.Desc)
-                                    </div-->
-                                    <div class="form_field">
-                                        @Html.TextAreaFor(m => m.Desc, new { placeholder = "Description" })
-                                        @Html.ValidationMessageFor(m => m.Desc)
-                                    </div>
-                                </div>
-
-                                <!--div class="editor-label">
-                                    @Html.LabelFor(m => m.AgreementId)
-                                </div-->
-                                <!--div class="form_field">
-                                    @Html.DropDownList("AgreementId", agreementList, "Agreement", new { onchange = "AgreementColour()" })
-                                    @Html.ValidationMessageFor(m => m.AgreementId)
-                                </div-->
-                            </td>
-                            <td class="right_col">
-                                <div class="form_background">
-                                    <div id="Price_Box">
-                                        <!--div class="editor-label">
-                                            @Html.LabelFor(m => m.CostPerDay)
-                                        </div-->
-                                        <div class="form_field">
-                                            @Html.TextBoxFor(m => m.CostPerDay, new { placeholder = "Price/day (CAD) e.g. 20" })
-                                            @Html.ValidationMessageFor(m => m.CostPerDay)
-                                        </div>
-                                    </div>
-                                    <div id="Security_Deposit_Box">
-                                        <!--div class="editor-label">
-                                            @Html.LabelFor(m => m.SecurityDeposit)
-                                        </div-->
-                                        <div class="form_field">
-                                            @Html.TextBoxFor(m => m.SecurityDeposit, new { placeholder = "Security Deposit (CAD) e.g. 400" })
-                                            @Html.ValidationMessageFor(m => m.SecurityDeposit)
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div id="upload_item_picture">
-                    <h3>
-                        Upload a picture of your item
-                    </h3>
-                    <h3  class="de-emphasise">
-                        (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
-                    </h3>
-                    <input type="file" name="file" id="upload_item_picture_input"/>
+    <div class="row">
+        <div class="span12">
+            List Your Item
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            Form
+            <div class="row">
+                <div class="span2">
+                    Label 1
                 </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="header_background">
-                                    <abbr class="WhatsThis" title="This is the location you want the renter to arrive to pick up your item. This information will be accessible by the public as it will be published as part of your listing. ">What's This?</abbr>
-                                    <h2 class="box_header">
-                                        Pickup Location
-                                    </h2>
-                                </div>
-                            </td>
-                            <td class="right_col">
-                                <div id="Black_Out_Dates_Header" class="header_background">
-                                    <abbr class="WhatsThis" title="These are dates when you don't want anyone to rent your item out, in case you're using the item on that date.">What's This?</abbr>
-                                    <!---
-                                    <a id="Whats_Blackout_Dates" class="WhatsThis" href="#">
-                                        What's This?
-                                    </a>
-                                    -->
-                                    <h2 class="box_header">
-                                        Blackout Dates
-                                    </h2>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div id="Pickup_Location_Box" class="form_background">
-                                    <!--
-                                        <div id="pickup_location_guide" class="guide_container_hidden">
-                                            This is the location you want the renter to arrive to pick up your item. This information will be accessible by the public as it will be published as part of your listing. 
-                                        </div>
-                                    -->
-                                    <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.PickupLocation.StreetAddress1)
-                                    </div-->
-                                    <div class="form_field">
-                                        <!--input type="text" name="PLStreetAddress1" id="PLStreetAddress1" placeholder="Address 1"/-->
-                                        @Html.TextBoxFor(m => m.PickupLocation.StreetAddress1, new { placeholder = "Address 1" })
-                                        @Html.ValidationMessageFor(m => m.PickupLocation.StreetAddress1)
-                                    </div>
-            
-                                    <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.PickupLocation.StreetAddress2)
-                                    </div-->
-                                    <div class="form_field">
-                                        <!--input type="text" name="PLStreetAddress2" id="PLStreetAddress2" placeholder="Address 2"/-->
-                                        @Html.TextBoxFor(m => m.PickupLocation.StreetAddress2, new { placeholder = "Address 2" })
-                                        @Html.ValidationMessageFor(m => m.PickupLocation.StreetAddress2)
-                                    </div>
-
-                                    <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.PickupLocation.City)
-                                    </div-->
-                                    <div class="form_field">
-                                        <!--input type="text" name="PLCity" id="PLCity" placeholder="City"/-->
-                                        @Html.TextBoxFor(m => m.PickupLocation.City, new { placeholder = "City" })
-                                        @Html.ValidationMessageFor(m => m.PickupLocation.City)
-                                    </div>
-
-                                    <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.ItemRegion.Name)
-                                    </div-->
-                                    <div class="form_dropdown">
-                                        @Html.DropDownList("RegionId", regionList, "Province", new { onchange = "RegionColour()" })
-                                        @Html.ValidationMessageFor(m => m.RegionId)
-                                    </div>
-			
-	                                <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.PickupLocation.PostalCode)
-                                    </div-->
-                                    <div class="form_field">
-                                        <!--input type="text" name="PLPostalCode" id="PLPostalCode" placeholder="Postal Code"/-->
-                                        @Html.TextBoxFor(m => m.PickupLocation.PostalCode, new { placeholder = "Postal Code" })
-                                        @Html.ValidationMessageFor(m => m.PickupLocation.PostalCode)
-                                    </div>
-
-                                    <div class="form_field">
-                                        <input type="checkbox" name="saveLocationToProfile" id="saveLocationToProfile" />
-                                        <span class = "form_label_small_2">Save this location to your profile</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="right_col">
-                                <div id="Blackout_Dates_Box" class="form_background">                      
-                                    <!--div class="editor-label">
-                                        @Html.LabelFor(m => m.BlackoutDates) 
-                                    </div-->
-                                    <div class="form_field">
-                                        <div id="multiple_datepicker"></div>
-                                        <input id="datepicker" name="datepicker" type="hidden" />
-                                    </div>
-                                    <!----
-                                    <div id="blackout_dates_guide" class="guide_container_hidden">
-                                        These are dates when you don't want anyone to rent your item out, in case you're using the item on that date. 
-                                    </div>
-                                    --->
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="btn_listit_page">
-                    <input type="submit" value="List your item" />
+                <div class="span7">
+                    Input 1
                 </div>
             </div>
+        </div>
+        <div class="span3">
+            Q & A
         </div>
     </div>
 }
@@ -237,19 +47,5 @@
         CategoryColour();
         //AgreementColour();
         RegionColour();
-
-        $('.WhatsThis').click(function (event) {
-            event.preventDefault();
-        });
-
-        $('#Whats_Pickup_Location').click(function (event) {
-            $('#pickup_location_guide').fadeIn(250);
-            $('#pickup_location_guide').removeAttr('class');
-        });
-
-        $('#Whats_Blackout_Dates').click(function (event) {
-            $('#blackout_dates_guide').fadeIn(250);
-            $('#blackout_dates_guide').removeAttr('class');
-        });
     });
 </script>

@@ -1,6 +1,33 @@
-﻿/* Masthead Layout Elements
-----------------------------------------------------------------------------------------------------*/
-/* Top layout strip - left most strip */
+﻿.header-elements
+{
+    border-right-style: groove;
+    border-right-width: thin;
+    border-right-color: #CCCCCC;
+    border-left-style: groove;
+    border-left-width: thin;
+    border-left-color: #CCCCCC;
+    height: 79.96296691894531px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+/* Masthead Layout Elements
+----------------------------------------------------------------------------------------------------*
+Top layout strip - left most strip *
 #header #top_left{
     height: 10px;
     vertical-align:top;
@@ -9,7 +36,7 @@
 
 }
 
-/* Top layout strip - middle four strips */
+Top layout strip - middle four strips
 #header #top_centre_one, #header #top_centre_two, #header #top_centre_three, #header #top_centre_four
 {
     height: 10px;
@@ -17,31 +44,31 @@
     vertical-align:top;
 }
 
-/* Top layout strip - second from the left */
+/* Top layout strip - second from the left *
 #header #top_centre_one
 {
     background-color: @color-secondary-one;
 }
 
-/* Top layout strip - third from the left */
+/* Top layout strip - third from the left *
 #header #top_centre_two
 {
     background-color: @color-secondary-one;
 }
 
-/* Top layout strip - fourth from the left */
+/* Top layout strip - fourth from the left *
 #header #top_centre_three
 {
     background-color: @color-secondary-two;
 }
 
-/* Top layout strip - fifth from the left */
+/* Top layout strip - fifth from the left *
 #header #top_centre_four
 {
     background-color: @color-secondary-two;
 }
 
-/* Top layout strip - first from the right */
+/* Top layout strip - first from the right *
 #header #top_right
 {
     height: 10px;
@@ -52,7 +79,7 @@
     background-color: @color-secondary-two;
 }
 
-/* Top header background strip */
+/* Top header background strip *
 #header{
     display: block;
     padding: 0px;
@@ -61,14 +88,14 @@
     background-repeat: repeat-x;
 }
 
-/* Top header bottom divider strip */
+/* Top header bottom divider strip *
 #header_bottom_strip {
     height: 1px;
     background-color:@color-bg;
     border-bottom: 2px inset @color-primary-two;
 }
 
-/* Top header background strip shadow gradient */
+/* Top header background strip shadow gradient *
 #header_shadow {
     height: 7px;
     .gradient (@color-primary-two, #FFF);
@@ -80,14 +107,14 @@
     background-color: @color-bg;
 }
 
-/* Bottom footer background strip shadow gradient */
+/* Bottom footer background strip shadow gradient *
 #footer_shadow {
     height: 7px;
     margin: 100px auto auto auto;
     .gradient (#FFF, @color-primary-one);
 }
 
-/* Bottom footer background strip */
+/* Bottom footer background strip *
 #footer{
     display: block;
     height: 45px;
@@ -101,8 +128,8 @@
 
 
 /* Header Specific Layout Elements
-----------------------------------------------------------------------------------------------------*/
-/* Top header logo */
+----------------------------------------------------------------------------------------------------*
+/* Top header logo *
 #header #logo a {
     font-family: @font-family-header;
     color: @color-primary-three;
@@ -110,7 +137,7 @@
     letter-spacing: 0.2em;
 }
 
-/* Top header logo - landing page*/
+/* Top header logo - landing page *
 #header #logo_landing a {
     font-family: @font-family-header;
     color: @color-primary-three;
@@ -119,59 +146,59 @@
 }
 
 
-/* Top header searchbar */
+/* Top header searchbar *
 #searchdisplay {
     text-align: right;
 }
 
-/* Top header right-most links */
+/* Top header right-most links *
 .nav_links li {
     float: right;
     margin-right: 15px;
     padding-right: 15px;
 }
 
-/* Top header right-most links */
+/* Top header right-most links *
 .nav_right {
     margin-left: 35px;
 }
 
-/* Adding a line divider (e.g. top header right-most links) */
+/* Adding a line divider (e.g. top header right-most links) *
 #header .navbar, .navbar li
 {
 	.line-divider;
 }
 
-/* Top header left-most links, sets the width of the hover effect for the Log In drop down menu */
+/* Top header left-most links, sets the width of the hover effect for the Log In drop down menu *
 .navbar_dropdown 
 {
     width: 11em;
 }
 
-/* This is a fix so that the unorded list element always positions itself right below the relative dropdown grid div */
+/* This is a fix so that the unorded list element always positions itself right below the relative dropdown grid div *
 #dropdown_grid {
 	position: relative;
 }
 
-/* Downward arrow beside the first name of the logged in user */
+/* Downward arrow beside the first name of the logged in user *
 #down_arrow {
 	font-size: @font-size-very-small;
 }
 
-/* Top header left-most links, adjusts the Log In text to align with the drop down menu options */
+/* Top header left-most links, adjusts the Log In text to align with the drop down menu options *
 #navbar_ddtop{
     padding: 0 0 0 .3em;
 }
 
-/* Top header left-most links, turns the links into larger clickable boxes */
+/* Top header left-most links, turns the links into larger clickable boxes *
 .navbar_dropdown:hover #navbar_ddtop a{
     display: inline-block;
     color: @color-bg;
     background-color: @color-secondary-two;
     text-decoration: none;
-}
+}*/
 
-/* Top header left-most links, turns the links into larger clickable boxes */
+/* Top header left-most links, turns the links into larger clickable boxes *
 .navbar_dropdown ul li a {
     display: block;
     padding: 0.3em 1.5em 0.3em 0.3em;
@@ -181,7 +208,7 @@
     border: none;
 }
 
-/* Top header left-most links, pseudo selector used for a usability aid, so you know when you can click */
+/* Top header left-most links, pseudo selector used for a usability aid, so you know when you can click *
 .navbar_dropdown ul li a:hover 
 {
     padding: 0.3em 1.5em 0.3em 0.3em;
@@ -193,24 +220,24 @@
     transition: background-color .1s ease-in;
 }
 
-/* Top header left-most links, hides nested hierarchy links by default */
+/* Top header left-most links, hides nested hierarchy links by default *
 .navbar_dropdown ul {
     display: none;
     padding: 0;
 	position: absolute;
-	left: 22px; /* Hardcoded (not proud of it) */
+	left: 22px; /* Hardcoded (not proud of it) *
 }
 
-/* Top header left-most links, shows nested hierarchy links when we mouseover the parent */
+/* Top header left-most links, shows nested hierarchy links when we mouseover the parent *
 .navbar_dropdown:hover ul{
     display: block;
     z-index:2;
 }
 
-/* Top header left-most links, overrides the style on line 23 for nested link collections */
+/* Top header left-most links, overrides the style on line 23 for nested link collections *
 .navbar_dropdown li {
     float: none;
-    border-bottom: 1px solid @color-primary-two; /* border-top causes IE bug */
+    border-bottom: 1px solid @color-primary-two; /* border-top causes IE bug *
 }
 
 .navbar_dropdown li#bottom_item {
@@ -243,4 +270,4 @@
 
 #search_display form #search_box_landing:hover, #search_display form #search_box_landing:focus {
     .text-box-hover;
-}
+}*/
