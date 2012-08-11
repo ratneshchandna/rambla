@@ -12,42 +12,28 @@
 </p>
 -->
 <!------ Facebook Logon ------>
-<div class="container_12">
-    <div class="grid_4 push_3">
-        <div id="login_container">
-            <h2>Log In to Rambla</h2>
-            <div id="login_facebook">
-                <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Login with Facebook</fb:login-button>
-            </div>
-            <p>or</p>
-            <!------ E-mail Logon ------>
-            @using (Html.BeginForm()) {
-                <div id="form_container">
-                        <div class="form_field">
-                            @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address" })
-                            @Html.ValidationMessageFor(m => m.Email)
-                        </div>
-                        <div class="form_field">
-                            @Html.PasswordFor(m => m.Password, new { placeholder = "Password", type = "password" })
-                            @Html.ValidationMessageFor(m => m.Password)
-                        </div>
-                        <!--
-                        <div class="editor-label">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                        -->
-                        @Html.ValidationSummary(true)
-                        <div class="btn_submit">
-                            <input id="LoginButton" type="submit" value="Login">
-                        </div>
-                        <div id="forgot_pwd">@Html.ActionLink("Forgot your password?", "Index", "Home")</div>
+<div class="container">
+    <div class="row">
+        <div class="span6 offset3 center">
+            <h1>Login to Rambla</h1>
+            <form class="form-vertical well" method="post" action="@Url.Content("~/Account/LogOn")">
+                <div class="controls">
+                    <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Login with Facebook</fb:login-button>
                 </div>
-            }
+                <hr />
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address", @class = "span4 fatty-input" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+                <div class="controls">
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password", type = "password", @class = "span4 fatty-input" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+                @Html.ValidationSummary(true)
+                <div class="controls">
+                    <input id="LoginButton" class="btn btn-large btn-primary" type="submit" value="Login" />
+                </div>
+            </form>
         </div>
     </div>
-    <div class="grid_5">
-    </div>
-    <div class="clear">
-        &nbsp;</div>
 </div>
