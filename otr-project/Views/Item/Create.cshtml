@@ -11,23 +11,26 @@
 {
     <div class="row">
         <div class="span12">
-            List Your Item
+            <h1>List Your Item</h1>
         </div>
     </div>
+    <div id="form_validation_summary">@Html.ValidationSummary(true)</div>
     <div class="row">
         <div class="span9">
-            Form
             <div class="row">
                 <div class="span2">
-                    Label 1
+                    <strong>Item Name</strong>
                 </div>
                 <div class="span7">
-                    Input 1
+                    <div class="input_field">
+                        @Html.TextBoxFor(m => m.Name, new { placeholder = "Item" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
                 </div>
             </div>
         </div>
         <div class="span3">
-            Q & A
+            <h2>Q & A</h2>
         </div>
     </div>
 }
