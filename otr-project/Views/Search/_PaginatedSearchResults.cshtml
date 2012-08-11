@@ -1,0 +1,97 @@
+﻿@model PagedList<otr_project.ViewModels.SearchItemViewModel>
+@using Webdiyer.WebControls.Mvc;
+
+<div id="dvOrders">
+@if (Model.Count() == 0)
+{
+    <div id="no_results">
+        Your search yeilded no results. 
+    </div>
+}
+else
+{
+    @Ajax.Pager((IPagedList)Model, new PagerOptions { PageIndexParameterName = "id", ShowDisabledPagerItems = false, SeparatorHtml = "&nbsp;|&nbsp;" }, new AjaxOptions { UpdateTargetId = "dvOrders" }, new { id = "pagination" })
+    <table>
+    @foreach (var searchItem in Model)
+    {
+        <tr id="@searchItem.Item.Id" class="search_result" onclick="document.location='@Url.Content("~/Item/Details/" + searchItem.Item.Id)';">
+            <td class="search_item_image">
+                <!--div class="item_image_small"-->
+                @{
+                    if (searchItem.Item.ItemImages.Count > 0)
+                    {
+                        <!--div class="gallery">
+                        @{
+                        foreach (var i in searchItem.Item.ItemImages)
+                        {
+                                <img src="@Url.Content("~/Item/GetItemImage/" + i.Id)" />
+                        }
+                        }
+                        </div-->
+                        <img class="Search_Item_Image" src="@Url.Content("~/Item/GetItemImage/" + searchItem.Item.ItemImages.ElementAt(0).Id)" />
+                    }
+                    else
+                    {
+                        <img class="Search_Item_Image" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                    }
+                }
+                <!--/div-->
+            </td>
+            <td class="search_item_details">
+                <div id="Search_Item_Name">
+                    @Html.ActionLink(searchItem.Item.Name, "Details", "Item", new { id = searchItem.Item.Id }, null)
+                </div>
+                @if(searchItem.isItemBlocked)
+                {
+                    <div id="ItemIsBlocked">
+                        This item is booked on one or more days between 
+                        @DateTime.Parse(Session["SEARCH_PICKUP"].ToString()).ToLongDateString() & 
+                        @DateTime.Parse(Session["SEARCH_DROPOFF"].ToString()).ToLongDateString()
+                    </div>
+                }
+                <br />
+                <!--div id="Search_Item_Description">
+                    @searchItem.Item.Desc
+                </div-->
+                Location: 
+                <div class="search_item_city_province">
+                    @searchItem.Item.PickupLocation.City, @searchItem.Item.ItemRegion.Name
+                </div>
+            </td>
+            <td class="search_item_owner_image">
+                @if (searchItem.Item.Owner != null)
+                {
+                    if (searchItem.Item.Owner.isFacebookUser)
+                    {
+                        <img class="Search_Owner_Image" src="https://graph.facebook.com/@searchItem.Item.Owner.FacebookProfile.Id/picture?type=small" />
+                    }
+                    else
+                    {
+                        if (searchItem.Item.Owner.ProfilePicture != null)
+                        {
+                            string id = searchItem.Item.Id;
+                            <img class="Search_Owner_Image" src="@Url.Content("~/User/GetProfilePicture/" + id)" />
+                        }
+                        else
+                        {
+                            <img class="Search_Owner_Image" src="@Url.Content("~/Content/images/empty_profile_picture.png")" />
+                        }
+                    }
+                    <div class="search_item_owner">
+                        @(searchItem.Item.Owner.FirstName + " " + searchItem.Item.Owner.LastName)
+                    </div>
+                }
+            </td>
+            <td class="search_item_price">
+                <div id="Search_Item_PricePerDay">
+                    <div class="search_item_price_amount">
+                        @searchItem.Item.CostPerDay.ToString("C")
+                    </div>
+                    <span class="price_per_day">per day</span>
+                </div>
+            </td>
+        </tr>
+    }
+    </table>
+}
+</div>

@@ -1,0 +1,139 @@
+﻿@model IEnumerable<otr_project.Models.ItemModel>
+
+@{
+    ViewBag.Title = "Rambla | Items Listed";
+}
+
+<div class = "container_12">
+    <div class="header_to_body_gap"></div>
+    <!----- Account Dashboard ----->
+    <div class="grid_12" id = "my_account_dashboard">
+        <ul class="user_nav_links">
+            <li class="user_navbar">@Html.ActionLink("Agreements", "Agreements", "User")</li>
+            <li class="user_navbar">@Html.ActionLink("Borrowed", "ItemsBorrowed", "User")</li>
+            <li class="user_navbar">@Html.ActionLink("Listings", "Items", "User")</li>
+            <li class="user_navbar">@Html.ActionLink("Inbox", "MessageBox", "User")</li>
+            <li class="user_navbar">@Html.ActionLink("Profile", "Index", "User")</li>
+        </ul>
+    </div>
+    <div class="clear">
+    &nbsp;</div>
+
+    <div class="grid_9">
+        <div id="User_Items_Listed_Title" class="title_container_item_left">
+            <h1>
+                Items Listed
+            </h1>
+            <h2 id="User_Items_Listed_Subtitle" class="page_subtitle">
+                Here are all the items you have listed on Rambla.
+            </h2>
+        </div>
+    </div>
+    <div class="grid_3">
+        <div class ="title_container_item_right">
+            <h2>
+                Earnings: @ViewBag.UserEarnings.ToString("C")
+            </h2>
+        </div>
+    </div>
+    <div class="clear">
+    &nbsp;</div>
+    <div class="grid_12">
+        <div id="user-items-listed-container" class="container">
+            @if (Model.Count() > 0)
+            {
+                <table class="user_items_listed">
+                    <thead>
+                        <tr>
+                            <th>Item Image</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Cost/Day</th>
+                            <th>Security Deposit</th>
+                            <th>Pickup Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="items_justify_center">
+                                    @{
+                            if (item.ItemImages.Count > 0)
+                            {
+                                                <img src="@Url.Content("~/Item/GetItemImage/" + item.ItemImages.ToList()[0].Id)" />
+                                                <!--
+                                                <div class="gallery">
+                                                @foreach (var i in item.ItemImages)
+                                                {
+                                                    <img src="@Url.Content("~/Item/GetItemImage/" + i.Id)" /> 
+                                                }
+                                                </div>
+                                                -->
+                            }
+                            else
+                            {
+                                            <div class="display-field">No Images</div>
+                            }    
+                                    }
+                                </td>
+                                <td class="item_name">
+                                    @if (item.isActive)
+                                    {
+                                        <p>@Html.ActionLink(item.Name, "Details", "Item", new { id = item.Id }, null)</p>
+                                        <span>
+                                            @Html.ActionLink("Edit", "Edit", "Item", new { id = item.Id }, null) |
+                                            @Html.ActionLink("Delete", "Delete", "Item", new { id = item.Id }, null)
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <p>@item.Name</p>
+                                    }
+                                </td>
+                                <td class="item_desc">
+                                    @if (item.Desc.Length > 70)
+                                    {
+                                        <span>@(item.Desc.Substring(0, 70) + "...")</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@item.Desc</span> 
+                                    }
+                                </td>
+                                <td class="items_justify_center">
+                                    @item.Category.Name
+                                </td>
+                                <td class="items_justify_center">
+                                    @item.CostPerDay.ToString("C")
+                                </td>
+                                <td class="items_justify_center">
+                                    @item.SecurityDeposit.ToString("C")
+                                </td>
+                                <td class="item_location">
+                                    @item.PickupLocation.StreetAddress1,
+                                    @if (item.PickupLocation.StreetAddress2 != null)
+                                    {
+                                        if (item.PickupLocation.StreetAddress2.Length > 0)
+                                        {
+                                            <br />
+                                            @item.PickupLocation.StreetAddress2<span>,</span>
+                                        }
+                                    }
+                                    <br />
+                                    @item.PickupLocation.City, @item.ItemRegion.Name @item.PickupLocation.PostalCode,<br />
+                                    @item.ItemRegion.Country.Name
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <span>Uh oh, looks like you have not yet listed an item on Rambla.</span>
+            }
+        </div>
+    </div>
+</div>
