@@ -2,6 +2,92 @@
 @{
     ViewBag.Title = "Rambla | " + @Model.Name;
 }
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <ul class="nav nav-pills">
+                <li><h1>@Model.Name</h1></li>
+                <li>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                </li>
+            </ul>
+            <div class="row">
+                <div class="span5">
+                    <h4>
+                        @Model.PickupLocation.City, @Model.ItemRegion.Name, @Model.PickupLocation.PostalCode, @Model.ItemCountry.Name
+                    </h4>
+                </div>
+                <div class="span3">
+                    <ul class="nav nav-pills pull-right">
+                        @if (Request.IsAuthenticated)
+                        {
+                            if (Model.UserModelEmail == User.Identity.Name)
+                            {
+                                <li>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</li>
+                            }
+                        }
+                        <!--
+                        <li>
+                            <fb:like send="false" width="100" show_faces="true"></fb:like>
+                        </li>
+                        -->
+                        <li>
+                            <a href="https://twitter.com/share" class="twitter-share-button" data-related="jasoncosta" data-lang="en" data-size="large" data-count="none">Tweet</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="row">
+        <div class="span8">
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Images</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Map</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <p>I'm in Section 1.</p>
+                        <ul class="thumbnails">
+                            <li class="span8">
+                                <img src="http://placehold.it/780x540" alt="">
+                            </li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                    <img src="http://placehold.it/160x120" alt="">
+                                </a>
+                            </li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                    <img src="http://placehold.it/160x120" alt="">
+                                </a>
+                            </li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                    <img src="http://placehold.it/160x120" alt="">
+                                </a>
+                            </li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                    <img src="http://placehold.it/160x120" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <p>Howdy, I'm in Section 2.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="header_to_body_gap"></div>
 <div class="container_12">
     <div class="grid_12">
