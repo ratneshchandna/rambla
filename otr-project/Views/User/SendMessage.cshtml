@@ -1,0 +1,21 @@
+﻿@model otr_project.Models.MessageModel
+
+@using (Html.BeginForm("SendMessage", "User", new { item = ViewBag.Item }, FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <div>
+        <div class="form_field">
+            @Html.TextBoxFor(model => model.Subject, new { placeholder = "Subject" })
+            @Html.ValidationMessageFor(model => model.Subject)
+        </div>
+
+        <div class="form_field">
+            <textarea id="Message" name="Message" placeholder="Message Contents"></textarea>
+        </div>
+
+        <div class="btn_listit_page">
+            <input type="submit" value="Send Message" />
+        </div>
+    </div>
+}
+

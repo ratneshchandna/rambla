@@ -1,0 +1,11 @@
+Hello @ViewData.Model.FirstName,<br /><br />
+
+Thank you for signing up for Rambla! You have taken the first step towards expanding your rentability.<br /><br />
+@{
+    string URL = Url.Action("activateaccount", "Account", new RouteValueDictionary(new { id = ViewData.Model.ActivationId }), Request.Url.Scheme.ToString(), Request.Url.Host);
+}
+
+Please click <a href="@URL">here</a> to activate your account.<br /><br />
+
+Regards,<br />
+Rambla Team

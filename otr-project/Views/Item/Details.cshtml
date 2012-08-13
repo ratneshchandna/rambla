@@ -1,0 +1,328 @@
+﻿@model otr_project.Models.ItemModel
+@{
+    ViewBag.Title = "Rambla | " + @Model.Name;
+}
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <ul class="nav nav-pills">
+                <li><h1>@Model.Name</h1></li>
+                <li>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                    <i class="icon-star"></i>
+                </li>
+            </ul>
+            <div class="row">
+                <div class="span5">
+                    <h4>
+                        @Model.PickupLocation.City, @Model.ItemRegion.Name, @Model.PickupLocation.PostalCode, @Model.ItemCountry.Name
+                    </h4>
+                </div>
+                <div class="span3">
+                    <ul class="nav nav-pills pull-right">
+                        @if (Request.IsAuthenticated)
+                        {
+                            if (Model.UserModelEmail == User.Identity.Name)
+                            {
+                                <li>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</li>
+                            }
+                        }
+                        <!--
+                        <li>
+                            <fb:like send="false" width="100" show_faces="true"></fb:like>
+                        </li>
+                        -->
+                        <li>
+                            <a href="https://twitter.com/share" class="twitter-share-button" data-related="jasoncosta" data-lang="en" data-size="large" data-count="none">Tweet</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="row">
+        <div class="span8">
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Images</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Map</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <p>I'm in Section 1.</p>
+                        <ul class="thumbnails">
+                            <li class="span8">
+                                <img src="http://placehold.it/780x540" alt="">
+                            </li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                    <img src="http://placehold.it/160x120" alt="">
+                                </a>
+                            </li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                    <img src="http://placehold.it/160x120" alt="">
+                                </a>
+                            </li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                    <img src="http://placehold.it/160x120" alt="">
+                                </a>
+                            </li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                    <img src="http://placehold.it/160x120" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <p>Howdy, I'm in Section 2.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header_to_body_gap"></div>
+<div class="container_12">
+    <div class="grid_12">
+        <div id="Item_Details_Title" class="title_container">
+            <!----- Item Header ----->
+            <h1>
+                @Model.Name
+            </h1>
+        </div>
+    </div>
+</div>
+<div id="item_details_body_container" class="container_12">
+    <!----- Item Header - Google Maps Stretch ----->
+    <div class="grid_12">
+        <div id="map_container">
+            <div id="map_canvas" style="width: 940px; height: 160px;"></div>
+            @Html.HiddenFor(i => i.PickupLocation.PostalCode)
+        </div>
+    </div>
+    <div class="clear">
+    &nbsp;</div>
+    <!----- Item Header - Google Maps ----->
+    <div class="grid_9">
+        @if (Model.UserModelEmail == User.Identity.Name)
+        {
+            <div id="Edit_Item_Details" class="btns_item_details_page">
+                @Html.ActionLink("Edit Item Details", "Edit", new { id = Model.Id })
+            </div>
+        }
+        @{
+            if (Model.ItemImages.Count > 0)
+            {
+                <div id="gallery">
+                @foreach (var i in Model.ItemImages)
+                {
+                    <img src="@Url.Content("~/Item/GetItemImage/" + i.Id)" /> 
+                }
+                </div>
+            }
+            else
+            {
+                <div id="no_images">This item has no images</div>
+            }
+        }
+        <!----- Social Plugins ----->
+        <div class="social_plugins">
+            <!--g:plusone size="medium" annotation="none"></g:plusone-->
+            <!--a href="http://pinterest.com/pin/create/button/" count-layout="horizontal">
+                <img border="0" src="//assets.pinterest.com/images/PinExt.png" title="@Model.Name"/>
+            </a
+            <div class="fb-like" href="@Request.Url.AbsoluteUri" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>
+            -->
+        </div>
+        <div id="item_description">
+            @Html.LabelFor(m => m.Desc)
+            <span id="item_description_content">@Model.Desc</span>
+        </div>
+    </div>
+    <div class="grid_3">
+        @if (User.Identity.IsAuthenticated == true && Model.Owner.Email != User.Identity.Name)
+        {
+            <!----- Contact Owner ----->
+            <div id="Contact_Owner" class="btns_item_details_page">
+                <input id = "contact_owner" type="submit" value="Contact Owner" />
+            </div>
+            <div id="dialog">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    Html.RenderAction("SendMessage", "User", new { item = Model.Id });
+                }
+            </div>
+        }
+        <div id="Item_Details_Info_Box">
+            <div>
+                <!--- *TO DO* Category, need to convert this to breadcrumb ---->
+                Category: <span class="display_field" id="category_field">@Model.Category.Name</span>
+            </div>
+
+            <!--div>
+                @Html.LabelFor(m => m.AgreementId):
+            </div>
+            <div>
+                @if (Model.Agreement != null)
+                {
+                    Html.ActionLink("Agreement", "GetAgreement", "User", new { id = Model.AgreementId }, null);
+                }
+                else
+                {
+                    <span>None</span>
+                }                    
+            </div-->
+
+            <div>
+                <span id="item_cost">$@String.Format("{0:F}", Model.CostPerDay)</span> / day
+            </div>
+
+            <div class="display_label">
+                @Html.LabelFor(m => m.SecurityDeposit)
+            </div>
+            <div class="display_field">
+                $@String.Format("{0:F}", Model.SecurityDeposit)
+            </div>
+            <br />
+
+            <div class="display_label">
+                Location
+            </div>
+            <div class="display_field">
+                @Model.PickupLocation.City, @Model.ItemRegion.Name
+            </div>
+            @if (Model.Owner.Email != User.Identity.Name)
+            {
+                using (Html.BeginForm("AddToCart", "RentalCart", FormMethod.Post))
+                {
+                    <input type="hidden" id="itemId" name="itemId" value="@Model.Id" />
+                    <div class="form_label">
+                        Pickup Date
+                    </div>  
+                    <div class="form_field">
+                        <input id="pickupdate" name="pickupdate" class="datepicker" type="text" />
+                    </div>
+          
+                    <div class="form_label">
+                        Return Date
+                    </div> 
+                    <div class="form_field">
+                        <input id="dropoffdate" name="dropoffdate" class="datepicker" type="text" />
+                    </div>
+                
+                    <div class="validation_errors">@ViewBag.ErrorMessage</div>
+                
+                    <div id="AddToCartBtn" class="btns_item_details_page">
+                        <input type="submit" value="Add To Cart" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="clear">
+    &nbsp;</div>
+</div>
+
+<script type="text/javascript">
+    var bOutDates;
+    function isSelectableDate(date) {
+        for (i = 0; i < bOutDates.length; i++) {
+            var strDate = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+            if (strDate == bOutDates[i])
+                return [false];
+        }
+        return [true];
+    }
+
+    $(function () {
+        /*Galleria.configure({
+            debug: false // debug is now off for deployment
+        });*/
+
+        Galleria.loadTheme('@Url.Content("~/Content/themes/classic/galleria.classic.min.js")');
+        $("#gallery").galleria({
+            width: 700,
+            height: 300, 
+            transition: "fadeslide",
+            transitionSpeed: 800, 
+        });
+
+        $.post('@Url.Content("~/Item/GetBlockedDates/" + Model.Id)', function (data) {
+            //call back happens here.
+            bOutDates = data;
+        });
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            modal: true,
+            resizable: false,
+            title: "Rambla - Contact Item Owner",
+            width: 500
+        });
+
+        $("#contact_owner").button();
+        $("#contact_owner").click(function () {
+            $("#dialog").dialog("open");
+        });
+
+        var dates = $(".datepicker").datepicker({
+            minDate: 1,
+            dateFormat: "d MM, yy",
+            beforeShowDay: isSelectableDate,
+            onSelect: function (selectedDate) {
+                var option = this.id == "pickupdate" ? "minDate" : "maxDate",
+					instance = $(this).data("datepicker"),
+					date = $.datepicker.parseDate(
+						instance.settings.dateFormat ||
+						$.datepicker._defaults.dateFormat,
+						selectedDate, instance.settings);
+                if (option == "minDate") {
+                    var newDate = new Date(date.setDate(date.getDate() + 1));
+                    dates.not(this).datepicker("option", option, newDate);
+                }
+                else {
+                    var newDate = new Date(date.setDate(date.getDate() - 1));
+                    dates.not(this).datepicker("option", option, newDate);
+                }
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    var geocoder;
+    var map;
+
+    function codeAddress(address) {
+        geocoder = new google.maps.Geocoder();
+        var myOptions = {
+            zoom: 12,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+            } else {
+                $("#map_canvas").removeAttr('style');
+                $("#map_canvas").html("The pickup location for this item cannot be found on the map. ");
+            }
+        });
+    }
+    $(function () {
+        var address = $("#PickupLocation_PostalCode").val();
+        codeAddress(address);
+    });
+</script>

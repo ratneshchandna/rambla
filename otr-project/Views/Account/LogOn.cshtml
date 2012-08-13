@@ -1,0 +1,39 @@
+﻿<!------ Tab and Window Title ------>
+@model otr_project.Models.LogOnModel
+@{
+    ViewBag.Title = "Rambla | Log in to Rambla";
+}
+
+<!--
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<p>
+    Please enter your ads and password. @Html.ActionLink("Register", "Register") if you don't have an account.
+</p>
+-->
+<!------ Facebook Logon ------>
+<div class="container">
+    <div class="row">
+        <div class="span6 offset3 center">
+            <h1>Login to Rambla</h1>
+            <form class="form-vertical well" method="post" action="@Url.Content("~/Account/LogOn")">
+                <div class="controls">
+                    <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Login with Facebook</fb:login-button>
+                </div>
+                <hr />
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address", @class = "span4 fatty-input" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+                <div class="controls">
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password", type = "password", @class = "span4 fatty-input" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+                @Html.ValidationSummary(true)
+                <div class="controls">
+                    <input id="LoginButton" class="btn btn-large btn-primary" type="submit" value="Login" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
