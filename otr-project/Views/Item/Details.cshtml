@@ -304,7 +304,7 @@
 </script>
 
 <script type="text/javascript">
-    var geocoder;
+    var geocoder, circle, marker;
     var map;
     
     function initialize() {
@@ -321,9 +321,17 @@
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
+                // Using circle overlay to give user an approximate location
+                circle = new google.maps.Circle({
                     map: map,
-                    position: results[0].geometry.location
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    center: results[0].geometry.location,
+                    //1 mile in meters
+                    radius: 1609
                 });
             } else {
                 $("#map_canvas").removeAttr('style');
