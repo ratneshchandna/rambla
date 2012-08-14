@@ -22,11 +22,11 @@
                 </div>
                 <hr />
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address", @class = "span4 fatty-input" })
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address", @class = "span4 input-fatty" })
                     @Html.ValidationMessageFor(m => m.Email)
                 </div>
                 <div class="controls">
-                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password", type = "password", @class = "span4 fatty-input" })
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password", type = "password", @class = "span4 input-fatty" })
                     @Html.ValidationMessageFor(m => m.Password)
                 </div>
                 @Html.ValidationSummary(true)
