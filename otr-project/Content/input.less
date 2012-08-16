@@ -1,7 +1,33 @@
-﻿input[type="text"].fatty-input, input[type="password"].fatty-input
+﻿input[type="text"], input[type="password"], textarea {
+	.text-box(320px);
+}
+
+textarea {
+	height: 100px;
+}
+
+select {
+	.drop-down(330px);
+}
+
+select[state="selected_none"] {
+	color: #909090;//color: @color-placeholder;
+}
+
+option {
+	color: black; //color: @color-text;
+}
+
+
+input[type="text"].fatty-input, input[type="password"].fatty-input
 {
 	height: 30px;
 }
+
+.input_label * {
+	vertical-align: middle;
+}
+
 
 
 
