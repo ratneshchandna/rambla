@@ -1,0 +1,430 @@
+﻿@model PagedList<otr_project.ViewModels.SearchItemViewModel>
+@using Webdiyer.WebControls.Mvc;
+
+@{
+    ViewBag.Title = "Rambla | Search";
+}
+
+@{
+    int price_filter = 500;
+    int security_deposit_filter = 500;
+    string requireImages = Session["SEARCH_REQUIRE_IMAGES"].ToString();
+    string pickup = "";
+    string dropoff = "";
+    
+    if (Session["SEARCH_PRICE"] != null)
+    {
+        if (Session["SEARCH_PRICE"].ToString() != "")
+        {
+            price_filter = Int32.Parse(Session["SEARCH_PRICE"].ToString());
+        }
+    }
+    if (Session["SEARCH_SECURITY_DEPOSIT"] != null)
+    {
+        if (Session["SEARCH_SECURITY_DEPOSIT"].ToString() != "")
+        {
+            security_deposit_filter = Int32.Parse(Session["SEARCH_SECURITY_DEPOSIT"].ToString());
+        }
+    }
+    if (Session["SEARCH_PICKUP"] != null)
+    {
+        if (Session["SEARCH_PICKUP"].ToString() != "")
+        {
+            pickup = Session["SEARCH_PICKUP"].ToString();
+        }
+    }
+    if (Session["SEARCH_DROPOFF"] != null)
+    {
+        if (Session["SEARCH_DROPOFF"].ToString() != "")
+        {
+            dropoff = Session["SEARCH_DROPOFF"].ToString();
+        }
+    }
+}
+
+<div class="row-fluid">
+    <div class="span12">
+        <h1>Search Results</h1>
+    </div>
+</div>
+
+@using (Ajax.BeginForm("Basic", null, null, new { id = "basic-search", @class = "form-inline well" }))
+{
+    <div class="row-fluid">
+        <div class="control-group">
+            <div class="span1">
+                <label class="control-label vpad5" for="CategoryId"><strong>Category:</strong></label>
+            </div>
+            <div class=" span2 controls">
+                @Html.DropDownList("CategoryId", null, "All Categories", new { @class = "span12" })
+            </div>
+            <div class="span1"></div>
+            <div class="span1">
+                <label class="control-label vpad5" for="SortType"><strong>Sort by:</strong></label>
+            </div>
+            <div class=" span2 controls">
+                @Html.DropDownList("SortType", null, "", new { @class = "span12" })
+            </div>
+            <div class="span1">
+                <label class="control-label vpad5" for="SortType"><strong>View by:</strong></label>
+            </div>
+            <div class="span2">
+                <div class="btn-group" data-toggle="buttons-radio">
+                    <a href="#" class="btn center active">Images</a>
+                    <a href="#" class="btn center">List</a>
+                </div>
+            </div>
+            <div class="span2">
+                <a href="#" class="btn toggler">
+                    <i class="icon-circle-arrow-down"></i>
+                        Search Filter
+                </a>
+                <a href="#" class="btn toggler" style="display:none;">
+                    <i class="icon-circle-arrow-up"></i>
+                        Search Filter
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="search-filter" style="display:none;">
+        <div class="row-fluid">
+        <hr />
+        <div class="control-group">
+            <div class="span3">
+                <div class="row-fluid">
+                    <label class="control-label vpad5 span9" for="price"><strong>Maximum Price</strong></label>
+                    <div id="max-price-label" class="label span3 center vcenter">
+                        @if (price_filter >= 500)
+                        {
+                            <h5>$500+</h5>
+                        }
+                        else
+                        {
+                            <h5>$@price_filter</h5>
+                        }
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span11">
+                        <div id="price-slider"></div>
+                        <input id="price" name="price" type="hidden" />
+                    </div>
+                </div>
+            </div>
+            <div class="span1"></div>
+            <div class="span3">
+                <div class="row-fluid">
+                    <label class="control-label vpad5 span9" for="price"><strong>Maximum Security Deposit</strong></label>
+                    <div id="max-securitydeposit-label" class="label span3 center vcenter">
+                        @if (security_deposit_filter >= 500)
+                        {
+                            <h5>$500+</h5>
+                        }
+                        else
+                        {
+                            <h5>$@security_deposit_filter</h5>
+                        }
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span11">
+                        <div id="securitydeposit-slider"></div>
+                        <input id="securitydeposit" name="securitydeposit" type="hidden" />
+                    </div>
+                </div>
+            </div>
+            <div class="span2 border-right">
+                <div class="row-fluid">
+                    <label class="control-label vpad5 span9" for="price"><strong>Availability</strong></label>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 controls vpad5">
+                        <input id="pickup"  name="pickup" class="datepicker span10" type="text" placeholder="Pickup Date" value="@((!String.IsNullOrEmpty(pickup)) ? DateTime.Parse(pickup).ToLongDateString() : "")"/>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 controls vpad5">
+                        <input id="dropoff" name="dropoff" class="datepicker span10" type="text" placeholder="Return Date" value="@((!String.IsNullOrEmpty(dropoff)) ? DateTime.Parse(dropoff).ToLongDateString() : "")"/>
+                    </div>
+                </div>
+            </div>
+            <div class="span3">
+                <div class="row-fluid">
+                    <label class="control-label vpad5 span9" for="price"><strong>Options</strong></label>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 controls vpad5">
+                        <label class="checkbox">
+                            <input type="checkbox" id="requireImages" name="requireImages"/>
+                            Only show items with images
+                        </label>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 controls vpad5">
+                        <label class="checkbox">
+                            <input type="checkbox" id="noConflicts" name="noConflicts"/>
+                            Only show items with no conflicts
+                        </label>
+                    </div>
+                </div>
+                <div class="row-fluid vpad10"></div>
+                <div id="update-results" class="row-fluid vpad10">
+                    <div class="span12 center">
+                        <a id="refresh" href="#" class="btn btn-large">Update Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+}
+
+<div class="container_12">
+    <div class="header_to_body_gap"></div>
+    <div id="search_custom_container" class="grid_12">
+        <div class="grid_3">
+            <div id="configureSearch">
+                <!--div class="editor-label">Location</div>
+        
+                <div class="form_field"> Doesn't Work!
+                    <input id="location"  name="location" type="text" />
+                </div-->
+                
+
+                <table id="PickupDropoffDates">
+                    <tr>
+                        <td>
+                            <div id="Search_PickupDate_Label" class="editor-label">
+                                Available for pickup on:
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="Search_Pickup_Input" class="form_field">
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="Search_DropoffDate_Label" class="editor-label">
+                                & free until:
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="Search_Dropoff_Input" class="form_field">
+                                
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="checkboxes">
+                    <tr>
+                        <td class="cell_with_checkbox">
+                            
+                        </td>
+                        <td class="cell_with_checkbox_description">
+                            <span id="requireImagesDesc">Only show items with images</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <div id="UpdateButton">
+                    <button id="refresh">Update</button>
+                </div>
+            </div>
+        </div>
+        <div class="grid_9">
+            <div id="Search_Filter_Bar">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
+                                Category
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form_dropdown">
+                                @Html.DropDownList("CategoryId", "All Categories")
+                            </div>
+                        </td>
+                        <td>
+                            <div class="editor-label">
+                                Sort by
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form_dropdown">
+                                @Html.DropDownList("SortType")
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="searchResults">
+                @{Html.RenderPartial("_PaginatedSearchResults", Model);}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var changeURL = true;
+    var stateObj = { page: "1" };
+
+    function doAjax() {
+        $.blockUI({
+            message: "<strong>" + "<img src=" + '@Url.Content("~/Content/themes/classic/classic-loader.gif")' + " \/>" + "  Loading...</strong>",
+            css: { 
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            }
+        });
+
+        // to fix checkbox issue - need to serialize when unchecked as well
+        var serialized = $('#basic-search').serialize();
+        if(serialized.indexOf("requireImages") == -1)
+        {
+            serialized = serialized + "&requireImages=off";
+        }
+        $.post('@Url.Content("~/Search/Index")', serialized, function (data) {
+            //call back happens here.  Unblock form/show result
+            //var serialized = $('#basic-search').serialize();
+            $('#searchResults').html(data);
+            /*$(".gallery").each(function () {
+                $(this).galleria({
+                    width: 200,
+                    height: 200,
+                    thumbnails: false
+                });
+            })*/
+            if (changeURL == true) {
+                history.pushState(stateObj, "Page 1", "@(Url.Content("~/"))Search/Index/1");
+                changeURL = false;
+            }
+            $.unblockUI();
+        });
+    }
+
+    $(function () {
+        var max_price = @(price_filter);
+        var max_secutiry_deposit = @(security_deposit_filter);
+        var requireImages = "@(requireImages)";
+        var prev_state;
+        
+        $('.btn-group').button()
+
+        $('#refresh').click(function(){
+            doAjax();
+        });
+
+        //This little bundle of joy makes the search filter slide out when we click
+        $('.toggler').live('click',function(){
+            $(this).parent().children().toggle();  //swaps the display:none between the two spans
+            $('#search-filter').slideToggle();  //swap the display of the main content with slide 
+        });
+
+        $("#CategoryId, #SortType").change(function () {
+            doAjax();
+        });
+
+        if (requireImages == "on")
+        {
+            $("#requireImages").attr('checked', 'true');
+            prev_state = "on";
+        }
+        else
+        {
+            $("#requireImages").removeAttr('checked');
+            prev_state = "off";
+        }
+        
+        $("#requireImages").change(function() {
+            if (prev_state == "on")
+            {
+                $("#requireImages").val("off");
+                prev_state = "off";
+            }
+            else
+            {
+                $("#requireImages").val("on");
+                prev_state = "on";
+            }
+            doAjax();
+        });
+
+        var dates = $(".datepicker").datepicker({
+            minDate: 0,
+            dateFormat: "d MM, yy",
+            onSelect: function (selectedDate) {
+                var option = this.id == "pickup" ? "minDate" : "maxDate",
+					instance = $(this).data("datepicker"),
+					date = $.datepicker.parseDate(
+						instance.settings.dateFormat ||
+						$.datepicker._defaults.dateFormat,
+						selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        });
+
+        $("#price-slider").slider({
+            range: "min",
+            min: 0,
+            max: 500,
+            value: max_price,
+            step: 1,
+            slide: function (event, ui) {
+                if (ui.value >= 500){
+                    var htmlStr = "<h5>$" + ui.value + "+</h5>";
+                }
+                else{
+                    var htmlStr = "<h5>$" + ui.value + "</h5>";
+                }
+                $("#price").val("$" + ui.value);
+                $("#max-price-label").html(htmlStr);
+                
+            },
+            stop: function (event, ui) {
+                doAjax();
+            }
+        });
+
+        $("#securitydeposit-slider").slider({
+            range: "min",
+            min: 0,
+            max: 500,
+            value: max_secutiry_deposit,
+            step: 1,
+            slide: function (event, ui) {
+                if (ui.value >= 500){
+                    var htmlStr = "<h5>$" + ui.value + "+</h5>";
+                }
+                else{
+                    var htmlStr = "<h5>$" + ui.value + "</h5>";
+                }
+                $(this).prev().prev().val("$" + ui.value);
+                $("#max-securitydeposit-label").html(htmlStr);
+            },
+            stop: function (event, ui) {
+                doAjax();
+            }
+        });
+        
+        $("#price").val("$" + $("#price-slider").slider("value"));
+        $("#securitydeposit").val("$" + $("#securitydeposit-slider").slider("value"));
+
+        //$("div#pagination > a").attr("onclick", "Sys.Mvc.AsyncHyperlink.handleClick(this, new Sys.UI.DomEvent(event), { insertionMode: Sys.Mvc.InsertionMode.replace,updateTargetId: 'dvOrders' });");
+    });
+</script>

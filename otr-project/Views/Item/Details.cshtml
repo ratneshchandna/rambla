@@ -1,0 +1,309 @@
+﻿@model otr_project.Models.ItemModel
+@{
+    ViewBag.Title = "Rambla | " + @Model.Name;
+}
+  
+<div class="row-fluid">
+    <div class="span12 vbottom">
+        <ul class="nav nav-pills no-margin">
+            <li><h1>@Model.Name</h1></li>
+            <li class="vpad10 hpad10">
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+                <i class="icon-star"></i>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span3">
+        <h4>
+            @Model.PickupLocation.City, @Model.ItemRegion.Name, @Model.ItemCountry.Name
+        </h4>
+    </div>
+    <div class="span5">
+        <div class="row-fluid">
+            <div class="span8"></div>
+            <div class="span2 center">
+                <iframe src="//www.facebook.com/plugins/like.php?href=@Url.Action("Details", "Item", new RouteValueDictionary( new { @id = Model.Id }), Request.Url.Scheme, Request.Url.Host)&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
+            </div>
+            <div class="span2 center">
+                <div class="g-plusone" data-size="tall" data-annotation="none" data-width="120"></div>
+            </div>
+        </div>
+    </div>  
+</div>
+<div class="row-fluid">
+    <div class="span8">
+        <div class="tabbable custom-tabbable">
+            <ul class="nav nav-tabs custom-nav-tabs">
+                <li class="active tpad10 hpad5"><a href="#tab1" data-toggle="tab"><strong>Images</strong></a></li>
+                <li class="tpad10 hpad5"><a id="mapTab" href="#tab2" data-toggle="tab"><strong>Map</strong></a></li>
+                <div class="pull-right hpad10 tpad10">
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (Model.UserModelEmail == User.Identity.Name)
+                        {
+                            <a href="@Url.Content("~/Item/Edit/" + Model.Id)" class="btn btn-success">
+                                <i class="icon-edit icon-white"></i>
+                                Edit
+                            </a>
+                        }
+                    }
+                </div>
+            </ul>
+            <div class="tab-content min-height-control">
+                <div class="tab-pane active" id="tab1">
+                    @if (Model.ImageCount > 0)
+                    {
+                        int img_count = 0;
+                        <ul class="thumbnails hpad10">
+                            @foreach (var i in Model.ItemImages)
+                            {
+                                if (img_count == 0)
+                                {
+                                    <li class="span12">
+                                        <div class="thumbnail">
+                                            <img class="main-image" src="@Url.Content("~/Item/GetItemImage/" + i.Id)" />
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="span3">
+                                        <a href="#" class="thumbnail">
+                                            <img src="@Url.Content("~/Item/GetItemImage/" + i.Id)" alt="">
+                                        </a>
+                                    </li>
+                                }
+                                img_count++;
+                            }
+                        </ul>
+                    }
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <ul class="thumbnails hpad10">
+                        <li class="span12">
+                            <div id="map_container" class="thumbnail">
+                                <div id="map_canvas" style="height: 426px"></div>
+                                @Html.HiddenFor(i => i.PickupLocation.PostalCode)
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="span4 hpad10">
+        <div class="row">
+            <br /><br /><br />
+            <div class="span12">
+                <div id="item-booking-container" class="well borderless">
+                    <div id="item-cost">
+                        <h3>@Model.CostPerDay.ToString("C") per day</h3>
+                        <h4>@Model.SecurityDeposit.ToString("C") Deposit</h4>
+                    </div>
+                    <br />
+                    <div id="item-booking-form">
+                        @if (Model.Owner.Email != User.Identity.Name)
+                        {
+                            <form class="borderfull" method="post" action="@Url.Content("~/RentalCart/AddToCart")">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <label for="pickupdate" class="control-label">Pickup Date</label>
+                                    </div>
+                                    <div class="span6">
+                                        <label for="dropoffdate" class="control-label">Return Date</label>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <input id="pickupdate" name="pickupdate" class="input-wider-small input-fatty datepicker" type="text" />
+                                    </div>
+                                    <div class="span6">
+                                        <input id="dropoffdate" name="dropoffdate" class="input-wider-small input-fatty datepicker" type="text" />
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span12 center">
+                                        <input type="submit" class="btn btn-large" value="Add To Cart" />
+                                    </div>
+                                </div>
+                                @if (ViewBag.ErrorMessage != null)
+                                {
+                                    <br />
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                            <div class="alert alert-error">
+                                                <strong>Oops! </strong>@ViewBag.ErrorMessage
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                
+                                <input type="hidden" id="itemId" name="itemId" value="@Model.Id" />
+                            </form>
+                        }
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <ul class="thumbnails no-margin">
+                                <li class="span12">
+                                <div class="thumbnail">
+                                    @if (Model.Owner.ProfilePicture == null){
+                                        <img src="@Url.Content("~/Content/images/empty_profile_picture.png")" alt="" />
+                                    }
+                                    else{
+                                        <img src="@Url.Content("~/User/GetProfilePicture/" + Model.Id)" alt="" />
+                                    }
+                                </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="span6">
+                            <h3>@Model.Owner.FirstName</h3>
+                            <ul class="nav nav-pills">
+                                <li>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    @if (User.Identity.IsAuthenticated == true && Model.Owner.Email != User.Identity.Name)
+                    {
+                        <div class="row-fluid">
+                            <div class="span6 center">
+                                <a href="#dialog" class="btn btn-large" data-toggle="modal">Contact Me</a>
+                            </div>
+                            <div class="modal hide fade in" id="dialog">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                    <h3>Rambla - Contact Owner</h3>
+                                </div>
+                                <div class="modal-body">
+                                    @{Html.RenderAction("SendMessage", "User", new { item = Model.Id });}
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row-fluid vpad10">
+    <div class="span8">
+        <div class="tabbable custom-tabbable">
+            <ul class="nav nav-tabs custom-nav-tabs">
+                <li class="active tpad10 hpad5"><a href="#descTab" data-toggle="tab"><strong>Description</strong></a></li>
+                <li class="tpad10 hpad5"><a href="#agreeTab" data-toggle="tab"><strong>Agreement</strong></a></li>
+            </ul>
+            <div class="tab-content hpad10 min-height-control">
+                <div class="tab-pane active" id="descTab">
+                    <p>@Model.Desc</p>
+                </div>
+                <div class="tab-pane" id="agreeTab">
+                    <p>Please click <a href="@Url.Content("~/Content/Rental_Agreement.pdf")">here</a> to download the rental agreement.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var bOutDates;
+    function isSelectableDate(date) {
+        for (i = 0; i < bOutDates.length; i++) {
+            var strDate = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+            if (strDate == bOutDates[i])
+                return [false];
+        }
+        return [true];
+    }
+
+    $(function () {
+        $.post('@Url.Content("~/Item/GetBlockedDates/" + Model.Id)', function (data) {
+            //call back happens here.
+            bOutDates = data;
+        });
+        
+        var dates = $(".datepicker").datepicker({
+            minDate: 1,
+            dateFormat: "d MM, yy",
+            beforeShowDay: isSelectableDate,
+            onSelect: function (selectedDate) {
+                var option = this.id == "pickupdate" ? "minDate" : "maxDate",
+					instance = $(this).data("datepicker"),
+					date = $.datepicker.parseDate(
+						instance.settings.dateFormat ||
+						$.datepicker._defaults.dateFormat,
+						selectedDate, instance.settings);
+                if (option == "minDate") {
+                    var newDate = new Date(date.setDate(date.getDate() + 1));
+                    dates.not(this).datepicker("option", option, newDate);
+                }
+                else {
+                    var newDate = new Date(date.setDate(date.getDate() - 1));
+                    dates.not(this).datepicker("option", option, newDate);
+                }
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    var geocoder, circle, marker;
+    var map;
+    
+    function initialize() {
+        var myOptions = {
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map_canvas'),
+            myOptions);
+    }
+
+    function codeAddress(address) {
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                // Using circle overlay to give user an approximate location
+                circle = new google.maps.Circle({
+                    map: map,
+                    strokeWeight: 0,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.20,
+                    center: results[0].geometry.location,
+                    //1 mile in meters
+                    radius: 1609
+                });
+            } else {
+                $("#map_canvas").removeAttr('style');
+                $("#map_canvas").html("The pickup location for this item cannot be found on the map. ");
+            }
+        });
+    }
+
+    $(function () {
+        var address = $("#PickupLocation_PostalCode").val();
+        // This makes the google map render from within a Bootstrap Tab
+        $("#mapTab").on("shown", function (event) {
+            google.maps.event.trigger(map, 'resize');
+            codeAddress(address);
+        });
+
+        initialize();
+    });
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
