@@ -2,7 +2,7 @@ syntax: glob
 *.suo
 *.user
 *.MDF
-*.ldf
+*.LDF
 *.cache
 *.[Pp]ublish.xml
 Logs/

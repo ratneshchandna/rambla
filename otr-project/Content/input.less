@@ -1,4 +1,8 @@
-﻿input[type="text"].input-fatty, input[type="password"].input-fatty
+﻿input[type="text"], input[type="password"], textarea {
+	.text-box(320px);
+}
+
+input[type="text"].input-fatty, input[type="password"].input-fatty
 {
 	height: 30px;
 }
@@ -6,6 +10,26 @@
 input[type="text"].input-wider-small, input[type="password"].input-wider-small
 {
 	width: 120px;
+}
+
+textarea {
+	height: 100px;
+}
+
+select {
+	.drop-down(330px);
+}
+
+select[state="selected_none"] {
+	color: #909090;//color: @color-placeholder;
+}
+
+option {
+	color: black; //color: @color-text;
+}
+
+.input_label * {
+	vertical-align: middle;
 }
 
 
