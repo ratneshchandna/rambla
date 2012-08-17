@@ -112,18 +112,10 @@
                             <form class="borderfull" method="post" action="@Url.Content("~/RentalCart/AddToCart")">
                                 <div class="row-fluid">
                                     <div class="span6">
-                                        <label for="pickupdate" class="control-label">Pickup Date</label>
+                                        <input id="pickupdate" name="pickupdate" class="input-wider-small datepicker" placeholder="Pickup Date" type="text" />
                                     </div>
                                     <div class="span6">
-                                        <label for="dropoffdate" class="control-label">Return Date</label>
-                                    </div>
-                                </div>
-                                <div class="row-fluid">
-                                    <div class="span6">
-                                        <input id="pickupdate" name="pickupdate" class="input-wider-small input-fatty datepicker" type="text" />
-                                    </div>
-                                    <div class="span6">
-                                        <input id="dropoffdate" name="dropoffdate" class="input-wider-small input-fatty datepicker" type="text" />
+                                        <input id="dropoffdate" name="dropoffdate" class="input-wider-small datepicker" placeholder="Return Date" type="text" />
                                     </div>
                                 </div>
                                 <div class="row-fluid">
