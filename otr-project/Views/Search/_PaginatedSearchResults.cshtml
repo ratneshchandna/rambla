@@ -1,6 +1,15 @@
 ﻿@model PagedList<otr_project.ViewModels.SearchItemViewModel>
 @using Webdiyer.WebControls.Mvc;
-
+<script type="text/javascript">
+    $(function () {
+        $(".search-item").hover(function () {
+            $(this).addClass("search-item-hover");
+        },
+        function () {
+            $(this).removeClass("search-item-hover")
+        });
+    });
+</script>
 <div id="searchResults">
 @if (Model.Count() == 0)
 {
@@ -26,10 +35,10 @@ else
                         break;
                     }
                 
-                    <li class="span3 max-height-limit">
-                        <div class="thumbnail">
+                    <li class="span3 max-height-limit" onclick="document.location='@Url.Content("~/Item/Details/" + searchItem.Item.Id)';">
+                        <div class="thumbnail search-item">
                             <div class="row-fluid">
-                                <div class="span12 search-price-banner vcenter">
+                            <div class="span12 search-price-banner vcenter">
                                     <div class="span8 tpad10 hpad5">
                                         @searchItem.Item.Name
                                     </div>
@@ -38,20 +47,30 @@ else
                                     </div>
                                 </div>
                             </div>
-                            @if (j == 1){
-                            <div class="row-fluid">
-                                <div class="span12 item-conflict-banner">
-                                    Item not available for selected dates.
+                            @if (searchItem.isItemBlocked == true){
+                                <div class="row-fluid">
+                                    <div class="span12 item-conflict-banner tpad10 center">
+                                        Item not available for selected dates.
+                                    </div>
                                 </div>
-                            </div>
+                                if (searchItem.Item.ItemImages.Count > 0)
+                                {
+                                    <img class="search-thumbnail-image-small" src="@Url.Content("~/Item/GetItemImage/" + searchItem.Item.ItemImages.ElementAt(0).Id)" />
                                 }
-                            @if (searchItem.Item.ItemImages.Count > 0)
-                            {
-                                <img class="search-thumbnail-image" src="@Url.Content("~/Item/GetItemImage/" + searchItem.Item.ItemImages.ElementAt(0).Id)" />
+                                else
+                                {
+                                    <img class="search-thumbnail-image-small" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                                }
                             }
-                            else
-                            {
-                                <img class="search-thumbnail-image" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                            else{
+                                if (searchItem.Item.ItemImages.Count > 0)
+                                {
+                                    <img class="search-thumbnail-image" src="@Url.Content("~/Item/GetItemImage/" + searchItem.Item.ItemImages.ElementAt(0).Id)" />
+                                }
+                                else
+                                {
+                                    <img class="search-thumbnail-image" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                                }
                             }
                             <h5>@searchItem.Item.Owner.FirstName @searchItem.Item.Owner.LastName</h5>
                             <p><strong>@searchItem.Item.PickupLocation.City, @searchItem.Item.ItemRegion.Name</strong></p>
@@ -84,7 +103,7 @@ else
                 <div id="Search_Item_Name">
                     @Html.ActionLink(searchItem.Item.Name, "Details", "Item", new { id = searchItem.Item.Id }, null)
                 </div>
-                @if(searchItem.isItemBlocked)
+                @if (searchItem.isItemBlocked)
                 {
                     <div id="ItemIsBlocked">
                         This item is booked on one or more days between 
