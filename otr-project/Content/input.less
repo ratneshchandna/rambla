@@ -18,7 +18,7 @@ input[type="text"].input-wider-small, input[type="password"].input-wider-small
 
 /*
 textarea {
-	height: 100px;
+	rows: 10;
 }
 */
 
@@ -29,11 +29,11 @@ select {
 
 
 select[state="selected_none"] {
-	color: #909090;//color: @color-placeholder;
+	color: @color-selected-none; //color: @color-placeholder;
 }
 
 option {
-	color: black; //color: @color-text;
+	color: @color-text-primary; //color: @color-text;
 }
 
 .input_label * {
