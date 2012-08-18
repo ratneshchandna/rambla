@@ -434,8 +434,13 @@
     <Content Include="Content\Pages\search.less" />
     <Content Include="Content\style.less" />
     <Content Include="Content\variables.less" />
-	<Content Include="Content\buttons.less" />
+    <Content Include="Content\buttons.less" />
     <Content Include="Content\input.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\fonts\Archer-Bold-Pro.otf" />
+    <None Include="Content\fonts\Archer-Medium-Pro.otf" />
+    <None Include="Content\fonts\Archer-Semibold-Pro.otf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
