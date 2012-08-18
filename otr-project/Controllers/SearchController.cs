@@ -15,7 +15,7 @@ namespace otr_project.Controllers
 {
     public class SearchController : Controller
     {
-        const int ITEMS_PER_PAGE = 10;
+        const int ITEMS_PER_PAGE = 3;
         MarketPlaceEntities market = new MarketPlaceEntities();
         ErrorMessageViewModel ErrorMessage = new ErrorMessageViewModel();
 
