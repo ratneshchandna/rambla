@@ -1,0 +1,137 @@
+﻿/* This is not the right way to use Bootstrap. Please refrain from adding global changes to bootstrap's existing components.
+ * If you'd like a wider textbox, use the "span#" class to make them wider. This Mixin alters all text boxes across the board
+ * and makes it look quite ugly. Please delete this comment and all commented out CSS entries in this page if you agree.
+input[type="text"], input[type="password"], textarea {
+	.text-box(320px);
+}
+*/
+
+input[type="text"].input-fatty, input[type="password"].input-fatty
+{
+	height: 30px;
+}
+
+input[type="text"].input-wider-small, input[type="password"].input-wider-small
+{
+	width: 120px;
+}
+
+/*
+textarea {
+	height: 100px;
+}
+*/
+
+/*
+select {
+	.drop-down(330px);
+}
+
+
+select[state="selected_none"] {
+	color: #909090;//color: @color-placeholder;
+}
+
+option {
+	color: black; //color: @color-text;
+}
+
+.input_label * {
+	vertical-align: middle;
+}
+*/
+
+//Dropping the thickness of the stock jQuery Slider
+.ui-slider-horizontal {
+	height: .5em;
+}
+
+//Configuring the knob to match in size
+.ui-slider .ui-slider-handle {
+	height: 1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+/* Common Input Elements
+- Text boxes
+- Password boxes
+- Dropdown boxes
+- Textarea boxes
+- Form labels for other input elements
+----------------------------------------------------------------------------------------------------*
+/* For all text fields *
+.form_field input[type="text"], .form_field input[type="password"]{
+    display:block;
+    margin: 10px auto 10px auto;
+    .text-box (320px);
+}
+
+/* For all text field hover and focus events *
+.form_field input[type="text"]:hover, .form_field input[type="text"]:focus, .form_field input[type="password"]:hover, .form_field input[type="password"]:focus {
+    .text-box-hover;
+}
+
+.form_dropdown select{
+    display:block;
+    margin: 10px auto 10px auto;
+    .drop-down (339px);
+}
+
+/* For all drop down hover and focus events *
+.form_dropdown select:hover, .form_dropdown select:focus {
+    .drop-down-hover;
+}
+
+select[state="selected_none"] {
+	color: @color-placeholder;
+}
+
+select {
+	color: @color-text;
+}
+
+option {
+	color: @color-text;
+}
+
+.form_field textarea {
+	display: block;
+	height: 100px;
+	margin: 10px auto 10px auto;
+	.text-box(320px);
+}
+
+/* For all textarea field hover and focus events *
+.form_field textarea:hover, .form_field textarea:focus {
+    .text-box-hover;
+}
+
+.form_field input[type="checkbox"] {
+	float: left;
+}
+
+.form_label_small {
+	display:block;
+	font-size:@font-size;
+	font-weight:bold;
+	text-align: left;
+	margin: 30px 0 0 5px;
+}
+
+.form_label_small_2 {
+	display:inline-block;
+	font-size:@font-size;
+	text-align: left;
+}
+*/

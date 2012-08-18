@@ -1,0 +1,301 @@
+﻿.header-elements
+{
+    vertical-align: middle;
+    text-align: center;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  background-image: url("../designfrmk/glyphicons-halflings.png");
+}
+
+.icon-white {
+  background-image: url("../designfrmk/glyphicons-halflings-white.png");
+}
+
+.vpad10{
+	.vertical_padding(10px, 10px);
+}
+
+.tpad10{
+	.vertical_padding(10px, 0px);
+}
+
+.hpad10{
+	.horizontal_padding(10px, 10px);
+}
+
+.hpad5{
+	.horizontal_padding(5px, 5px);
+}
+
+.no-margin{
+	margin: 0px;
+}
+
+.vpad5{
+	.vertical_padding(5px, 5px);
+}
+
+.tpad5{
+	.vertical_padding(5px, 0px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+/* Masthead Layout Elements
+----------------------------------------------------------------------------------------------------*
+Top layout strip - left most strip *
+#header #top_left{
+    height: 10px;
+    vertical-align:top;
+    background-color: @color-secondary-one;
+    border-bottom-left-radius: 0.4em;
+
+}
+
+Top layout strip - middle four strips
+#header #top_centre_one, #header #top_centre_two, #header #top_centre_three, #header #top_centre_four
+{
+    height: 10px;
+    margin-left:-10px;
+    vertical-align:top;
+}
+
+/* Top layout strip - second from the left *
+#header #top_centre_one
+{
+    background-color: @color-secondary-one;
+}
+
+/* Top layout strip - third from the left *
+#header #top_centre_two
+{
+    background-color: @color-secondary-one;
+}
+
+/* Top layout strip - fourth from the left *
+#header #top_centre_three
+{
+    background-color: @color-secondary-two;
+}
+
+/* Top layout strip - fifth from the left *
+#header #top_centre_four
+{
+    background-color: @color-secondary-two;
+}
+
+/* Top layout strip - first from the right *
+#header #top_right
+{
+    height: 10px;
+    vertical-align:top;
+    margin: 0 0 10px -10px;
+    padding-right: 100px;
+    border-bottom-right-radius: 0.4em;
+    background-color: @color-secondary-two;
+}
+
+/* Top header background strip *
+#header{
+    display: block;
+    padding: 0px;
+    margin: auto;
+    background-color: @color-primary-one;
+    background-repeat: repeat-x;
+}
+
+/* Top header bottom divider strip *
+#header_bottom_strip {
+    height: 1px;
+    background-color:@color-bg;
+    border-bottom: 2px inset @color-primary-two;
+}
+
+/* Top header background strip shadow gradient *
+#header_shadow {
+    height: 7px;
+    .gradient (@color-primary-two, #FFF);
+    margin-bottom:10px;
+}
+
+#body_container
+{
+    background-color: @color-bg;
+}
+
+/* Bottom footer background strip shadow gradient *
+#footer_shadow {
+    height: 7px;
+    margin: 100px auto auto auto;
+    .gradient (#FFF, @color-primary-one);
+}
+
+/* Bottom footer background strip *
+#footer{
+    display: block;
+    height: 45px;
+    background-color: @color-primary-three;
+    background-repeat: repeat-x;
+}
+
+#comodo_ssl_seal {
+	float: right;
+}
+
+
+/* Header Specific Layout Elements
+----------------------------------------------------------------------------------------------------*
+/* Top header logo *
+#header #logo a {
+    font-family: @font-family-header;
+    color: @color-primary-three;
+    font-size: @font-size-very-large;
+    letter-spacing: 0.2em;
+}
+
+/* Top header logo - landing page *
+#header #logo_landing a {
+    font-family: @font-family-header;
+    color: @color-primary-three;
+    font-size: @font-size-very-large;
+    letter-spacing: 0.2em;
+}
+
+
+/* Top header searchbar *
+#searchdisplay {
+    text-align: right;
+}
+
+/* Top header right-most links *
+.nav_links li {
+    float: right;
+    margin-right: 15px;
+    padding-right: 15px;
+}
+
+/* Top header right-most links *
+.nav_right {
+    margin-left: 35px;
+}
+
+/* Adding a line divider (e.g. top header right-most links) *
+#header .navbar, .navbar li
+{
+	.line-divider;
+}
+
+/* Top header left-most links, sets the width of the hover effect for the Log In drop down menu *
+.navbar_dropdown 
+{
+    width: 11em;
+}
+
+/* This is a fix so that the unorded list element always positions itself right below the relative dropdown grid div *
+#dropdown_grid {
+	position: relative;
+}
+
+/* Downward arrow beside the first name of the logged in user *
+#down_arrow {
+	font-size: @font-size-very-small;
+}
+
+/* Top header left-most links, adjusts the Log In text to align with the drop down menu options *
+#navbar_ddtop{
+    padding: 0 0 0 .3em;
+}
+
+/* Top header left-most links, turns the links into larger clickable boxes *
+.navbar_dropdown:hover #navbar_ddtop a{
+    display: inline-block;
+    color: @color-bg;
+    background-color: @color-secondary-two;
+    text-decoration: none;
+}*/
+
+/* Top header left-most links, turns the links into larger clickable boxes *
+.navbar_dropdown ul li a {
+    display: block;
+    padding: 0.3em 1.5em 0.3em 0.3em;
+    color: @color-bg;
+    text-decoration: none;
+    background-color: @color-primary-four-rgba;
+    border: none;
+}
+
+/* Top header left-most links, pseudo selector used for a usability aid, so you know when you can click *
+.navbar_dropdown ul li a:hover 
+{
+    padding: 0.3em 1.5em 0.3em 0.3em;
+    background-color: @color-primary-three;
+    color: @color-text;
+    text-decoration: none;
+    border: none;
+    -webkit-transition: background-color .1s ease-in;
+    transition: background-color .1s ease-in;
+}
+
+/* Top header left-most links, hides nested hierarchy links by default *
+.navbar_dropdown ul {
+    display: none;
+    padding: 0;
+	position: absolute;
+	left: 22px; /* Hardcoded (not proud of it) *
+}
+
+/* Top header left-most links, shows nested hierarchy links when we mouseover the parent *
+.navbar_dropdown:hover ul{
+    display: block;
+    z-index:2;
+}
+
+/* Top header left-most links, overrides the style on line 23 for nested link collections *
+.navbar_dropdown li {
+    float: none;
+    border-bottom: 1px solid @color-primary-two; /* border-top causes IE bug *
+}
+
+.navbar_dropdown li#bottom_item {
+    border-bottom: none;
+}
+
+#search_display form #search_box {
+    display: inline-block;
+    margin: 0 -30px 0 -125px;
+    .text-box(290px);
+	padding: 0.4em 2.2em 0.4em 0.4em;
+	background: white url("images/search_icon.png");
+	background-repeat: no-repeat;
+	background-position: 98% 3px;
+}
+
+#search_display form #search_box:hover, #search_display form #search_box:focus {
+    .text-box-hover;
+}
+
+#cart_num {
+	margin-right: 5px;
+}
+
+#search_display form #search_box_landing {
+    display: inline-block;
+    margin: 0 -40px 0 0;
+    .text-box-medium(660px);
+}
+
+#search_display form #search_box_landing:hover, #search_display form #search_box_landing:focus {
+    .text-box-hover;
+}*/
