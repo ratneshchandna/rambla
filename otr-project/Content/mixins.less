@@ -1,13 +1,13 @@
 ﻿.text-box (@txt-box-width) {
-    color: black;//color: @color-text;
-    background-color: white;
+    color: @color-text-primary;
+    background-color: @color-bg;
     outline-color: transparent;
 
-	border: 1px solid #D3D3D3;
+	border: 1px solid @color-border;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
-	-webkit-box-shadow: 1px 0 1px 0 #D3D3D3, -1px 0 1px 0 #D3D3D3, 0 1px 3px 0 #D3D3D3;
+	-webkit-box-shadow: 1px 0 1px 0 @color-textbox-shadow, -1px 0 1px 0 @color-textbox-shadow, 0 1px 3px 0 @color-textbox-shadow;
 
 	width: @txt-box-width;
     //padding: 0.4em;
@@ -20,32 +20,26 @@
 }
 
 .drop-down (@dropdown-width) {
-    color: black;//color: @color-text;
-	background-color: white;
+    color: @color-text-primary;
+	background-color: @color-bg;
 	outline-color: transparent;
 	//background: white url("images/1.jpg");
 	//background-repeat: no-repeat;
 	//background-position: 97%;
 	//-webkit-appearance: none;
 
-    border: 2px solid #D3D3D3;
+    border: 2px solid @color-border;
     -webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
-	-webkit-box-shadow: 1px 0 2px 0 #D3D3D3, -1px 0 2px 0 #D3D3D3;
+	-webkit-box-shadow: 1px 0 2px 0 @color-textbox-shadow, -1px 0 2px 0 @color-textbox-shadow;
 
     width: @dropdown-width;
 	padding: 1px 0;
     //line-height: @line-height;
     
-
     //font-family: @font-family-main;
     //font-size: @font-size-small;
-}
-
-.center
-{
-	text-align: center;
 }
 
 .vertical_padding (@top, @bottom){
@@ -58,6 +52,14 @@
 	padding-right: @right;
 }
 
+.center
+{
+	text-align: center;
+}
+
+.row-fluid .no-min-height {
+	min-height: 0;
+}
 
 
 
