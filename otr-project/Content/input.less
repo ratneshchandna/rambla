@@ -1,10 +1,7 @@
-﻿/* This is not the right way to use Bootstrap. Please refrain from adding global changes to bootstrap's existing components.
- * If you'd like a wider textbox, use the "span#" class to make them wider. This Mixin alters all text boxes across the board
- * and makes it look quite ugly. Please delete this comment and all commented out CSS entries in this page if you agree.
-input[type="text"], input[type="password"], textarea {
+﻿.input_field input[type="text"], .input_field input[type="password"], .input_field textarea {
 	.text-box(320px);
 }
-*/
+
 
 input[type="text"].input-fatty, input[type="password"].input-fatty
 {
@@ -16,30 +13,25 @@ input[type="text"].input-wider-small, input[type="password"].input-wider-small
 	width: 120px;
 }
 
-/*
-textarea {
+.input_field textarea {
 	rows: 10;
 }
-*/
 
-/*
-select {
+.input_field select {
 	.drop-down(330px);
 }
 
-
-select[state="selected_none"] {
+.input_field select[state="selected_none"] {
 	color: @color-selected-none; //color: @color-placeholder;
 }
 
-option {
+.input_field option {
 	color: @color-text-primary; //color: @color-text;
 }
 
 .input_label * {
 	vertical-align: middle;
 }
-*/
 
 //Dropping the thickness of the stock jQuery Slider
 .ui-slider-horizontal {
