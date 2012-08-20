@@ -26,7 +26,7 @@
                     <strong>Item</strong>
                 </div>
                 <div class="span8">
-                    <div class="input_field form_">
+                    <div class="input_field form_row">
                         @Html.TextBoxFor(m => m.Name)
                         @Html.ValidationMessageFor(m => m.Name)
                     </div>
@@ -83,7 +83,7 @@
                     </strong>
                 </div>
                 <div class="span8">
-                    <div>
+                    <div class="input_field">
                         <input type="file" name="file" id="upload_item_picture_input"/>
                         (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
                     </div>
