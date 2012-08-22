@@ -1,12 +1,13 @@
 ﻿@model otr_project.Models.UserModel
 
 @{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
     ViewBag.Title = "Rambla | Edit Your Profile";
+    ViewBag.AccountPageTitle = "Edit Your Profile";
 }
 
 <div class = "container_12">
-    <div class="header_to_body_gap"></div>
-    <!----- Account Dashboard ----->
+    <!--div class="header_to_body_gap"></div>
     <div class="grid_12" id = "my_account_dashboard">
         <ul class="user_nav_links">
             <li class="user_navbar">@Html.ActionLink("Agreements", "Agreements", "User")</li>
@@ -17,12 +18,12 @@
         </ul>
     </div>
     <div class="clear">
-    &nbsp;</div>
+    &nbsp;</div-->
 
     
     @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <div class="grid_9">
+        <!--div class="grid_9">
                 <div id="User_Edit_Title" class="title_container_item_left">
                     <h1>
                         @(Model.FirstName + " " + Model.LastName)
@@ -40,7 +41,7 @@
             </div>
         </div>
         <div class="clear">
-        &nbsp;</div>
+        &nbsp;</div-->
         <div class="grid_12">
                 <div id="user-edit-container" class="container">
                         <table>

@@ -33,7 +33,18 @@ namespace otr_project.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return RedirectToAction("Edit");
+            var user = db.Users.SingleOrDefault(i => i.Email == User.Identity.Name);
+
+            if (user == null)
+            {
+                ErrorMessage.ErrorCode = ErrorCode.UNKNOWN;
+                return View("ErrorMessage", ErrorMessage);
+            }
+
+            ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", user.RegionId);
+            ViewBag.UserEarnings = user.Earnings;
+
+            return View("Dashboard", user);
         }
 
         //
@@ -42,12 +53,16 @@ namespace otr_project.Controllers
         public ActionResult Items()
         {
             var user = db.Users.SingleOrDefault(i => i.Email == User.Identity.Name);
+
             if (user == null)
             {
                 //User doesnt exist in our Database. Should Delete user.
                 //MembershipService.DeleteUser(User.Identity.Name);
                 //FormsService.SignOut();
-                return RedirectToAction("LogOn", "Account");
+                //return RedirectToAction("LogOn", "Account");
+
+                ErrorMessage.ErrorCode = ErrorCode.UNKNOWN;
+                return View("ErrorMessage", ErrorMessage);
             }
             /*
             if (user.Items.Count() == 0)
@@ -66,7 +81,10 @@ namespace otr_project.Controllers
                 //User doesnt exist in our Database. Should Delete user.
                 //MembershipService.DeleteUser(User.Identity.Name);
                 //FormsService.SignOut();
-                return RedirectToAction("LogOn", "Account");
+                //return RedirectToAction("LogOn", "Account");
+
+                ErrorMessage.ErrorCode = ErrorCode.UNKNOWN;
+                return View("ErrorMessage", ErrorMessage);
             }
             /*
             if (user.Items.Count() == 0)
@@ -83,6 +101,7 @@ namespace otr_project.Controllers
         public ActionResult Edit()
         {
             UserModel usermodel = db.Users.Find(User.Identity.Name);
+
             if (usermodel == null)
             {
                 ErrorMessage.ErrorCode = ErrorCode.UNKNOWN;
@@ -312,7 +331,17 @@ namespace otr_project.Controllers
         [Authorize]
         public ActionResult MessageBox()
         {
-            return View(db.Messages.Where(m=> m.To == User.Identity.Name).ToList());
+            var user = db.Users.SingleOrDefault(u => u.Email == User.Identity.Name);
+
+            if (user == null)
+            {
+                ErrorMessage.ErrorCode = ErrorCode.UNKNOWN;
+                return View("ErrorMessage", ErrorMessage);
+            }
+
+            ViewBag.UserEarnings = user.Earnings;
+
+            return View("Inbox", db.Messages.Where(m => m.To == User.Identity.Name || m.From == User.Identity.Name).ToList());
         }
 
         [Authorize]
@@ -320,10 +349,15 @@ namespace otr_project.Controllers
         public ActionResult Inbox()
         {
             var user = db.Users.SingleOrDefault(u => u.Email == User.Identity.Name);
-            if (user != null)
+
+            if (user == null)
             {
-                ViewBag.UserEarnings = user.Earnings;
+                ErrorMessage.ErrorCode = ErrorCode.UNKNOWN;
+                return View("ErrorMessage", ErrorMessage);
             }
+
+            ViewBag.UserEarnings = user.Earnings;
+
             return PartialView(db.Messages.Where(m => m.To == User.Identity.Name || m.From == User.Identity.Name).ToList());
         }
 
