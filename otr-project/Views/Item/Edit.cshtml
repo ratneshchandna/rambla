@@ -1,0 +1,357 @@
+﻿@model otr_project.Models.ItemModel
+
+@{
+    ViewBag.Title = "Rambla | Edit " + Model.Name;
+}
+
+@{
+    var categoryList = Session["CategoryId"] as SelectList;
+    var agreementList = Session["AgreementId"] as SelectList;
+    var regionList = Session["RegionId"] as SelectList;
+}
+
+@using (Html.BeginForm("Edit", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row-fluid page_title">
+        <div class="span7">
+            <h1>Edit Your Item</h1>
+        </div>
+        <div class="span2">
+            <a href="~/Item/Delete/@Model.Id" class="btn btn-danger">Delete This Item</a>
+            <!--@Html.ActionLink("Delete Item", "Delete", new { id = Model.Id })-->
+        </div>
+        <div class="span3"></div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12 no-min-height" id="form_validation_summary">
+            @Html.ValidationSummary(true, "Oops. Looks like we have had some trouble. Please correct the errors and try again.")
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span9 well">
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Item</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field form_row">
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.UserModelEmail)
+                        @Html.HiddenFor(model => model.ImageCount)
+                        @Html.HiddenFor(model => model.DateCreated)
+
+                        @Html.TextBoxFor(m => m.Name)
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Category</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        @Html.DropDownList("CategoryId", categoryList, "Select One", new { onchange = "CategoryColour()" })
+                        @Html.ValidationMessageFor(m => m.CategoryId)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Description</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        @Html.TextAreaFor(m => m.Desc)
+                        @Html.ValidationMessageFor(m => m.Desc)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Price / day (CAD)</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        @Html.TextBoxFor(m => m.CostPerDay, new { placeholder = "e.g. 20" })
+                        @Html.ValidationMessageFor(m => m.CostPerDay)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Security Deposit (CAD)</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        @Html.TextBoxFor(m => m.SecurityDeposit, new { placeholder = "e.g. 400" })
+                        @Html.ValidationMessageFor(m => m.SecurityDeposit)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>
+                        Picture of Item
+                    </strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        <input type="file" name="file" id="upload_item_picture_input"/>
+                        (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Blackout Dates</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        <div id="multiple_datepicker"></div>
+                        <input id="datepicker" name="datepicker" type="hidden" />
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div id="item_pictures">
+                    @{
+                        if (Model.ItemImages.Count != 0)
+                        {
+                            int count = 0;
+                            foreach (var i in Model.ItemImages)
+                            {
+                                count++;
+                                <div class="item_thumbnail_container">
+                                    <img src="@Url.Content("~/Item/GetItemImage/" + i.Id)" id="image-@count" class="item_thumbnail"/>
+                                    <a id="DeleteImage" data_id="@count">
+                                        Delete
+                                    </a>
+                                </div>
+                                <input id="ImageID-@count" type="hidden" value="@i.Id" />
+                                <input id="ItemID-@count" type="hidden" value="@Model.Id" />
+                            }
+                            <div id="item_thumbnail_container_last"></div>
+                        }
+                        else
+                        {
+                            <p>
+                                You've not uploaded any images of @Model.Name
+                            </p>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span12 form_subheading_container">
+                    <div id="form_subheading_filler_left"></div>
+                    <div class="form_subheading">
+                        <strong>Pickup Location</strong>
+                    </div>
+                    <div id="form_subheading_filler_right"></div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Address 1</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        <input type="text" name="PLStreetAddress1" id="PLStreetAddress1" value="@Model.PickupLocation.StreetAddress1"/>
+                        @Html.ValidationMessageFor(m => m.PickupLocation.StreetAddress1)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Address 2</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        <input type="text" name="PLStreetAddress2" id="PLStreetAddress2" value="@Model.PickupLocation.StreetAddress2"/>
+                        @Html.ValidationMessageFor(m => m.PickupLocation.StreetAddress2)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>City</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        <input type="text" name="PLCity" id="PLCity" value="@Model.PickupLocation.City"/>
+                        @Html.ValidationMessageFor(m => m.PickupLocation.City)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Province</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        @Html.DropDownList("RegionId", regionList, "Select One", new { onchange = "RegionColour()" })
+                        @Html.ValidationMessageFor(m => m.ItemRegion.Id)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Postal Code</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        <input type="text" name="PLPostalCode" id="PLPostalCode" value="@Model.PickupLocation.PostalCode"/>
+                        @Html.ValidationMessageFor(m => m.PickupLocation.PostalCode)
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12 center">
+                    <input class="btn-large btn-primary" type="submit" value="Update" />
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="row-fluid">
+                <div id="right_panel" class="span12 accordion">
+                    <h2>Q&A</h2>
+                    <div class="QnA accordion-group">
+                        <div class="accordion-heading" id="Q1">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#right_panel" href="#A1">Is it free to list?</a>
+                        </div>
+                        <div class=" accordion-body collapse" id="A1">
+                            <div class="accordion-inner">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi 
+                                ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
+                                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim 
+                                id est laborum.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="QnA accordion-group">
+                        <div class="accordion-heading" id="Q2">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#right_panel" href="#A2">Is Rambla safe?</a>
+                        </div>
+                        <div class="accordion-body collapse" id="A2">
+                            <div class="accordion-inner">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi 
+                                ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
+                                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim 
+                                id est laborum.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="QnA accordion-group">
+                        <div class="accordion-heading" id="Q3">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#right_panel" href="#A3">Who will be using my items?</a>
+                        </div>
+                        <div class="accordion-body collapse" id="A3">
+                            <div class="accordion-inner">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi 
+                                ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
+                                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim 
+                                id est laborum.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="QnA accordion-group">
+                        <div class="accordion-heading" id="Q4">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#right_panel" href="#A4">What if the renter never returns my item?</a>
+                        </div>
+                        <div class="accordion-body collapse" id="A4">
+                            <div class="accordion-inner">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi 
+                                ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
+                                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+                                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim 
+                                id est laborum.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="@Url.Content("~/Scripts/dropdown-colour.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var addedDates;
+    var disabledDates;
+    var imageCount = @(Model.ItemImages.Count());
+
+    function renderDatePicker(adates, ddates) {
+        if (adates.length == 0) {
+            $("#multiple_datepicker").multiDatesPicker({
+                altField: '#datepicker'
+            });
+        }
+        else {
+            $("#multiple_datepicker").multiDatesPicker({
+                altField: '#datepicker',
+                addDates: addedDates
+                //addDisabledDates: disabledDates
+            });
+        }
+    }
+
+    $(function () {
+        $("#item_pictures a").click(function () {
+            var imageToDelete = $(this).attr("data_id");
+            imageCount--;
+
+            $.post('@Url.Content("~/Item/DeleteImageFromItem")',
+                {
+                    "id": $("#ItemID-" + imageToDelete).attr("value"),
+                    "image": $("#ImageID-" + imageToDelete).attr("value")
+                },
+                function (data) {
+                    // Successful requests get here
+                    // Update the page elements
+                    if (data.Value == false) {
+                        $("#image-" + imageToDelete).parent().fadeOut('slow', function () {
+                            if (imageCount == 0) {
+                                $('#item_thumbnail_container_last').html("<p id=\"no_images_left_message\">You've deleted all images of @Model.Name</p>");
+                            }
+                        });
+                        /*$("#image-" + imageToDelete).parent().fadeOut('slow', function () {
+                        if ($("#image-" + imageToDelete).parent().attr('id') == "item_thumbnail_container_last") {
+                        $("#image-" + imageToDelete).parent().prev().prev().prev().attr('id', 'item_thumbnail_container_last');
+                        }
+                        });
+                        $('#update-message').text(data.Message);*/
+                    }
+                }
+            );
+        });
+    });
+
+
+    $(function () {
+        $.post('@Url.Content("~/Item/GetBlackOutDates/" + Model.Id)', function (data) {
+            //call back happens here.
+            addedDates = data;
+            $.post('@Url.Content("~/Item/GetBookedDates/" + Model.Id)', function (data) {
+                //call back happens here.
+                disabledDates = data;
+                renderDatePicker(addedDates, disabledDates);
+            });
+        });
+
+        CategoryColour();
+        //AgreementColour();
+        RegionColour();
+    });
+</script>

@@ -1,0 +1,221 @@
+﻿.text-box (@txt-box-width) {
+    color: @color-text-primary;
+    background-color: @color-bg;
+    outline-color: transparent;
+
+	border: 1px solid @color-border;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-box-shadow: 1px 0 1px 0 @color-textbox-shadow, -1px 0 1px 0 @color-textbox-shadow, 0 1px 3px 0 @color-textbox-shadow;
+
+	width: @txt-box-width;
+    //padding: 0.4em;
+    //line-height: @line-height;
+	
+	//font-family: @font-family-main;
+    //font-size: @font-size-small;
+    
+    cursor: text;
+}
+
+.drop-down (@dropdown-width) {
+    color: @color-text-primary;
+	background-color: @color-bg;
+	outline-color: transparent;
+	//background: white url("images/1.jpg");
+	//background-repeat: no-repeat;
+	//background-position: 97%;
+	//-webkit-appearance: none;
+
+    border: 2px solid @color-border;
+    -webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-box-shadow: 1px 0 2px 0 @color-textbox-shadow, -1px 0 2px 0 @color-textbox-shadow;
+
+    width: @dropdown-width;
+	padding: 1px 0;
+    //line-height: @line-height;
+    
+    //font-family: @font-family-main;
+    //font-size: @font-size-small;
+}
+
+.vertical_padding (@top, @bottom){
+	padding-top: @top;
+	padding-bottom: @bottom;
+}
+
+.horizontal_padding (@left, @right){
+	padding-left: @left;
+	padding-right: @right;
+}
+
+.center
+{
+	text-align: center;
+}
+
+.row-fluid .no-min-height {
+	min-height: 0;
+}
+
+
+
+
+
+
+
+/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+/* Mixin Declarations
+----------------------------------------------------------------------------------------------------*
+/* To create horizontal 50%-50% gradients *
+.gradient (@fore-color, @bg-color) {
+    background-color: @bg-color;
+    background-repeat: repeat-x;
+    background-image: -moz-linear-gradient(top,@fore-color 0,@bg-color 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,@fore-color),color-stop(100%,@bg-color));
+    background-image: -webkit-linear-gradient(top,@fore-color 0,@bg-color 100%);
+    background-image: -ms-linear-gradient(top,@fore-color 0,@bg-color 100%);
+    background-image: -o-linear-gradient(top,@fore-color 0,@bg-color 100%);
+    background-image: linear-gradient(top,@fore-color 0,@bg-color 100%);
+}
+
+/* For all medium sized buttons *
+.button-medium (@fore-color, @bg-color, @font-sz, @line-ht, @bt-width)
+{
+    cursor: pointer;
+    color: white;
+    width: @bt-width;
+    font-family: @font-family-main;
+    font-size: @font-sz;
+    font-weight: bold;
+    line-height: @line-ht;
+    text-align:center;
+    text-decoration:none;
+    text-shadow: 0 1px 1px @bg-color;
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+    border: 1px solid @fore-color;
+    .gradient (@fore-color, @bg-color);
+    -webkit-box-shadow: 0 1px 0 @fore-color;
+    -moz-box-shadow: 0 1px 0 @fore-color;
+    box-shadow: 0 1px 0 @fore-color;
+}
+
+.header-container (@fore-color, @bg-color, @font-sz, @line-ht, @cntr-width)
+{
+    width: @cntr-width;
+    font-family: @font-family-main;
+    font-size: @font-sz;
+    font-weight: bold;
+    line-height: @line-ht;
+    text-decoration:none;
+    border: 0px solid @fore-color;
+    .gradient (@fore-color, @bg-color);
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+}
+
+/* For all form text boxes *
+.text-box (@txt-box-width) {
+    color: @color-text;
+    width: @txt-box-width;
+    padding: 0.4em;
+    font-family: @font-family-main;
+    font-size: @font-size-small;
+    line-height: @line-height;
+    background-color: white;
+    border: 2px solid @color-primary-two;
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+    outline-color:transparent;
+    cursor: text;
+}
+
+.text-box-medium (@txt-box-width) {
+    color: @color-text;
+    width: @txt-box-width;
+    padding: 0.33em;
+    font-family: @font-family-main;
+    font-size: @font-size-medium;
+    line-height: @line-height;
+    background-color: white;
+    border: 2px solid @color-primary-two;
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+    outline-color:transparent;
+    cursor: text;
+}
+
+
+/* For all form text box hover / focus effects *
+.text-box-hover{
+    border: 2px solid @color-secondary-two;
+}
+
+/* For all form drop downs *
+.drop-down (@txt-box-width) {
+    color: @color-text;
+    width: @txt-box-width;
+    padding: 0.4em;
+    font-family: @font-family-main;
+    font-size: @font-size-small;
+    line-height: @line-height;
+    background-color: white;
+    border: 2px solid @color-primary-two;
+	//-webkit-appearance: none;
+	//background: white url("images/1.jpg");
+	//background-repeat: no-repeat;
+	//background-position: 97%;
+    //-webkit-border-radius: 0.4em;
+	//-moz-border-radius: 0.4em;
+	//border-radius: 0.4em;
+    outline-color:transparent;
+}
+
+/* For all form drop down hover / focus effects *
+.drop-down-hover{
+    border: 2px solid @color-secondary-two;
+}
+
+/* For line dividders *
+.line-divider
+{
+    border-right-width: 1px;
+    border-right-color: @color-primary-two;
+    border-right-style: inset;
+}*/
+
+/* For all background boxes with a shadow *
+.background-box-with-shadow
+{
+    -webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+	background-color: @color-bg-container;
+    .text-box-hover;
+}
+
+.guide-container
+{
+	padding: 5px 5px 5px 5px;
+	background-color: @color-text;
+	color: @color-text-inverted;
+	text-align: center;
+	-webkit-border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+}
+
+.image-thumbnail {
+	width: auto;
+	height: 100px;
+	padding: 10px;
+}
+*/
