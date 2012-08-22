@@ -43,6 +43,9 @@ namespace otr_project.Controllers
 
             ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", user.RegionId);
             ViewBag.UserEarnings = user.Earnings;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            ViewBag.ProfilePicture = (user.ProfilePicture != null);
+            ViewBag.Name = user.FirstName + " " + user.LastName;
 
             return View("Dashboard", user);
         }
@@ -68,7 +71,12 @@ namespace otr_project.Controllers
             if (user.Items.Count() == 0)
                 return RedirectToAction("Index", "Home");
             */
+
             ViewBag.UserEarnings = user.Earnings;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            ViewBag.ProfilePicture = (user.ProfilePicture != null);
+            ViewBag.Name = user.FirstName + " " + user.LastName;
+
             return View(user.Items.ToList());
         }
 
@@ -90,8 +98,14 @@ namespace otr_project.Controllers
             if (user.Items.Count() == 0)
                 return RedirectToAction("Index", "Home");
             */
+
             var orders = db.Orders.Where(u => u.User.Email == user.Email && u.Confirmed == true).ToList();
+
             ViewBag.UserEarnings = user.Earnings;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            ViewBag.ProfilePicture = (user.ProfilePicture != null);
+            ViewBag.Name = user.FirstName + " " + user.LastName;
+
             return View(orders);
         }
 
@@ -100,18 +114,21 @@ namespace otr_project.Controllers
         [Authorize]
         public ActionResult Edit()
         {
-            UserModel usermodel = db.Users.Find(User.Identity.Name);
+            UserModel user = db.Users.Find(User.Identity.Name);
 
-            if (usermodel == null)
+            if (user == null)
             {
                 ErrorMessage.ErrorCode = ErrorCode.UNKNOWN;
                 return View("ErrorMessage", ErrorMessage);
             }
 
-            ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", usermodel.RegionId);
-            ViewBag.UserEarnings = usermodel.Earnings;
-            
-            return View(usermodel);
+            ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", user.RegionId);
+            ViewBag.UserEarnings = user.Earnings;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            ViewBag.ProfilePicture = (user.ProfilePicture != null);
+            ViewBag.Name = user.FirstName + " " + user.LastName;
+
+            return View(user);
         }
 
         //
@@ -340,6 +357,9 @@ namespace otr_project.Controllers
             }
 
             ViewBag.UserEarnings = user.Earnings;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            ViewBag.ProfilePicture = (user.ProfilePicture != null);
+            ViewBag.Name = user.FirstName + " " + user.LastName;
 
             return View("Inbox", db.Messages.Where(m => m.To == User.Identity.Name || m.From == User.Identity.Name).ToList());
         }
@@ -357,6 +377,9 @@ namespace otr_project.Controllers
             }
 
             ViewBag.UserEarnings = user.Earnings;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            ViewBag.ProfilePicture = (user.ProfilePicture != null);
+            ViewBag.Name = user.FirstName + " " + user.LastName;
 
             return PartialView(db.Messages.Where(m => m.To == User.Identity.Name || m.From == User.Identity.Name).ToList());
         }
