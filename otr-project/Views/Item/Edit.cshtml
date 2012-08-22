@@ -17,7 +17,7 @@
             <h1>Edit Your Item</h1>
         </div>
         <div class="span2">
-            <a href="~/Item/Delete/@Model.Id" class="btn btn-danger">Delete This Item</a>
+            <a href="~/Item/Delete/@Model.Id" class="btn btn-danger"><i class="icon-trash icon-white"></i> Delete This Item</a>
             <!--@Html.ActionLink("Delete Item", "Delete", new { id = Model.Id })-->
         </div>
         <div class="span3"></div>
@@ -103,17 +103,6 @@
                 </div>
             </div>
             <div class="row-fluid form_row">
-                <div class="span4 input_label">
-                    <strong>Blackout Dates</strong>
-                </div>
-                <div class="span8">
-                    <div class="input_field">
-                        <div id="multiple_datepicker"></div>
-                        <input id="datepicker" name="datepicker" type="hidden" />
-                    </div>
-                </div>
-            </div>
-            <div class="row-fluid form_row">
                 <div id="item_pictures">
                     @{
                         if (Model.ItemImages.Count != 0)
@@ -142,6 +131,18 @@
                     }
                 </div>
             </div>
+            <div class="row-fluid form_row">
+                <div class="span4 input_label">
+                    <strong>Blackout Dates</strong>
+                </div>
+                <div class="span8">
+                    <div class="input_field">
+                        <div id="multiple_datepicker"></div>
+                        <input id="datepicker" name="datepicker" type="hidden" />
+                    </div>
+                </div>
+            </div>
+
             <div class="row-fluid form_row">
                 <div class="span12 form_subheading_container">
                     <div id="form_subheading_filler_left"></div>

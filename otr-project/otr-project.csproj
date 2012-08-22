@@ -305,7 +305,7 @@
     <Content Include="Views\Item\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\Edit.cshtml" />
@@ -441,9 +441,12 @@
     <Content Include="Content\input.less" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\fonts\Archer-Bold-Pro.otf" />
-    <None Include="Content\fonts\Archer-Medium-Pro.otf" />
-    <None Include="Content\fonts\Archer-Semibold-Pro.otf" />
+    <Content Include="Content\fonts\Archer-Bold-Pro.otf" />
+    <Content Include="Content\fonts\Archer-Medium-Pro.otf" />
+    <Content Include="Content\fonts\Archer-Semibold-Pro.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LayoutAccount.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

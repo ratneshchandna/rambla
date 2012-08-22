@@ -1,12 +1,13 @@
 ﻿@model otr_project.Models.UserModel
 
 @{
-    ViewBag.Title = "Rambla | Account Details";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    ViewBag.Title = "Rambla | " + @Model.FirstName + "'s Dashboard";
+    ViewBag.AccountPageTitle = "Dashboard";
 }
 
-<div class = "container_12">
+<!--div class = "container_12">
     <div class="header_to_body_gap"></div>
-    <!----- Account Dashboard ----->
     <div class="grid_12" id = "my_account_dashboard">
         <ul class="user_nav_links">
             <li class="user_navbar">@Html.ActionLink("Agreements", "Agreements", "User")</li>
@@ -113,4 +114,4 @@
             </div>
         </div>
     }
-</div>
+</div-->
