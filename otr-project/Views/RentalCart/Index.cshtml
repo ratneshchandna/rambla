@@ -229,86 +229,95 @@ else
         <h1>Your rental cart</h1>
     </div>
     <div class="row-fluid">
-        <div class="span9 well border-up-down">
-            <div class="row-fluid vpad10">
-                <div class="span1 center">
-                    Remove
-                </div>
-                <div class="span2 center">
-                    Item Details
-                </div>
-                <div class="span2 center">
-                    Pickup Date
-                </div>
-                <div class="span2 center">
-                    Return Date
-                </div>
-                <div class="span2 center">
-                    Price/Day
-                </div>
-                <div class="span1 center">
-                    Days
-                </div>
-                <div class="span1 center">
-                    Deposit
-                </div>
-                <div class="span1 center">
-                    Total
-                </div>
-            </div>
-            @foreach (otr_project.Models.CartItemModel item in Model.CartItems)
-            {
-                <div id="row-@item.id" class="row-fluid vpad10 border-up-down">
-                    <div class="span1 center auto-height">
-                        <a href="#" id="RemoveLink" class="RemoveLink btn btn-small btn-warning" data-id="@item.id">
-                            <i class="icon-trash"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="span2 center">
-                        @Html.ActionLink(item.Item.Name, "Details", "Item", new { id = item.Item.Id }, null)  
-                                                           
-                        @if (item.Item.ItemImages.Count > 0)
-                        {
-                            <img class="span12" src="@Url.Content("~/Item/GetItemImage/" + item.Item.ItemImages.ToList()[0].Id)" />
-                        }
-                        else
-                        {
-                            <img class="span12" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
-                        }
-                    </div> 
-                    <div class="span2 center">
-                        <input id="pickupdate-@item.id" name="pickupdate-@item.id" class="datepicker span12" type="text" value="@item.PickupDate.Date.ToString("dd-MMMM-yy")" data-id="@item.id" item-id="@item.Item.Id" />
+        <div class="span9">
+            <div class="span12 well border-up-down">
+                <div class="row-fluid vpad10">
+                    <div class="span1 center">
+                        Remove
                     </div>
                     <div class="span2 center">
-                        <input id="dropoffdate-@item.id" name="dropoffdate-@item.id" class="datepicker span12" type="text" value="@item.DropoffDate.Date.ToString("dd-MMMM-yy")" data-id="@item.id" item-id="@item.Item.Id" />
+                        Item Details
                     </div>
                     <div class="span2 center">
-                        <p>@item.Item.CostPerDay.ToString("C")</p>
+                        Pickup Date
+                    </div>
+                    <div class="span2 center">
+                        Return Date
+                    </div>
+                    <div class="span2 center">
+                        Price/Day
                     </div>
                     <div class="span1 center">
-                        <p id="item-count-@item.id">@((item.DropoffDate - item.PickupDate).Days)</p>
+                        Days
                     </div>
-                    <div class="span1 pull-right">
-                        <p>@item.Item.SecurityDeposit.ToString("C")</p>
+                    <div class="span1 center">
+                        Deposit
                     </div>
-                    <div class="span1 pull-right">
-                        <p id="item-total-@item.id">@item.itemTotal.ToString("C")</p>
+                    <div class="span1 center">
+                        Total
                     </div>
                 </div>
-            }
-            <div class="row-fluid vpad10 border-up-down">
-                <div class="span10 hright">
-                    <strong>Cart Total:</strong>
+                @foreach (otr_project.Models.CartItemModel item in Model.CartItems)
+                {
+                    <div id="row-@item.id" class="row-fluid vpad10 border-up-down">
+                        <div class="span1 center auto-height">
+                            <a href="#" id="RemoveLink" class="RemoveLink btn btn-small btn-warning" data-id="@item.id">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </div>
+                    
+                        <div class="span2 center">
+                            @Html.ActionLink(item.Item.Name, "Details", "Item", new { id = item.Item.Id }, null)  
+                                                           
+                            @if (item.Item.ItemImages.Count > 0)
+                            {
+                                <img class="span12" src="@Url.Content("~/Item/GetItemImage/" + item.Item.ItemImages.ToList()[0].Id)" />
+                            }
+                            else
+                            {
+                                <img class="span12" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                            }
+                        </div> 
+                        <div class="span2 center">
+                            <input id="pickupdate-@item.id" name="pickupdate-@item.id" class="datepicker span12" type="text" value="@item.PickupDate.Date.ToString("dd-MMMM-yy")" data-id="@item.id" item-id="@item.Item.Id" />
+                        </div>
+                        <div class="span2 center">
+                            <input id="dropoffdate-@item.id" name="dropoffdate-@item.id" class="datepicker span12" type="text" value="@item.DropoffDate.Date.ToString("dd-MMMM-yy")" data-id="@item.id" item-id="@item.Item.Id" />
+                        </div>
+                        <div class="span2 center">
+                            <p>@item.Item.CostPerDay.ToString("C")</p>
+                        </div>
+                        <div class="span1 center">
+                            <p id="item-count-@item.id">@((item.DropoffDate - item.PickupDate).Days)</p>
+                        </div>
+                        <div class="span1 pull-right">
+                            <p>@item.Item.SecurityDeposit.ToString("C")</p>
+                        </div>
+                        <div class="span1 pull-right">
+                            <p id="item-total-@item.id">@item.itemTotal.ToString("C")</p>
+                        </div>
+                    </div>
+                }
+                <div class="row-fluid vpad10 border-up-down">
+                    <div class="span10 hright">
+                        <strong>Cart Total:</strong>
+                    </div>
+                    <div class="span2 hright">
+                        <p id="cart-total">@Model.CartTotal.ToString("C")</p>
+                    </div>
                 </div>
-                <div class="span2 hright">
-                    <p id="cart-total">@Model.CartTotal.ToString("C")</p>
+                <div class="row-fluid vpad10">
+                    <div class="span12 alert alert-error" style="display:none">
+                        <button id="alert-close" type="button" class="close">×</button>
+                        <p id="update-message"></p>
+                    </div>
                 </div>
             </div>
-            <div class="row-fluid vpad10">
-                <div class="span12 alert alert-error" style="display:none">
-                    <button id="alert-close" type="button" class="close">×</button>
-                    <p id="update-message"></p>
+            <div class="row-fluid">
+                <div class="span12">
+                    <form class="form-inline pull-right" action='@Url.Content("~/CheckOut/PayPalCheckOut")' method='post'>
+                        <input type='image' name='submit' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif' alt='Check out with PayPal'/>
+                    </form>
                 </div>
             </div>
         </div>
