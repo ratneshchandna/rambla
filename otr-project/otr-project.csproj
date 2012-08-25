@@ -200,7 +200,12 @@
     <Content Include="Content\images\default_item_image.jpg" />
     <Content Include="Content\images\empty_cart.jpg" />
     <Content Include="Content\images\empty_profile_picture.png" />
+    <Content Include="Content\images\home_form_bg.png" />
     <Content Include="Content\images\Logo.png" />
+    <Content Include="Content\images\rambla_bg\img1.jpg" />
+    <Content Include="Content\images\rambla_bg\img2.jpg" />
+    <Content Include="Content\images\rambla_bg\img3.jpg" />
+    <Content Include="Content\images\rambla_bg\img4.jpg" />
     <Content Include="Content\images\search_icon.png" />
     <Content Include="Content\images\img1.png" />
     <Content Include="Content\images\img2.png" />
@@ -447,6 +452,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Pages\home.less" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

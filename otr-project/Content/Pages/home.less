@@ -1,53 +1,61 @@
-﻿.border-right{
-	border-right: 1px;
-	border-right-style: solid;
-	padding-right: 10px;
-	border-right-color: #DDD;
+﻿#myCarousel{
+	z-index: -999;
+	min-height: 100%;
+	min-width: 1024px;
+	width: 100%;
+	height: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
 }
 
-.search-thumbnail-image{
-	height: 180px;
-	width: 260px;
-	max-width: 100%;
+.home-background { 
+	z-index: -999;
+	min-height: 100%;
+	min-width: 1024px;
+	width: 100%;
+	height: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
 }
 
-.search-thumbnail-image-small{
-	height: 152px;
-	width: 260px;
-	max-width: 100%;
+.home-content-wrapper {
+	position: relative;
+	width: 800px;
+	min-height: 400px;
+	margin: 100px auto;
+	color: #333;
 }
 
-.search-price-banner{
-	background-color: Gray;
-	color: White;
+body .home-body-container
+{
+	width: 96%;
+	padding-left: 2%;
+	padding-right: 2%;
+	padding-top: 100px;
 }
 
-.item-conflict-banner{
-	background-color: Blue;
-	color: White;
+.home-form-wrapper{
+	background-image: url(../images/home_form_bg.png);
+	background-repeat: no-repeat;
+	opacity:0.9;
+	min-height: 300px;
+	-webkit-box-shadow: 2px 2px 5px @color-box-shadow, -2px 2px 5px @color-box-shadow;
+	-moz-box-shadow: 2px 2px 5px @color-box-shadow, -2px 2px 5px @color-box-shadow;
 }
 
-.max-height-limit{
-	max-height: 280px;
+.shadowy{
+	text-shadow: 1px 1px @color-box-shadow;
 }
 
-.search-item{
-	cursor: pointer;
+.color-blue{
+	color: @color-text-tertiary;
 }
 
-.search-item-hover{
-	border: 1px;
-	border-color: @color-text-quaternary;
-	border-style: solid;
-	-webkit-box-shadow: 0 0 1px 1px #FF0084;
+.color-pink{
+	color: @color-text-quaternary;
 }
-
-
-
-
-
-
-
 
 
 
