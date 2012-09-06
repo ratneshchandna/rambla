@@ -43,9 +43,13 @@ namespace otr_project.Controllers
 
             ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", user.RegionId);
             ViewBag.UserEarnings = user.Earnings;
-            ViewBag.isFacebookUser = user.isFacebookUser;
             ViewBag.ProfilePicture = (user.ProfilePicture != null);
             ViewBag.Name = user.FirstName + " " + user.LastName;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            if (user.isFacebookUser)
+            {
+                ViewBag.FacebookId = user.FacebookProfile.Id;
+            }
 
             return View("Dashboard", user);
         }
@@ -73,9 +77,13 @@ namespace otr_project.Controllers
             */
 
             ViewBag.UserEarnings = user.Earnings;
-            ViewBag.isFacebookUser = user.isFacebookUser;
             ViewBag.ProfilePicture = (user.ProfilePicture != null);
             ViewBag.Name = user.FirstName + " " + user.LastName;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            if (user.isFacebookUser)
+            {
+                ViewBag.FacebookId = user.FacebookProfile.Id;
+            }
 
             return View(user.Items.ToList());
         }
@@ -102,9 +110,13 @@ namespace otr_project.Controllers
             var orders = db.Orders.Where(u => u.User.Email == user.Email && u.Confirmed == true).ToList();
 
             ViewBag.UserEarnings = user.Earnings;
-            ViewBag.isFacebookUser = user.isFacebookUser;
             ViewBag.ProfilePicture = (user.ProfilePicture != null);
             ViewBag.Name = user.FirstName + " " + user.LastName;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            if (user.isFacebookUser)
+            {
+                ViewBag.FacebookId = user.FacebookProfile.Id;
+            }
 
             return View(orders);
         }
@@ -124,9 +136,13 @@ namespace otr_project.Controllers
 
             ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", user.RegionId);
             ViewBag.UserEarnings = user.Earnings;
-            ViewBag.isFacebookUser = user.isFacebookUser;
             ViewBag.ProfilePicture = (user.ProfilePicture != null);
             ViewBag.Name = user.FirstName + " " + user.LastName;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            if (user.isFacebookUser)
+            {
+                ViewBag.FacebookId = user.FacebookProfile.Id;
+            }
 
             return View(user);
         }
@@ -139,10 +155,16 @@ namespace otr_project.Controllers
         {
             try
             {
-                ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", usermodel.RegionId);
-                
                 var user = db.Users.SingleOrDefault(u => u.Email == User.Identity.Name);
+                ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", usermodel.RegionId);
+                ViewBag.Name = usermodel.FirstName + " " + usermodel.LastName;
                 ViewBag.UserEarnings = user.Earnings;
+                ViewBag.ProfilePicture = (user.ProfilePicture != null);
+                ViewBag.isFacebookUser = user.isFacebookUser;
+                if (user.isFacebookUser)
+                {
+                    ViewBag.FacebookId = user.FacebookProfile.Id;
+                }
 
                 foreach (string inputTagName in Request.Files)
                 {
@@ -202,6 +224,8 @@ namespace otr_project.Controllers
                     Session["USER_F_NAME"] = usermodel.FirstName;
                     return RedirectToAction("Index");
                 }
+
+
                 return View(usermodel);
             }
             catch (Exception ex)
@@ -357,9 +381,13 @@ namespace otr_project.Controllers
             }
 
             ViewBag.UserEarnings = user.Earnings;
-            ViewBag.isFacebookUser = user.isFacebookUser;
             ViewBag.ProfilePicture = (user.ProfilePicture != null);
             ViewBag.Name = user.FirstName + " " + user.LastName;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            if (user.isFacebookUser)
+            {
+                ViewBag.FacebookId = user.FacebookProfile.Id;
+            }
 
             return View("Inbox", db.Messages.Where(m => m.To == User.Identity.Name || m.From == User.Identity.Name).ToList());
         }
@@ -377,9 +405,13 @@ namespace otr_project.Controllers
             }
 
             ViewBag.UserEarnings = user.Earnings;
-            ViewBag.isFacebookUser = user.isFacebookUser;
             ViewBag.ProfilePicture = (user.ProfilePicture != null);
             ViewBag.Name = user.FirstName + " " + user.LastName;
+            ViewBag.isFacebookUser = user.isFacebookUser;
+            if (user.isFacebookUser)
+            {
+                ViewBag.FacebookId = user.FacebookProfile.Id;
+            }
 
             return PartialView(db.Messages.Where(m => m.To == User.Identity.Name || m.From == User.Identity.Name).ToList());
         }
@@ -459,6 +491,13 @@ namespace otr_project.Controllers
             if (user != null)
             {
                 ViewBag.UserEarnings = user.Earnings;
+                ViewBag.ProfilePicture = (user.ProfilePicture != null);
+                ViewBag.Name = user.FirstName + " " + user.LastName;
+                ViewBag.isFacebookUser = user.isFacebookUser;
+                if (user.isFacebookUser)
+                {
+                    ViewBag.FacebookId = user.FacebookProfile.Id;
+                }
             }
             return View();
         }
