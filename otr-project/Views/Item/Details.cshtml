@@ -73,7 +73,7 @@
                                 else
                                 {
                                     <li class="span3">
-                                        <a href="#" class="thumbnail">
+                                        <a href="#" class="thumbnail sub-image">
                                             <img src="@Url.Content("~/Item/GetItemImage/" + i.Id)" alt="">
                                         </a>
                                     </li>
@@ -226,7 +226,7 @@
             //call back happens here.
             bOutDates = data;
         });
-        
+
         var dates = $(".datepicker").datepicker({
             minDate: 1,
             dateFormat: "d MM, yy",
@@ -247,6 +247,13 @@
                     dates.not(this).datepicker("option", option, newDate);
                 }
             }
+        });
+
+        $(".sub-image").click(function () {
+            var main_image = $('.main-image').attr('src');
+            var thumb_image = $(this).children("img").attr("src");
+            $(this).children("img").attr("src", main_image);
+            $('.main-image').attr('src', thumb_image);
         });
     });
 </script>
