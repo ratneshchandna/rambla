@@ -6,121 +6,70 @@
     ViewBag.AccountPageTitle = "Edit Your Profile";
 }
 
-<div class = "container_12">
-    <!--div class="header_to_body_gap"></div>
-    <div class="grid_12" id = "my_account_dashboard">
-        <ul class="user_nav_links">
-            <li class="user_navbar">@Html.ActionLink("Agreements", "Agreements", "User")</li>
-            <li class="user_navbar">@Html.ActionLink("Borrowed", "ItemsBorrowed", "User")</li>
-            <li class="user_navbar">@Html.ActionLink("Listings", "Items", "User")</li>
-            <li class="user_navbar">@Html.ActionLink("Inbox", "MessageBox", "User")</li>
-            <li class="user_navbar">@Html.ActionLink("Profile", "Index", "User")</li>
-        </ul>
+<div id="edit-user-modal" class="modal">
+    <div class="modal-header">
+        <h3>Edit Profile</h3>
     </div>
-    <div class="clear">
-    &nbsp;</div-->
-
-    
+  
     @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <!--div class="grid_9">
-                <div id="User_Edit_Title" class="title_container_item_left">
-                    <h1>
-                        @(Model.FirstName + " " + Model.LastName)
-                    </h1>
-                    <h2 id="User_Edit_Subtitle" class="page_subtitle">
-                        Edit your profile information
-                    </h2>
-                </div>
-        </div>
-        <div class="grid_3">
-            <div class ="title_container_item_right">
-                <h2>
-                    Earnings: @ViewBag.UserEarnings.ToString("C")
-                </h2>
-            </div>
-        </div>
-        <div class="clear">
-        &nbsp;</div-->
-        <div class="grid_12">
-                <div id="user-edit-container" class="container">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="editor-label">
-                                            @Html.ValidationSummary(true)
-                                            @if (Model.isFacebookUser == true)
-                                            {
-                                                <img src="http://graph.facebook.com/@Model.FacebookProfile.Id/picture?type=large" />
-                                            }
-                                            else if (Model.ProfilePicture != null)
-                                            {
-                                                <img src="@Url.Content("~/User/GetProfilePicture")" class="img_profile" />
-                                                <span class="form_label_small">
-                                                    Upload a new profile picture <br />
-                                                    <span class="de-emphasise">(Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)</span>
-                                                </span>
-                                                <input type="file" name="file" id="file" />
-                                            }
-                                            else
-                                            {
-                                                <img src="@Url.Content("~/Content/images/empty_profile_picture.png")" class="img_profile" />
-                                                <span class="form_label_small">
-                                                    Upload a profile picture <br />
-                                                    <span class="de-emphasise">(Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)</span>
-                                                </span>
-                                                <input type="file" name="file" id="file" class="upload_user_picture_input" />
-                                            }
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div id="Price_Box">
-                                            @Html.TextBoxFor(model => model.Email, new { type = "hidden" })
-                                            <div class="form_field">
-                                                @Html.TextBoxFor(model => model.FirstName, new { placeholder = "First Name" })
-                                                @Html.ValidationMessageFor(model => model.FirstName)
-                                            </div>
-                                            <div class="form_field">
-                                                @Html.TextBoxFor(model => model.LastName, new { placeholder = "Last Name" })
-                                                @Html.ValidationMessageFor(model => model.LastName)
-                                            </div>
-                                            <div class="form_field">
-                                                @Html.TextBoxFor(model => model.Address1, new { placeholder = "Address Line 1" })
-                                                @Html.ValidationMessageFor(model => model.Address1)
-                                            </div>
-                                            <div class="form_field">
-                                                @Html.TextBoxFor(model => model.Address2, new { placeholder = "Address Line 2" })
-                                                @Html.ValidationMessageFor(model => model.Address2)
-                                            </div>
-                                            <div class="form_field">
-                                                @Html.TextBoxFor(model => model.City, new { placeholder = "City" })
-                                                @Html.ValidationMessageFor(model => model.City)
-                                            </div>
-                                            <div class="form_dropdown">
-                                                @Html.DropDownList("RegionId", null, "Province", new { onchange = "RegionColour()" })
-                                            </div>
-                                            <div class="form_field">
-                                                @Html.TextBoxFor(model => model.PostalCode, new { placeholder = "Postal Code" })
-                                                @Html.ValidationMessageFor(model => model.PostalCode)
-                                            </div>
-                                            <div class="form_field">
-                                                @Html.TextBoxFor(model => model.CellPhone, new { placeholder = "Cell Phone # eg. 4161231234" })
-                                                @Html.ValidationMessageFor(model => model.CellPhone)
-                                            </div>
-                                            <div class="form_field">
-                                                @Html.TextBoxFor(model => model.HomePhone, new { placeholder = "Home Phone # eg. 4161231234" })
-                                                @Html.ValidationMessageFor(model => model.HomePhone)
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="btn_listit_page">
-                            <input type="submit" value="Update your profile" />
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="span6">
+                    @Html.ValidationSummary(true)
+                    @if (Model.isFacebookUser == true)
+                    {
+                        <img src="http://graph.facebook.com/@Model.FacebookProfile.Id/picture?type=large" class="span12" />
+                    }
+                    else if (Model.ProfilePicture != null)
+                    {
+                        <img src="@Url.Content("~/User/GetProfilePicture")" class="span12" />
+                        <strong>Upload a new profile picture</strong>
+                        <div class="input_field">
+                            <input type="file" name="file" id="file"/>
+                            (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
                         </div>
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/images/empty_profile_picture.png")" class="span12" />
+                        <strong>Upload a profile picture</strong>
+                        <div class="input_field">
+                            <input type="file" name="file" id="file"/>
+                            (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
+                        </div>
+                    }
+                </div>
+                <div class="span6">
+                    @Html.TextBoxFor(model => model.FirstName, new { placeholder = "First Name" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                        @Html.TextBoxFor(model => model.LastName, new { placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(model => model.LastName)
+                        @Html.TextBoxFor(model => model.Address1, new { placeholder = "Address Line 1" })
+                        @Html.ValidationMessageFor(model => model.Address1)
+                        @Html.TextBoxFor(model => model.Address2, new { placeholder = "Address Line 2" })
+                        @Html.ValidationMessageFor(model => model.Address2)
+                        @Html.TextBoxFor(model => model.City, new { placeholder = "City" })
+                        @Html.ValidationMessageFor(model => model.City)
+                        @Html.DropDownList("RegionId", null, "Province", new { onchange = "RegionColour()" })
+                        @Html.TextBoxFor(model => model.PostalCode, new { placeholder = "Postal Code" })
+                        @Html.ValidationMessageFor(model => model.PostalCode)
+                        @Html.TextBoxFor(model => model.CellPhone, new { placeholder = "Cell Phone # eg. 4161231234" })
+                        @Html.ValidationMessageFor(model => model.CellPhone)
+                        @Html.TextBoxFor(model => model.HomePhone, new { placeholder = "Home Phone # eg. 4161231234" })
+                        @Html.ValidationMessageFor(model => model.HomePhone)
                 </div>
             </div>
+        </div>
+        <div class="modal-footer">
+            <a href="@Url.Content("~/User")" class="btn">Cancel</a>
+            <input class="btn btn-primary" type="submit" value="Save" />
+        </div>
     }
 </div>
+
+<script>
+    $(function () {
+        $('#edit-user-modal').modal('toggle');
+    });
+</script>
