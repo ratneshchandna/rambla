@@ -7,21 +7,6 @@
         status: true, xfbml: true
     });
     FB.Event.subscribe('auth.login', function (response) {
-        //window.location.reload();
-        
-        $.post('@Url.Content("~/Account/LogOnAjaxFacebook")', function (data) {
-            //call back happens here.  Unblock form/show result
-            //var serialized = $('#basic-search').serialize();
-            if (data.Error == true) {
-                $('#error-message').html(data.Message);
-                //$('#Email').val("");
-                //$('#Password').val("");
-            }
-            else {
-                //Authentication successful
-                $("#logon_partial").fadeOut('slow');
-            }
-        });
-        
+        window.location.reload();
     });
 </script>
