@@ -20,7 +20,7 @@ different user account pages that we have.
             <div id="profile_pic">
                 @if (ViewBag.isFacebookUser == true)
                 {
-                    <img src="http://graph.facebook.com/@Model.FacebookProfile.Id/picture?type=large" class="img_profile" />
+                    <img src="http://graph.facebook.com/@ViewBag.FacebookId/picture?type=large" class="img_profile" />
                 }
                 else if (ViewBag.ProfilePicture == true)
                 {

@@ -1,4 +1,4 @@
-﻿.row-fluid .account_tab {
+﻿.row-fluid .table_tab {
 	background-color: @color-body-bg;
 
 	padding: 5px 5px 0 5px;
@@ -17,7 +17,7 @@
 	border-top-right-radius: 3px;
 }
 
-.row-fluid .account_body {
+.row-fluid .table_body {
 	background-color: @color-bg;
 
 	margin-top: -18px;
@@ -37,4 +37,27 @@
 	webkit-border-radius-bottom-right: 3px;
 	-moz-border-radius-bottom-right: 3px;
 	border-bottom-right-radius: 3px;
+}
+
+.items_table {
+	background: -moz-linear-gradient(top, @color-table-bg-light, @color-table-bg-dark);
+    background: -webkit-linear-gradient(top, @color-table-bg-light, @color-table-bg-dark);
+    background: linear-gradient(top, @color-table-bg-light, @color-table-bg-dark);
+	
+	border: 1px solid @color-border-table;
+	
+	word-wrap: break-word;
+}
+
+.row_item {
+	text-align: center;
+	
+	padding: 1em 0 0.5em 0;
+
+	border-bottom: 1px solid @color-border-table;
+}
+
+.row_heading {
+	.row_item;
+	font-weight: bold;
 }
