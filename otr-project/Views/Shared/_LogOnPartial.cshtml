@@ -1,0 +1,78 @@
+﻿@model otr_project.Models.LogOnModel
+<script type="text/javascript">
+    function doLoginAjax() {
+        // to fix checkbox issue - need to serialize when unchecked as well
+        var serialized = $('#logon_ajax').serialize();
+        /*
+        if(serialized.indexOf("requireImages") == -1)
+        {
+            serialized = serialized + "&requireImages=off";
+        }
+        */
+        $.post('@Url.Content("~/Account/LogOnAjax")', serialized, function (data) {
+            //call back happens here.  Unblock form/show result
+            //var serialized = $('#basic-search').serialize();
+            if (data.Error == true){
+                $('#error-message').html(data.Message);
+                $('#Email').val("");
+                $('#Password').val("");
+            }
+            else{
+                //Authentication successful
+                $("#login_form").fadeOut('slow');
+            }
+        });
+    }
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $("#btn_login").click(function (event) {
+            event.preventDefault();
+            doLoginAjax();
+        });
+    });
+</script>
+<div id="login_form">
+    <form id="logon_ajax" class="navbar-form pull-left">
+        @Html.ValidationSummary(true)
+        <div id="error-message"></div>
+        <input id="Email" type="text" class="input-medium" placeholder="Email" />
+        <input id="Password" type="password" class="input-medium" placeholder="Password" />
+        <button type="submit" class="btn">Login</button>
+    </form>
+    <!--
+    @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "logon_ajax"})) {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>LogOnModel</legend>
+            <div id="error-message"></div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.RememberMe)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.RememberMe)
+                @Html.ValidationMessageFor(model => model.RememberMe)
+            </div>
+
+            <p>
+                <input id="btn_login" type="submit" value="Login" />
+            </p>
+        </fieldset>
+    }
+    -->
+</div>
