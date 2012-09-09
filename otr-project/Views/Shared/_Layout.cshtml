@@ -75,7 +75,7 @@
     
     <!-- Header nav bar -->
     <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
+        <div class="navbar-inner custom-navbar-inner">
             <div class="container">
                 <!-- New login form is on all pages now and is running AJAX -->
                 <!--
@@ -93,7 +93,7 @@
                 -->
                 <!-- END: New login form is on all pages now and is running AJAX -->
                 <a class="brand span4" href="@Url.Content("~/")">
-                    <img src="@Url.Content("~/Content/images/Logo.png")" />
+                    <img class="tpad5" src="@Url.Content("~/Content/images/Rambla_Logo.png")" />
                 </a>
                 <div class="nav-collapse">
                     <ul class="nav">
@@ -106,7 +106,7 @@
                         <li class="divider-vertical"></li>
                         <li class="span3">
                             <form class="navbar-search" action="@Url.Content("~/Search/Index/1")" method="post">
-                                <p class="navbar-text">Search for items</p>
+                                <h3>Search for items</h3>
                                 <input id="search_box" name="search" type="text" class="search-query" placeholder="Eg. Drill, tent, basketball etc." />
                             </form>
                         </li>
