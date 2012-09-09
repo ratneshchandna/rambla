@@ -112,7 +112,10 @@
                         </li>
                         <li class="divider-vertical"></li>
                         <li class="header-elements">
-                            <a id="cart_num" href="@Url.Action("Index", "RentalCart")">Your Cart (@Session["RentalCartItems"])</a>
+                            <a id="cart_num" href="@Url.Action("Index", "RentalCart")">
+                                <img class="tpad5" src="@Url.Content("~/Content/images/Cart_logo.png")" />
+                                <h3>Your Cart (@Session["RentalCartItems"])</h3>
+                            </a>
                         </li>
                         <li class="divider-vertical"></li>
                     </ul>
