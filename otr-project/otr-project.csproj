@@ -206,11 +206,11 @@
     <Content Include="Content\images\rambla_bg\img2.jpg" />
     <Content Include="Content\images\rambla_bg\img3.jpg" />
     <Content Include="Content\images\rambla_bg\img4.jpg" />
-    <Content Include="Content\images\rambla_bg\img5.jpg" />
-    <Content Include="Content\images\rambla_bg\img6.jpg" />
-    <Content Include="Content\images\rambla_bg\img7.jpg" />
+    <None Include="Content\images\rambla_bg\img5.jpg" />
+    <None Include="Content\images\rambla_bg\img6.jpg" />
+    <None Include="Content\images\rambla_bg\img7.jpg" />
     <Content Include="Content\images\rambla_bg\img8.1.jpg" />
-    <Content Include="Content\images\rambla_bg\img8.jpg" />
+    <None Include="Content\images\rambla_bg\img8.jpg" />
     <Content Include="Content\images\search_icon.png" />
     <Content Include="Content\images\img1.png" />
     <Content Include="Content\images\img2.png" />
