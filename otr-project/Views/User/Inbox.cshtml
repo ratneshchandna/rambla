@@ -1,0 +1,109 @@
+﻿@model IEnumerable<otr_project.Models.MessageModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    ViewBag.Title = "Rambla | Messages";
+    ViewBag.AccountPageTitle = "Messages";
+}
+
+<div class="container_12">
+    <!--div class="header_to_body_gap"></div>
+    <div class="grid_12" id = "my_account_dashboard">
+        <ul class="user_nav_links">
+            <li class="user_navbar">@Html.ActionLink("Agreements", "Agreements", "User")</li>
+            <li class="user_navbar">@Html.ActionLink("Borrowed", "ItemsBorrowed", "User")</li>
+            <li class="user_navbar">@Html.ActionLink("Listings", "Items", "User")</li>
+            <li class="user_navbar">@Html.ActionLink("Inbox", "MessageBox", "User")</li>
+            <li class="user_navbar">@Html.ActionLink("Profile", "Index", "User")</li>
+        </ul>
+    </div>
+    <div class="clear">
+    &nbsp;</div>
+    <div class="grid_9">
+            <div id="User_Inbox_Title" class="title_container_item_left">
+                <h1>
+                    Inbox
+                </h1>
+                <h2 id="User_Inbox_Subtitle" class="page_subtitle">
+                    Messaging allows you to communicate with other Rambla users
+                </h2>
+            </div>
+    </div>
+    <div class="grid_3">
+        <div class ="title_container_item_right">
+            <h2>
+                Earnings: @ViewBag.UserEarnings.ToString("C")
+            </h2>
+        </div>
+    </div>
+
+    <div class="clear">
+    &nbsp;</div-->
+    <div class="grid_12">
+        <div id="user-items-listed-container" class="container">
+            @if (Model.Count() <= 0)
+            {
+                <span>Your Rambla inbox is empty.</span>
+            }
+            else{
+                <table class="user_items_listed">
+                    <thead>
+                        <tr>
+                            <th>
+                                Message From
+                            </th>
+                            <th>
+                                Subject
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var message in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @{
+                            otr_project.Models.MarketPlaceEntities db = new otr_project.Models.MarketPlaceEntities();
+                            var fromUser = db.Users.Find(message.From);
+                                    }
+                                    @(fromUser.FirstName + " " + fromUser.LastName)
+                                </td>
+                                <td>
+                                    @if (message.isRead == false)
+                                    {
+                                        <strong>
+                                            <a href="#" id="msgSubject-@message.Id" class="msgSubject" data-id="@message.Id">@message.Subject</a>
+                                        </strong>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" id="msgSubject-@message.Id" class="msgSubject" data-id="@message.Id">@message.Subject</a>
+                                    }
+                                    <div id="msgDetail-@message.Id" class="msgDetail">
+                                        @{Html.RenderAction("GetMessage", "User", new { id = message.Id });}
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                }
+        </div>
+    </div>
+</div>
+
+<!--script type="text/javascript">
+    $(function () {
+        $(".msgDetail").dialog({
+            autoOpen: false,
+            modal: true,
+            resizable: false,
+            width: 500
+        });
+
+        $(".msgSubject").click(function () {
+            $("#msgDetail-" + $(this).attr("data-id")).dialog("option", { title: $(this).html() });
+            $("#msgDetail-" + $(this).attr("data-id")).dialog("open");
+        });
+    });
+</script-->

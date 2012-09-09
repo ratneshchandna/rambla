@@ -1,0 +1,81 @@
+﻿@model otr_project.ViewModels.ErrorMessageViewModel
+
+@{
+    ViewBag.Title = "Rambla | Error Message";
+    if (Model.Header == null)
+    {
+        Model.Header = Model.Headers[(int)Model.ErrorCode];
+    }
+    if (Model.Description == null)
+    {
+        Model.Description = Model.Descriptions[(int)Model.ErrorCode];
+    }
+}
+
+@if (
+    Model.ErrorCode == ErrorCode.PAYPAL_ERROR || 
+    Model.ErrorCode == ErrorCode.UNKNOWN || 
+    Model.ErrorCode == ErrorCode.IMAGE_UPLOAD_FAILED || 
+    Model.ErrorCode == ErrorCode.ITEM_DELETE_FAILED
+    )
+{
+    <div class="container_12">
+        <div class="header_to_body_gap"></div>
+        <div class="grid_12">
+            <div>
+                <div id="Error_Message_Title" class="title_container">
+                    <h1>
+                        Bit by the beta bug
+                    </h1>
+                    <h2 id="Error_Message_Subtitle" class="page_subtitle">
+                        We're in beta and we're working diligently to fix such errors.
+                    </h2>
+                </div>
+            </div>
+            <div class="container">
+                <h2>
+                    @Model.Header
+                </h2>
+                <p> 
+                    @Model.Description
+                    If this problem persists, please drop us a line using the feedback button.
+                </p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container_12">
+        <div class="header_to_body_gap"></div>
+        <div class="grid_12">
+            <div>
+                <div id="Error_Message_Title" class="title_container">
+                    <h1>
+                        Error
+                    </h1>
+                    <h2 id="Error_Message_Subtitle" class="page_subtitle">
+                        We've hit an error condition. Not to worry, this can be fixed.
+                    </h2>
+                </div>
+            </div>
+            <div class="container">
+                <h2>
+                    @Model.Header
+                </h2>
+    
+                <span> 
+                    @Model.Description
+                </span>
+    
+                <br />
+                @if (Model.ErrorCode == ErrorCode.OWNER_ITEM_IN_CART)
+                {
+                    <span>
+                        Please <a href="@Url.Action("Index", "RentalCart")">go back to your cart</a> and remove those items. 
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+}

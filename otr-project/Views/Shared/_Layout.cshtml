@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>@ViewBag.Title</title>
+        
+        <!-- Bootstrap CSS -->
+        <link href="@Url.Content("~/Content/designfrmk/bootstrap.css")" rel="stylesheet" type="text/css" />
+
+        <!-- Multiple Date Picker (customize) -->
+        <link href="@Url.Content("~/Content/mdp.css")" rel="stylesheet" type="text/css" />
+
+        <!-- Refactor: -->
+        <link href="@Url.Content("~/Content/style.less")" rel="stylesheet/less" type="text/css" />
+        <!--link href="@Url.Content("~/Content/print.css")" rel="stylesheet" type="text/css" media="print" /-->
+        
+        <!--
+        Deprecate: 
+        <link href="@Url.Content("~/Content/reset.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/grid.css")" rel="stylesheet" type="text/css" />
+        -->
+
+        <!------ JQuery Plugin CSS ------>
+        <link href="@Url.Content("~/Content/themes/ui-lightness/jquery-ui-1.8.16.custom.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/themes/classic/galleria.classic.css")" rel="stylesheet" type="text/css" />
+
+        <!------ Javascript Includes ------>
+        <script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/less.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery-1.8.0.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery-ui-1.8.23.custom.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/galleria-1.2.6.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Content/themes/classic/galleria.classic.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.blockUI.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery-ui.multidatespicker.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Content/designfrmk/bootstrap.js")" type="text/javascript"></script>
+
+        <!-- To fix facebook's stupid redirect hash -->
+        <script type="text/javascript">        if (window.location.hash == '#_=_') window.location.hash = '';</script>
+        <meta http-equiv="cache-control" content="no-cache, no-store" />
+        
+        <!-- Script to enable Bootstrap dropdown -->
+        <script type="text/javascript">
+            $(function () {
+                $('.dropdown-toggle').dropdown();
+            });
+            
+        </script>
+    </head>
+    <body>
+    
+    @{ 
+        otr_project.Models.RentalCart cart = otr_project.Models.RentalCart.GetCart(this.Context);
+        if (cart.GetCartItems().Count > 0)
+        {
+            Session["RentalCartItems"] = cart.GetCartItems().Count;
+        }
+
+        if (Session["RentalCartItems"] == null)
+        {
+            Session["RentalCartItems"] = 0;
+        }
+    }
+    @{
+        string search_box_value = "";
+
+        if (Request.FilePath.Contains("/Search") && Session["SEARCH_KEYWORD"] != null)
+        {
+            search_box_value = Session["SEARCH_KEYWORD"].ToString();
+        }
+    }
+    
+    <!-- Header nav bar -->
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <!-- New login form is on all pages now and is running AJAX -->
+                <!--
+                <div class="row">
+                    <div class="span5">
+                        <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Login with Facebook</fb:login-button>
+                    </div>
+                    <div class="span1">~ OR ~</div>
+                    <div class="span6">
+                        @{
+                            //Html.RenderPartial("_LogOnPartial", new otr_project.Models.LogOnModel());
+                            }
+                    </div>
+                </div>
+                -->
+                <!-- END: New login form is on all pages now and is running AJAX -->
+                <a class="brand span4" href="@Url.Content("~/")">
+                    <img src="@Url.Content("~/Content/images/Logo.png")" />
+                </a>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="divider-vertical"></li>
+                        <li class="header-elements">
+                            <a href="@Url.Content("~/Item/Create")">
+                                <button class="btn-large btn-primary">Add Item</button>
+                            </a>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li class="span3">
+                            <form class="navbar-search" action="@Url.Content("~/Search/Index/1")" method="post">
+                                <p class="navbar-text">Search for items</p>
+                                <input id="search_box" name="search" type="text" class="search-query" placeholder="Eg. Drill, tent, basketball etc." />
+                            </form>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li class="header-elements">
+                            <a id="cart_num" href="@Url.Action("Index", "RentalCart")">Your Cart (@Session["RentalCartItems"])</a>
+                        </li>
+                        <li class="divider-vertical"></li>
+                    </ul>
+                    <ul class="nav pull-right">
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, @Session["USER_F_NAME"]
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Content("~/User")">Dashboard</a></li>
+                                    <li><a href="@Url.Content("~/User/MessageBox")">Inbox</a></li>
+                                    <li><a href="@Url.Content("~/User/Items")">Items Listed</a></li>
+                                    <li><a href="@Url.Content("~/User/ItemsBorrowed")">Items Borrowed</a></li>
+                                    <li><a href="@Url.Content("~/Account/LogOff")">Sign Out</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="pull-right">
+                                <a href="@Url.Content("~/Account/Logon")">
+                                    <button class="btn-large btn-primary">Login</button>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Header nav bar -->
+    
+    <!------ Body ------>
+    <div class="container">
+        <div class="body-container">
+            @RenderBody()
+        </div>
+    </div>
+
+    
+    <div id = "footer_all">
+    <!------ Footer ------>
+        <div id="footer">
+            <div class="container_12 noprint">
+                <div class= "grid_5">
+                    <a class = "footer_links" href="@Url.Content("~/Content/rambla.pdf")">How Stuff Works</a>
+                </div>
+                <div class="grid_2 push_5">
+                    <span id="comodo_ssl_seal">
+                        <img src="@Url.Content("~/Content/images/comodo_secure.gif")" alt="Instant SSL Certificate Secure Site" width="76" height="40">
+                    </span>
+                </div>
+                <div class="clear">
+                    &nbsp;</div>
+            </div>
+        </div>
+    </div>
+    
+    <!------ Pinterest Script -----
+    <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+    -->
+
+    <!------ GooglePlus Script ----->
+    <script type="text/javascript">
+        (function () {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+    </script>
+    
+    <!-- Uservoice Javascript -->
+    <script type="text/javascript">
+        var uvOptions = {};
+        (function () {
+            var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+            uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/8PFcoYESX5HncdvR8jd0ew.js';
+            //uv.src = 'http://' + 'widget.uservoice.com/8PFcoYESX5HncdvR8jd0ew.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+        })();
+    </script>
+    <script>        !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>
+    <!------ Facebook Script ------>
+    @{Html.RenderPartial("FacebookInit");}
+</body>
+</html>

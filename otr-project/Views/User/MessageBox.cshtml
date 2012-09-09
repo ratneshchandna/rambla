@@ -1,0 +1,9 @@
+﻿@model IEnumerable<otr_project.Models.MessageModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    ViewBag.Title = "Rambla | Messages";
+    ViewBag.AccountPageTitle = "Messages";
+}
+
+@{Html.RenderAction("Inbox", "User");}
