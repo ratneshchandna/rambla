@@ -51,7 +51,11 @@ namespace otr_project.Controllers
                 ViewBag.FacebookId = user.FacebookProfile.Id;
             }
 
-            return View("Dashboard", user);
+            // Redirect to Items Listed page for private beta
+            return RedirectToAction("Items");
+
+            // No dashboard for Private Beta (will implement post private beta)
+            // return View("Dashboard", user);
         }
 
         //
