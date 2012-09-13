@@ -100,7 +100,7 @@
                         <li class="divider-vertical"></li>
                         <li class="header-elements">
                             <a href="@Url.Content("~/Item/Create")">
-                                <button class="btn-large btn-primary">Add Item</button>
+                                <button class="btn btn-large btn-primary">Add Item</button>
                             </a>
                         </li>
                         <li class="divider-vertical"></li>
@@ -122,9 +122,11 @@
                     <ul class="nav pull-right">
                         @if (Request.IsAuthenticated)
                         {
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, @Session["USER_F_NAME"]
+                            <li class="dropdown header-elements tpad10">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <h3>Hi, @Session["USER_F_NAME"]
                                     <b class="caret"></b>
+                                    </h3>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="@Url.Content("~/User")">Dashboard</a></li>
@@ -139,7 +141,7 @@
                         {
                             <li class="pull-right">
                                 <a href="@Url.Content("~/Account/Logon")">
-                                    <button class="btn-large btn-primary">Login</button>
+                                    <button type="button" class="btn btn-info btn-login">Login</button>
                                 </a>
                             </li>
                         }
