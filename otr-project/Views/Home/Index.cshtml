@@ -54,7 +54,18 @@
                 </div>
                 <div class="span4 offset4">
                     @if (Request.IsAuthenticated){
-                        <ul class="nav pull-right">
+                        <div class="nav-collapse">
+                            <ul class="nav">
+                                <li class="divider-vertical"></li>
+                                <li class="header-elements">
+                                    <a href="@Url.Content("~/Item/Create")">
+                                        <button class="btn btn-large btn-primary">Add Item</button>
+                                    </a>
+                                </li>
+                                <li class="divider-vertical"></li>
+                            </ul>
+                        </div>
+                        <ul class="nav">
                             <li class="dropdown header-elements tpad10">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <h3>Hi, @Session["USER_F_NAME"]
@@ -148,7 +159,7 @@
                             </div>
                             <div class="row-fluid tpad10">
                                 <div class="span12 center">
-                                    @Html.DropDownList("RegionId", regionList, "Province", new { @class="input-full search-query input-fatty" })
+                                    @Html.DropDownList("RegionId", regionList, "Province", new { @class = "input-full search-query input-fatty" })
                                 </div>
                             </div>
                             <div class="row-fluid tpad20">
