@@ -239,6 +239,17 @@
 <script type="text/javascript">
     $(function () {
         $('.dropdown-toggle').dropdown();
+        $('select').addClass('shadow_select');
+        $('select').wrap('<span class="select-wrapper" />');
+        $('.select-wrapper').width($(this).width());
+
+        $('select').focusin(function () {
+            $('.select-wrapper').addClass('webkit_specific');
+        });
+
+        $('select').focusout(function () {
+            $('.select-wrapper').removeClass('webkit_specific');
+        });
     });
 </script>
 <script type="text/javascript">
