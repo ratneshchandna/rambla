@@ -184,6 +184,19 @@
 
     <!------ GooglePlus Script ----->
     <script type="text/javascript">
+        $(function () {
+            $('select').addClass('shadow_select');
+            $('select').wrap('<span class="select-wrapper" />');
+            $('.select-wrapper').width($(this).width());
+
+            $('select').focusin(function () {
+                $('.select-wrapper').addClass('webkit_specific');
+            });
+
+            $('select').focusout(function () {
+                $('.select-wrapper').removeClass('webkit_specific');
+            });
+        });
         (function () {
             var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
             po.src = 'https://apis.google.com/js/plusone.js';
