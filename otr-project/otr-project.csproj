@@ -196,6 +196,7 @@
     <Content Include="Content\designfrmk\glyphicons-halflings-white.png" />
     <Content Include="Content\designfrmk\glyphicons-halflings.png" />
     <Content Include="Content\images\1.JPG" />
+    <Content Include="Content\images\Cart_logo.png" />
     <Content Include="Content\images\comodo_secure.gif" />
     <Content Include="Content\images\default_item_image.jpg" />
     <Content Include="Content\images\empty_cart.jpg" />
@@ -210,7 +211,7 @@
     <Content Include="Content\images\rambla_bg\img6.jpg" />
     <Content Include="Content\images\rambla_bg\img7.jpg" />
     <Content Include="Content\images\rambla_bg\img8.1.jpg" />
-    <Content Include="Content\images\rambla_bg\img8.jpg" />
+    <Content Include="Content\images\Rambla_Logo.png" />
     <Content Include="Content\images\search_icon.png" />
     <Content Include="Content\images\img1.png" />
     <Content Include="Content\images\img2.png" />
