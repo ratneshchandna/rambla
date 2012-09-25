@@ -26,90 +26,50 @@
                 <div class="span1">Total</div>
                 <div class="span2">Status</div>
             </div>
-            @if (Model.Count() > 0)
-            {
-                foreach (var order in Model)
-                {
-                    foreach (otr_project.Models.OrderDetailModel item in order.OrderDetails)
-                    {
-                        <div class="row-fluid row_item">
-                            <div class="span2">
-                                <a href="@Url.Content("~/Item/Details/" + item.Item.Id)">
-                                    @if (item.ItemName.Length > 50)
-                                    {
-                                        <span>@item.ItemName.Substring(0, 49) + "..."</span>
-                                    }
-                                    else
-                                    {
-                                        <span>@item.ItemName</span>
-                                    }
-                                </a>
-                            </div>
-                            <div class="span2"><a href="#"><i class="icon-envelope"></i></a></div>
-                            <div class="span2">@item.PickupDate.ToLongDateString()</div>
-                            <div class="span2">@item.DrofoffDate.ToLongDateString()</div>
-                            <div class="span1">@item.UnitPrice.ToString("C")</div>
-                            <div class="span1">@(((item.UnitPrice * item.NumberOfDays) + item.SecurityDeposit).ToString("C"))</div>
-                            <div class="span2">
-                            @switch (item.Status)
-                            {
-                                case (int)otr_project.Models.OrderStatus.ORDER_TENTATIVE:
-                                    <span>Confirm item pickup by clicking @Html.ActionLink("here", "ProcessSecurityCode", "PostCheckOut", new { order = order.OrderId, item = item.OrderDetailId }, null).</span>
-                                                                     break;
-
-                                case (int)otr_project.Models.OrderStatus.ORDER_COMPLETE:
-                                case (int)otr_project.Models.OrderStatus.ORDER_DELAYED_RETURN:
-                                    <span>Take good care of the item.</span>
-                                                                     break;
-
-                                case (int)otr_project.Models.OrderStatus.ORDER_LATE:
-                                    <span>Pickup date has passed. Please click @Html.ActionLink("here", "ProcessSecurityCode", "PostCheckOut", new { order = order.OrderId, item = item.OrderDetailId }, null) to enter the security code if you have picked up the item.</span>
-                                                                          break;
-
-                                case (int)otr_project.Models.OrderStatus.ORDER_CLOSED_HAPPY:
-                                    <span>This order has completed. Thank you!</span>
-                                                                          break;
-
-                                case (int)otr_project.Models.OrderStatus.ORDER_DISPUTE:
-                                    <span>This order is in a state of dispute.</span>
-                                                                          break;
-
-                                case (int)otr_project.Models.OrderStatus.ORDER_CLOSED_UNHAPPY:
-                                    <span>This order has completed. Thank you!</span>
-                                                                          break;
-
-                                case (int)otr_project.Models.OrderStatus.ORDER_TERMINATED:
-                                    <span>This order has been cancelled. You're money has been returned to you.</span>
-                                                                          break;
-
-                                default:
-                                    <span>We're having some trouble tracking this order. Please try again later.</span>
-                                                                          break;
-                            }
-                            </div>
-                        </div>
-                    }
-                }
-            }
-            else
-            {
-                <div class="row-fluid row_item">Uh oh, looks like you have not yet rented an item. Go ahead, try renting on Rambla.</div>
-            }
+            <div class="loading_text row-fluid row_item">
+                Loading ... 
             </div>
-
+            <div id="borrowed_list">
+                @{Html.RenderPartial("BorrowedList", Model);}
+            </div>
+        </div>
     </div>
 </div>
 
 <script type="text/javascript">
+    var current = "";
+
     $(function () {
         $("#current_borrowed").click(function () {
+            current = "current=true";
+
             $("#past_borrowed").removeClass("active");
             $("#current_borrowed").addClass("active");
+
+            $("#borrowed_list").hide();
+            $(".loading_text").show();
+
+            $.post('@Url.Content("~/User/ItemsBorrowed")', current, function (data) {
+                $(".loading_text").hide();
+                $('#borrowed_list').html(data);
+                $('#borrowed_list').show();
+            });
         });
 
         $("#past_borrowed").click(function () {
+            current = "current=false";
+
             $("#current_borrowed").removeClass("active");
             $("#past_borrowed").addClass("active");
+
+            $("#borrowed_list").hide();
+            $(".loading_text").show();
+
+            $.post('@Url.Content("~/User/ItemsBorrowed")', current, function (data) {
+                $(".loading_text").hide();
+                $('#borrowed_list').html(data);
+                $('#borrowed_list').show();
+            });
         });
     });
 </script>
