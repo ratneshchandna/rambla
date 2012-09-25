@@ -112,15 +112,15 @@
                             <form class="borderfull" method="post" action="@Url.Content("~/RentalCart/AddToCart")">
                                 <div class="row-fluid">
                                     <div class="span6">
-                                        <input id="pickupdate" name="pickupdate" class="input-wider-small datepicker" placeholder="Pickup Date" type="text" />
+                                        <input id="pickupdate" name="pickupdate" class="span12 datepicker" placeholder="Pickup Date" type="text" />
                                     </div>
                                     <div class="span6">
-                                        <input id="dropoffdate" name="dropoffdate" class="input-wider-small datepicker" placeholder="Return Date" type="text" />
+                                        <input id="dropoffdate" name="dropoffdate" class="span12 datepicker" placeholder="Return Date" type="text" />
                                     </div>
                                 </div>
                                 <div class="row-fluid">
                                     <div class="span12 center">
-                                        <button type="submit" class="btn btn-large btn-info">Add To Cart</button>
+                                        <button type="submit" class="span12 btn btn-large btn-info">Add To Cart</button>
                                     </div>
                                 </div>
                                 @if (ViewBag.ErrorMessage != null)
