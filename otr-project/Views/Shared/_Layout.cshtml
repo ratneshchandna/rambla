@@ -77,6 +77,11 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner custom-navbar-inner">
             <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
                 <!-- New login form is on all pages now and is running AJAX -->
                 <!--
                 <div class="row">
@@ -92,7 +97,7 @@
                 </div>
                 -->
                 <!-- END: New login form is on all pages now and is running AJAX -->
-                <a class="brand span4" href="@Url.Content("~/")">
+                <a class="brand span3" href="@Url.Content("~/")">
                     <img class="tpad5" src="@Url.Content("~/Content/images/Rambla_Logo.png")" />
                 </a>
                 <div class="nav-collapse">
@@ -104,10 +109,10 @@
                             </a>
                         </li>
                         <li class="divider-vertical"></li>
-                        <li class="span3">
+                        <li class="">
                             <form class="navbar-search" action="@Url.Content("~/Search/Index/1")" method="post">
                                 <h4>Search for items</h4>
-                                <input id="search_box" name="search" type="text" class="search-query" placeholder="Eg. Drill, tent, basketball etc." />
+                                <input id="search_box" name="search" type="text" class="search-query span3" placeholder="Eg. Drill, tent, basketball etc." />
                             </form>
                         </li>
                         <li class="divider-vertical"></li>
@@ -124,7 +129,7 @@
                         {
                             <li class="dropdown header-elements tpad10">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <h3>Hi, @Session["USER_F_NAME"]
+                                    <h3>Hi @Session["USER_F_NAME"]
                                     <b class="caret"></b>
                                     </h3>
                                 </a>
