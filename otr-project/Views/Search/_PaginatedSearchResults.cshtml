@@ -81,8 +81,9 @@
                                     <img class="search-thumbnail-image" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
                                 }
                             }
-                            <h5>@searchItem.Item.Owner.FirstName @searchItem.Item.Owner.LastName</h5>
-                            <p><strong>@searchItem.Item.PickupLocation.City, @searchItem.Item.ItemRegion.Name</strong></p>
+                            <h4><strong>@searchItem.Item.Owner.FirstName @searchItem.Item.Owner.LastName</strong></h4>
+                            <h5>@searchItem.Item.PickupLocation.City, @searchItem.Item.ItemRegion.Name</h5>
+                            <!-- Removing for private beta
                             <ul class="nav nav-pills no-margin">
                                 <li>
                                     <i class="icon-star"></i>
@@ -92,6 +93,7 @@
                                     <i class="icon-star"></i>
                                 </li>
                             </ul>
+                            -->
                         </div>
                     </li>
                 }
