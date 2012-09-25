@@ -53,33 +53,37 @@
     <div class="row-fluid">
         <div class="control-group">
             <div class="span1">
-                <label class="control-label vpad5" for="CategoryId"><strong>Category:</strong></label>
+                <label class="control-label vpad5" for="CategoryId"><h4><strong>Category:</strong></h4></label>
             </div>
             <div class=" span2 controls">
                 @Html.DropDownList("CategoryId", null, "All Categories", new { @class = "span12" })
             </div>
             <div class="span1"></div>
-            <div class="span1">
-                <label class="control-label vpad5" for="SortType"><strong>Sort by:</strong></label>
+            <div class="span2">
+                <label class="control-label vpad5 pull-right" for="SortType"><h4><strong>Sort by:</strong></h4></label>
             </div>
             <div class=" span2 controls">
-                @Html.DropDownList("SortType", null, "", new { @class = "span12" })
+                @Html.DropDownList("SortType", null, "", new { @class = "span12 pull-left" })
             </div>
+            <!-- Removing for Pr beta
             <div class="span1">
                 <label class="control-label vpad5" for="SortType"><strong>View by:</strong></label>
             </div>
+            -->
             <div class="span2">
+            <!--
                 <div class="btn-group" data-toggle="buttons-radio">
                     <a href="#" class="btn center active">Images</a>
                     <a href="#" class="btn center">List</a>
                 </div>
+            -->
             </div>
             <div class="span2">
-                <a href="#" class="btn toggler">
+                <a href="#" class="btn btn-primary toggler">
                     <i class="icon-circle-arrow-down"></i>
                         Search Filter
                 </a>
-                <a href="#" class="btn toggler" style="display:none;">
+                <a href="#" class="btn btn-primary toggler" style="display:none;">
                     <i class="icon-circle-arrow-up"></i>
                         Search Filter
                 </a>
@@ -92,7 +96,7 @@
         <div class="control-group">
             <div class="span3">
                 <div class="row-fluid">
-                    <label class="control-label vpad5 span9" for="price"><strong>Maximum Price</strong></label>
+                    <label class="control-label vpad5 span9" for="price"><h4><strong>Maximum Price</strong></h4></label>
                     <div id="max-price-label" class="label span3 center tpad5">
                         @if (price_filter >= 500)
                         {
@@ -114,7 +118,7 @@
             <div class="span1"></div>
             <div class="span3">
                 <div class="row-fluid">
-                    <label class="control-label vpad5 span9" for="price"><strong>Maximum Security Deposit</strong></label>
+                    <label class="control-label vpad5 span9" for="price"><h4><strong>Maximum Deposit</strong></h4></label>
                     <div id="max-securitydeposit-label" class="label span3 center tpad5">
                         @if (security_deposit_filter >= 500)
                         {
@@ -135,7 +139,7 @@
             </div>
             <div class="span2 border-right">
                 <div class="row-fluid">
-                    <label class="control-label vpad5 span9" for="price"><strong>Availability</strong></label>
+                    <label class="control-label vpad5 span9" for="price"><h4><strong>Availability</strong></h4></label>
                 </div>
                 <div class="row-fluid">
                     <div class="span12 controls vpad5">
@@ -150,7 +154,7 @@
             </div>
             <div class="span3">
                 <div class="row-fluid">
-                    <label class="control-label vpad5 span9" for="price"><strong>Options</strong></label>
+                    <label class="control-label vpad5 span9" for="price"><h4><strong>Options</strong></h4></label>
                 </div>
                 <div class="row-fluid">
                     <div class="span12 controls vpad5">
@@ -171,7 +175,10 @@
                 <div class="row-fluid vpad10"></div>
                 <div id="update-results" class="row-fluid vpad10">
                     <div class="span12 center">
-                        <a id="refresh" href="#" class="btn btn-large">Update Search</a>
+                        
+                        <a id="refresh" class="btn btn-large btn-info" href="#">
+                            Update Search
+                        </a>
                     </div>
                 </div>
             </div>
