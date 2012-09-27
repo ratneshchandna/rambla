@@ -39,8 +39,8 @@
     <div class="span8">
         <div class="tabbable custom-tabbable">
             <ul class="nav nav-tabs custom-nav-tabs">
-                <li class="active tpad10 hpad5"><a href="#tab1" data-toggle="tab"><strong>Images</strong></a></li>
-                <li class="tpad10 hpad5"><a id="mapTab" href="#tab2" data-toggle="tab"><strong>Map</strong></a></li>
+                <li class="active tpad10 hpad5"><a href="#tab1" data-toggle="tab"><h4>Images</h4></a></li>
+                <li class="tpad10 hpad5"><a id="mapTab" href="#tab2" data-toggle="tab"><h4>Map</h4></a></li>
                 <div class="pull-right hpad10 tpad10">
                     @if (Request.IsAuthenticated)
                     {
@@ -96,9 +96,9 @@
             </div>
         </div> 
     </div>
-    <div class="span4 hpad10">
+    <div class="span4 lpad2010">
         <div class="row">
-            <br /><br /><br />
+            
             <div class="span12">
                 <div id="item-booking-container" class="well well-custom">
                     <div id="item-cost">
@@ -112,15 +112,15 @@
                             <form class="borderfull" method="post" action="@Url.Content("~/RentalCart/AddToCart")">
                                 <div class="row-fluid">
                                     <div class="span6">
-                                        <input id="pickupdate" name="pickupdate" class="input-wider-small datepicker" placeholder="Pickup Date" type="text" />
+                                        <input id="pickupdate" name="pickupdate" class="span12 datepicker" placeholder="Pickup Date" type="text" />
                                     </div>
                                     <div class="span6">
-                                        <input id="dropoffdate" name="dropoffdate" class="input-wider-small datepicker" placeholder="Return Date" type="text" />
+                                        <input id="dropoffdate" name="dropoffdate" class="span12 datepicker" placeholder="Return Date" type="text" />
                                     </div>
                                 </div>
                                 <div class="row-fluid">
                                     <div class="span12 center">
-                                        <input type="submit" class="btn btn-large" value="Add To Cart" />
+                                        <button type="submit" class="span12 btn btn-large btn-info">Add To Cart</button>
                                     </div>
                                 </div>
                                 @if (ViewBag.ErrorMessage != null)
@@ -195,8 +195,8 @@
     <div class="span8">
         <div class="tabbable custom-tabbable">
             <ul class="nav nav-tabs custom-nav-tabs">
-                <li class="active tpad10 hpad5"><a href="#descTab" data-toggle="tab"><strong>Description</strong></a></li>
-                <li class="tpad10 hpad5"><a href="#agreeTab" data-toggle="tab"><strong>Agreement</strong></a></li>
+                <li class="active tpad10 hpad5"><a href="#descTab" data-toggle="tab"><h4>Description</h4></a></li>
+                <li class="tpad10 hpad5"><a href="#agreeTab" data-toggle="tab"><h4>Agreement</h4></a></li>
             </ul>
             <div class="tab-content hpad10 min-height-control">
                 <div class="tab-pane active" id="descTab">

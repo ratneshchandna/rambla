@@ -38,19 +38,27 @@
                         <div class="thumbnail search-item">
                             <div class="row-fluid">
                             <div class="span12 search-price-banner vcenter">
-                                    <div class="span8 tpad10 hpad5">
-                                        @searchItem.Item.Name
+                                    <div class="span7 tpad10 hpad5">
+                                        <h4 class="pull-left">
+                                        @if (searchItem.Item.Name.Length < 15){
+                                            <span>@searchItem.Item.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@(searchItem.Item.Name.Substring(0, 15) + "...")</span>
+                                        }
+                                        </h4>
                                     </div>
-                                    <div class="span4">
-                                        <h3>@searchItem.Item.CostPerDay.ToString("C")</h3>
+                                    <div class="span5">
+                                        <h3 class="pull-right">@searchItem.Item.CostPerDay.ToString("C")</h3>
                                     </div>
                                 </div>
                             </div>
                             @if (searchItem.isItemBlocked == true)
                             {
                                 <div class="row-fluid">
-                                    <div class="span12 item-conflict-banner tpad10 center">
-                                        Item not available for selected dates.
+                                    <div class="span12 item-conflict-banner tpad5 center">
+                                        <h5>Item not available for selected dates.</h5>
                                     </div>
                                 </div>
                                 if (searchItem.Item.ItemImages.Count > 0)
@@ -73,8 +81,9 @@
                                     <img class="search-thumbnail-image" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
                                 }
                             }
-                            <h5>@searchItem.Item.Owner.FirstName @searchItem.Item.Owner.LastName</h5>
-                            <p><strong>@searchItem.Item.PickupLocation.City, @searchItem.Item.ItemRegion.Name</strong></p>
+                            <h4><strong>@searchItem.Item.Owner.FirstName @searchItem.Item.Owner.LastName</strong></h4>
+                            <h5>@searchItem.Item.PickupLocation.City, @searchItem.Item.ItemRegion.Name</h5>
+                            <!-- Removing for private beta
                             <ul class="nav nav-pills no-margin">
                                 <li>
                                     <i class="icon-star"></i>
@@ -84,6 +93,7 @@
                                     <i class="icon-star"></i>
                                 </li>
                             </ul>
+                            -->
                         </div>
                     </li>
                 }
