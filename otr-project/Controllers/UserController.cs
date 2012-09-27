@@ -51,7 +51,11 @@ namespace otr_project.Controllers
                 ViewBag.FacebookId = user.FacebookProfile.Id;
             }
 
-            return View("Dashboard", user);
+            // Redirect to Items Listed page for private beta
+            return RedirectToAction("Items");
+
+            // No dashboard for Private Beta (will implement post private beta)
+            // return View("Dashboard", user);
         }
 
         //
@@ -89,7 +93,7 @@ namespace otr_project.Controllers
         }
 
         [Authorize]
-        public ActionResult ItemsBorrowed()
+        public ActionResult ItemsBorrowed(string current)
         {
             var user = db.Users.SingleOrDefault(i => i.Email == User.Identity.Name);
             if (user == null)
@@ -108,7 +112,7 @@ namespace otr_project.Controllers
             */
 
             var orders = db.Orders.Where(u => u.User.Email == user.Email && u.Confirmed == true).ToList();
-
+            
             ViewBag.UserEarnings = user.Earnings;
             ViewBag.ProfilePicture = (user.ProfilePicture != null);
             ViewBag.Name = user.FirstName + " " + user.LastName;
@@ -116,6 +120,60 @@ namespace otr_project.Controllers
             if (user.isFacebookUser)
             {
                 ViewBag.FacebookId = user.FacebookProfile.Id;
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                // Currently borrowed items
+                if (current == "true")
+                {
+                    foreach (var order in orders)
+                    {
+                        foreach (var detail in order.OrderDetails)
+                        {
+                            if (detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_CLOSED_HAPPY)
+                                || detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_CLOSED_UNHAPPY)
+                                || detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_TERMINATED))
+                            {
+                                orders.SingleOrDefault(o => o.OrderId == order.OrderId).OrderDetails.Remove(detail);
+                            }
+                        }
+                    }
+                }
+                // Past borrowed items
+                else
+                {
+                    foreach (var order in orders)
+                    {
+                        foreach (var detail in order.OrderDetails)
+                        {
+                            if (detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_CLOSED_HAPPY)
+                                || detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_CLOSED_UNHAPPY)
+                                || detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_TERMINATED))
+                            {
+                                continue;
+                            }
+
+                            orders.SingleOrDefault(o => o.OrderId == order.OrderId).OrderDetails.Remove(detail);
+                        }
+                    }
+                }
+
+                return PartialView("BorrowedList", orders);
+            }
+
+            // By default, return currently borrowed items
+            foreach (var order in orders)
+            {
+                foreach (var detail in order.OrderDetails)
+                {
+                    if (detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_CLOSED_HAPPY)
+                        || detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_CLOSED_UNHAPPY)
+                        || detail.Status.Equals(otr_project.Models.OrderStatus.ORDER_TERMINATED))
+                    {
+                        orders.SingleOrDefault(o => o.OrderId == order.OrderId).OrderDetails.Remove(detail);
+                    }
+                }
             }
 
             return View(orders);
@@ -156,11 +214,13 @@ namespace otr_project.Controllers
             try
             {
                 var user = db.Users.SingleOrDefault(u => u.Email == User.Identity.Name);
+                
                 ViewBag.RegionId = new SelectList(db.Regions, "Id", "Name", usermodel.RegionId);
                 ViewBag.Name = usermodel.FirstName + " " + usermodel.LastName;
                 ViewBag.UserEarnings = user.Earnings;
                 ViewBag.ProfilePicture = (user.ProfilePicture != null);
                 ViewBag.isFacebookUser = user.isFacebookUser;
+
                 if (user.isFacebookUser)
                 {
                     ViewBag.FacebookId = user.FacebookProfile.Id;
