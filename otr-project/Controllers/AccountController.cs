@@ -30,6 +30,7 @@ namespace otr_project.Controllers
         private IUserMailer _userMailer = new UserMailer();
         ErrorMessageViewModel ErrorMessage = new ErrorMessageViewModel();
         private static readonly ILog log = LogManager.GetLogger("otr_project.MvcApplication.Controllers");
+        private static readonly string prBetaTempPass = Guid.NewGuid().ToString().Substring(0, 10);
 
         public IUserMailer UserMailer
         {
@@ -268,6 +269,52 @@ namespace otr_project.Controllers
             ViewBag.PasswordLength = MembershipService.MinPasswordLength;
             ViewBag.RegionId = new SelectList(market.Regions, "Id", "Name");
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult RegisterPrBeta(RegisterPrBetaViewModel model)
+        {
+            ViewBag.RegionId = new SelectList(market.Regions, "Id", "Name");
+
+            if (ModelState.IsValid)
+            {
+                UserModel user = new UserModel();
+                // Attempt to register the user
+                MembershipCreateStatus createStatus = MembershipService.CreateUser(prBetaTempPass, model.Email.ToLower());
+
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    user.ActivationId = System.Guid.NewGuid().ToString();
+                    MembershipUser RegisteredUser = Membership.GetUser(model.Email.ToLower());
+                    RegisteredUser.IsApproved = false;
+                    Membership.UpdateUser(RegisteredUser);
+                    user.Email = model.Email.ToLower();
+                    user.FirstName = "Rambla";
+                    user.LastName = "User";
+                    user.City = model.City;
+                    user.RegionId = model.RegionId;
+                    user.CountryId = 1;
+                    market.Badges.SingleOrDefault(b => b.Name == "Individual").Users.Add(user);
+                    market.Users.Add(user);
+                    market.SaveChanges();
+
+                    //Use MvcMailer to send welcome email to newly registered user.
+                    //UserMailer.Welcome(newUser: user).Send();
+                    Session["REGISTERED_USER"] = true;
+                    log.Info("Account - New user registered (" + model.Email.ToLower() + ")");
+                    return RedirectToAction("Register");
+                }
+                else
+                {
+                    log.Error("Account - Error registering new user. " + createStatus.ToString());
+                    ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
+                }
+            }
+
+            log.Error("Account - RegisterModel Error.");
+            // If we got this far, something failed, redisplay form
+            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            return View("../Home/Index", model);
         }
 
         [HttpPost]
