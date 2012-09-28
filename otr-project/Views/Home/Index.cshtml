@@ -1,4 +1,5 @@
-﻿@{
+﻿@model otr_project.ViewModels.RegisterPrBetaViewModel
+@{
     Layout = null;
     ViewBag.Title = "Rambla";
     var regionList = ViewBag.RegionId as SelectList;
@@ -136,38 +137,33 @@
                             <span class="color-pink">money</span>
                         </h1>
                         <br />
-                        <form class="hpad10">
-                            <!--
+                        @using (Html.BeginForm("RegisterPrBeta", "Account", FormMethod.Post, new {@class="hpad10"}))
+                        {
+                            @Html.ValidationSummary(true)
                             <div class="row-fluid tpad10">
-                                <div class="span6 center">
-                                    <input type="text" class="input-wider-med search-query input-fatty" placeholder="First Name" />
-                                </div>
-                                <div class="span6 center">
-                                    <input type="text" class="input-wider-med search-query input-fatty" placeholder="Last Name" />
-                                </div>
-                            </div>
-                            -->
-                            <div class="row-fluid tpad10">
-                                <div class="span12 center">
-                                    <input type="text" class="input-full search-query input-fatty" placeholder="Email" />
+                                <div class="span12 center" style="padding-left:20px; padding-right: 20px">
+                                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address", @class = "input-full span12 search-query" })
+                                    @Html.ValidationMessageFor(m => m.Email)
                                 </div>
                             </div>
                             <div id="manual-location" class="row-fluid tpad10">
-                                <div class="span12 center">
-                                    <input id="City" type="text" class="input-full search-query input-fatty" placeholder="City" />
+                                <div class="span12 center" style="padding-left:20px; padding-right: 20px">
+                                    @Html.TextBoxFor(m => m.City, new { placeholder = "City", @id = "City", @class = "input-full search-query span12" })
+                                    @Html.ValidationMessageFor(m => m.City)
                                 </div>
                             </div>
                             <div class="row-fluid tpad10">
-                                <div class="span12 center">
-                                    @Html.DropDownList("RegionId", regionList, "Province", new { @class = "input-full search-query input-fatty" })
+                                <div class="span12 center" style="padding-left:20px; padding-right: 20px">
+                                    @Html.DropDownList("RegionId", regionList, "Province", new { @class = "input-full search-query span12" })
                                 </div>
                             </div>
                             <div class="row-fluid tpad20">
-                                <div class="span12 center">
-                                    <button type="button" class="btn btn-large btn-block btn-info">Request Access</button>
+                                <div class="span12 center" style="padding-left:20px; padding-right: 20px">
+                                    <button type="submit" class="btn btn-large btn-info span6 center">Request Access</button>
+                                    <button type="button" class="btn btn-large btn-info span6 center">Facebook Request</button>   
                                 </div>
                             </div>
-                        </form>
+                        }
                     </div>
                 </div>
                 <br />

@@ -30,6 +30,7 @@ namespace otr_project.Controllers
             }
             ViewBag.Message = "Welcome to Rambla!";
             ViewBag.RegionId = new SelectList(market.Regions, "Id", "Name");
+            
             return View();
         }
 
