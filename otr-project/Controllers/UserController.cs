@@ -304,15 +304,10 @@ namespace otr_project.Controllers
         public ActionResult GetProfilePicture(string id, string imageId) // parameter: itemid
         {
             UserModel user = null;
-            UserImageFileModel userImage = null;
 
             if (id != null)
             {
                 user = db.Items.SingleOrDefault(i => i.Id == id).Owner;
-            }
-            else if (imageId != null)
-            {
-                userImage = db.Files.SingleOrDefault(f => f.Id == imageId);
             }
             else
             {
@@ -326,13 +321,31 @@ namespace otr_project.Controllers
                     return File(user.ProfilePicture.Contents, user.ProfilePicture.ContentType);
                 }
             }
-            else if (userImage != null)
-            {
-                return File(userImage.Contents, userImage.ContentType);
-            }
+
             //Ideally we should return a blank face image here.
             return null;
         }
+
+        //
+        // GET: /User/GetUserImage
+        //[Authorize]
+        public ActionResult GetUserImage(string id) // parameter: userimageid
+        {
+            UserImageFileModel userImage = null;
+
+            if (id != null)
+            {
+                userImage = db.Files.SingleOrDefault(f => f.Id == id);
+            }
+
+            if (userImage != null)
+            {
+                return File(userImage.Contents, userImage.ContentType);
+            }
+
+            return null;
+        }
+
         /*
         //
         // GET: /User/Delete/5
