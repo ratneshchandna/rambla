@@ -6,7 +6,14 @@
         appId: '@Facebook.FacebookApplication.Current.AppId', cookie: true,
         status: true, xfbml: true
     });
-    FB.Event.subscribe('auth.login', function (response) {
-        window.location.reload();
+    FB.Event.subscribe('auth.authResponseChange', function (response) {
+        if (response.status === 'connected') {
+            if (window.location.href == '@Url.Action("Index", "Home", null, Request.Url.Scheme, Request.Url.Host)') {
+                window.location = '@Url.Content("~/Account/RegisterFBPrivateBeta")';
+            }
+            else if (window.location.href == '@Url.Action("LogOn", "Account", null, Request.Url.Scheme, Request.Url.Host)') {
+                window.location.reload();
+            }
+        }
     });
 </script>
