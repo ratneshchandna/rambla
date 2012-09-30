@@ -209,6 +209,9 @@ namespace otr_project.Models
                 case MembershipCreateStatus.DuplicateEmail:
                     return "The e-mail address already exists. Please enter a different e-mail address.";
 
+                case MembershipCreateStatus.DuplicateUserName:
+                    return "The e-mail address already exists. Please enter a different e-mail address.";
+
                 case MembershipCreateStatus.InvalidPassword:
                     return "The password provided is invalid. Please enter a valid password value.";
 
