@@ -1,0 +1,76 @@
+﻿@model IEnumerable<otr_project.Models.Order>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    ViewBag.Title = "Rambla | Items Borrowed";
+    ViewBag.AccountPageTitle = "Borrowed Items";
+}
+
+<div class="row-fluid">
+    <div class="span12 table_tab">
+        <ul class="nav nav-tabs">
+            <li id="current_borrowed" class="active"><a href="#">Currently Borrowing</a></li>
+            <li id="past_borrowed" ><a href="#">Borrowed In The Past</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12 table_body">
+        <div class="items_table">
+            <div class="row-fluid row_heading">
+                <div class="span2">Item</div>
+                <div class="span2">Contact Owner</div>
+                <div class="span2">Pickup</div>
+                <div class="span2">Dropoff</div>
+                <div class="span1">Price / Day</div>
+                <div class="span1">Total</div>
+                <div class="span2">Status</div>
+            </div>
+            <div class="loading_text row-fluid row_item">
+                Loading ... 
+            </div>
+            <div id="borrowed_list">
+                @{Html.RenderPartial("BorrowedList", Model);}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var current = "";
+
+    $(function () {
+        $("#current_borrowed").click(function () {
+            current = "current=true";
+
+            $("#past_borrowed").removeClass("active");
+            $("#current_borrowed").addClass("active");
+
+            $("#borrowed_list").hide();
+            $(".loading_text").show();
+
+            $.post('@Url.Content("~/User/ItemsBorrowed")', current, function (data) {
+                $(".loading_text").hide();
+                $('#borrowed_list').html(data);
+                $('#borrowed_list').show();
+            });
+        });
+
+        $("#past_borrowed").click(function () {
+            current = "current=false";
+
+            $("#current_borrowed").removeClass("active");
+            $("#past_borrowed").addClass("active");
+
+            $("#borrowed_list").hide();
+            $(".loading_text").show();
+
+            $.post('@Url.Content("~/User/ItemsBorrowed")', current, function (data) {
+                $(".loading_text").hide();
+                $('#borrowed_list').html(data);
+                $('#borrowed_list').show();
+            });
+        });
+    });
+</script>

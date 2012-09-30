@@ -1,0 +1,60 @@
+﻿<!-- 
+Ideally we should be using UserModel for all account pages. 
+This is a bit tricky given our current model for the 
+different user account pages that we have. 
+model otr_project.Models.UserModel
+-->
+               
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row-fluid">
+    <div class="row-fluid page_title">
+        <div class="span12">
+            <h1>@ViewBag.AccountPageTitle</h1>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3">
+            <div id="profile_pic">
+                @if (ViewBag.isFacebookUser == true)
+                {
+                    <img src="http://graph.facebook.com/@ViewBag.FacebookId/picture?type=large" class="img_profile" />
+                }
+                else if (ViewBag.ProfilePicture == true)
+                {
+                    <img src="@Url.Content("~/User/GetProfilePicture")" class="img_profile" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Content/images/empty_profile_picture.png")" class="img_profile" />
+                }
+            </div>
+            <div class="row-fluid" id="profile_name">
+                <div class="span9">
+                    <h3>@ViewBag.Name</h3>
+                </div>
+                <div class="span3" id="btn_edit">
+                    <a href="@Url.Content("~/User/Edit")" class="btn btn-large">Edit</a>
+                </div>
+            </div>
+            <div id="profile_earnings">
+                <h2>Earnings: @ViewBag.UserEarnings.ToString("C")</h2>
+            </div>
+            <div id="account_notifications">
+                <h2>Notifications</h2>
+            </div>
+            <div id="account_links">
+                <a href="@Url.Content("~/User/MessageBox")" class="btn btn-large">Messages</a>
+                <a href="@Url.Content("~/User/ItemsBorrowed")" class="btn btn-large">Borrowed Items</a>
+                <a href="@Url.Content("~/User/Items")" class="btn btn-large">Listed Items</a>
+                <!-- No Orders page for private beta -->
+                <!--a href="#" class="btn btn-large">Orders</a-->
+            </div>
+        </div>
+        <div class="span9">
+            @RenderBody()
+        </div>
+    </div>
+</div>

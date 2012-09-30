@@ -1,0 +1,195 @@
+﻿.input_field input[type="text"], .input_field input[type="password"], .input_field textarea {
+	.text-box(320px);
+}
+
+
+input[type="text"].input-fatty, input[type="password"].input-fatty
+{
+	height: 30px;
+}
+
+input[type="text"].input-super-fatty, input[type="password"].input-super-fatty
+{
+	height: 37px;
+}
+
+select.input-fatty{
+	height: 40px;
+}
+
+input[type="text"].input-wider-small, input[type="password"].input-wider-small
+{
+	width: 120px;
+}
+
+input[type="text"].input-full, input[type="password"].input-full
+{
+	width: 85%;
+}
+
+select.input-full{
+	width: 92%;
+}
+
+input[type="text"].input-wider-med, input[type="password"].input-wider-med
+{
+	width: 70%;
+}
+
+select.input-wider-med{
+	width: 85%;
+}
+
+.input_field textarea {
+	rows: 10;
+}
+
+.input_field select {
+	.drop-down(330px);
+}
+
+.input_field select[state="selected_none"] {
+	color: @color-selected-none; //color: @color-placeholder;
+}
+
+.input_field option {
+	color: @color-text-primary; //color: @color-text;
+}
+
+.input_label * {
+	vertical-align: middle;
+}
+
+//Dropping the thickness of the stock jQuery Slider
+.ui-slider-horizontal {
+	height: .5em;
+}
+
+//Configuring the knob to match in size
+.ui-slider .ui-slider-handle {
+	height: 1em;
+}
+
+select.search-query {
+  padding-right: 14px;
+  padding-right: 4px \9;
+  padding-left: 14px;
+  padding-left: 4px \9;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+  margin-bottom: 0;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+}
+
+.shadow_select {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+      -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+       -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+          transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+.shadow_select:focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  outline: 0;
+  outline: thin dotted \9;
+  /* IE6-9 */
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+.webkit_specific {
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+
+
+
+
+
+
+
+/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+/* Common Input Elements
+- Text boxes
+- Password boxes
+- Dropdown boxes
+- Textarea boxes
+- Form labels for other input elements
+----------------------------------------------------------------------------------------------------*
+/* For all text fields *
+.form_field input[type="text"], .form_field input[type="password"]{
+    display:block;
+    margin: 10px auto 10px auto;
+    .text-box (320px);
+}
+
+/* For all text field hover and focus events *
+.form_field input[type="text"]:hover, .form_field input[type="text"]:focus, .form_field input[type="password"]:hover, .form_field input[type="password"]:focus {
+    .text-box-hover;
+}
+
+.form_dropdown select{
+    display:block;
+    margin: 10px auto 10px auto;
+    .drop-down (339px);
+}
+
+/* For all drop down hover and focus events *
+.form_dropdown select:hover, .form_dropdown select:focus {
+    .drop-down-hover;
+}
+
+select[state="selected_none"] {
+	color: @color-placeholder;
+}
+
+select {
+	color: @color-text;
+}
+
+option {
+	color: @color-text;
+}
+
+.form_field textarea {
+	display: block;
+	height: 100px;
+	margin: 10px auto 10px auto;
+	.text-box(320px);
+}
+
+/* For all textarea field hover and focus events *
+.form_field textarea:hover, .form_field textarea:focus {
+    .text-box-hover;
+}
+
+.form_field input[type="checkbox"] {
+	float: left;
+}
+
+.form_label_small {
+	display:block;
+	font-size:@font-size;
+	font-weight:bold;
+	text-align: left;
+	margin: 30px 0 0 5px;
+}
+
+.form_label_small_2 {
+	display:inline-block;
+	font-size:@font-size;
+	text-align: left;
+}
+*/

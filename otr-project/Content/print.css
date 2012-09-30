@@ -1,0 +1,17 @@
+﻿/* Print stylesheet used for formatting how a printed page should look
+   Reference: http://www.webcredible.co.uk/user-friendly-resources/css/print-stylesheet.shtml
+*/
+
+/* Remove unwanted elements */
+#header, #hello_bar, #body_container_shadow, #menucontainer, .noprint
+{
+    display: none;
+}
+
+/* Ensure the content spans the full width */
+#body
+{
+    width: 100%; 
+    margin: 0; 
+    float: none;
+}
