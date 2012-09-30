@@ -217,7 +217,7 @@ namespace otr_project.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(LogOnModel model, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -226,9 +226,9 @@ namespace otr_project.Controllers
                     FormsService.SignIn(model.Email.ToLower(), model.RememberMe);
                     Session["USER_F_NAME"] = market.Users.Find(model.Email.ToLower()).FirstName;
                     log.Info("Account - User logged in (" + model.Email.ToLower() + ")");
-                    if (Url.IsLocalUrl(returnUrl))
+                    if (Url.IsLocalUrl(ReturnUrl))
                     {
-                        return Redirect(returnUrl);
+                        return Redirect(ReturnUrl);
                     }
                     else
                     {
