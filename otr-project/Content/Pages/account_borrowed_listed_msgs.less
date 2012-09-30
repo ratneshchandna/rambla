@@ -1,4 +1,4 @@
-﻿/* Accounts - Borrowed Items */
+﻿/* Accounts Pages */
 .row-fluid .table_tab {
 	background-color: @color-body-bg;
 
@@ -18,7 +18,7 @@
 	border-top-right-radius: 3px;
 }
 
-.row-fluid .list_tab {
+.row-fluid .list_tab, .row-fluid .msgs_tab {
 	//background-color: @color-body-bg;
 	background-color: @color-bg;
 
@@ -38,7 +38,7 @@
 	border-top-right-radius: 3px;
 }
 
-.row-fluid .table_body, .row-fluid .list_body {
+.row-fluid .table_body, .row-fluid .list_body, .row-fluid .msgs_body {
 	background-color: @color-bg;
 
 	margin-top: -18px;
@@ -60,6 +60,16 @@
 	border-bottom-right-radius: 3px;
 }
 
+.loading_text {
+	display: none;
+
+	border: none;
+
+	font-weight: bold;
+}
+
+
+/* Accounts - Borrowed Items */
 .items_table {
 	background: -moz-linear-gradient(top, @color-table-bg-light, @color-table-bg-dark);
     background: -webkit-linear-gradient(top, @color-table-bg-light, @color-table-bg-dark);
@@ -74,14 +84,6 @@
 	text-align: center;
 	
 	padding: 1em 0 0.5em 0;
-
-	border-bottom: 1px solid @color-border-table;
-}
-
-.row_listed_item {
-	padding: 20px 0;
-
-	border-bottom: 1px solid @color-border-table;
 }
 
 .row_heading {
@@ -89,20 +91,11 @@
 	font-weight: bold;
 }
 
-.items_table .loading_text {
-	display: none;
-
-	font-weight: bold;
-}
 
 /* Accounts - Listed Items */
 /* table_body:list_body; borrowed_list:listed_list; table_tab:list_tab; current_borrowed:active_listings; past_borrowed:other_listings */
 .list_body .loading_text {
-    display: none;
-
 	margin: 50px auto;
-
-	font-weight: bold;
 }
 
 .listed_image {
@@ -112,6 +105,37 @@
 
 .listed_label {
 	font-weight: bold;
+}
+
+.row_listed_item {
+	padding: 20px 0;
+
+	border-bottom: 1px solid @color-border-table;
+}
+
+
+/* Accounts - Messages */
+.msg_input textarea {
+	width: 90%;
+}
+
+.msgs_row_item {
+	background-color: @color-text-quinary;
+
+	text-align: center;
+	
+	padding: 1em 0 0.5em 0;
+}
+
+.msg_pic {
+	height: 50px;
+	width: auto;
+}
+
+.msg_subject {
+	padding: 20px 0;
+
+	text-align: left;
 }
 
 

@@ -6,89 +6,119 @@
     ViewBag.AccountPageTitle = "Messages";
 }
 
-<div class="container_12">
-    <!--div class="header_to_body_gap"></div>
-    <div class="grid_12" id = "my_account_dashboard">
-        <ul class="user_nav_links">
-            <li class="user_navbar">@Html.ActionLink("Agreements", "Agreements", "User")</li>
-            <li class="user_navbar">@Html.ActionLink("Borrowed", "ItemsBorrowed", "User")</li>
-            <li class="user_navbar">@Html.ActionLink("Listings", "Items", "User")</li>
-            <li class="user_navbar">@Html.ActionLink("Inbox", "MessageBox", "User")</li>
-            <li class="user_navbar">@Html.ActionLink("Profile", "Index", "User")</li>
-        </ul>
-    </div>
-    <div class="clear">
-    &nbsp;</div>
-    <div class="grid_9">
-            <div id="User_Inbox_Title" class="title_container_item_left">
-                <h1>
-                    Inbox
-                </h1>
-                <h2 id="User_Inbox_Subtitle" class="page_subtitle">
-                    Messaging allows you to communicate with other Rambla users
-                </h2>
-            </div>
-    </div>
-    <div class="grid_3">
-        <div class ="title_container_item_right">
-            <h2>
-                Earnings: @ViewBag.UserEarnings.ToString("C")
-            </h2>
-        </div>
-    </div>
+@{
+    otr_project.Models.MarketPlaceEntities db = new otr_project.Models.MarketPlaceEntities();
+}
 
-    <div class="clear">
-    &nbsp;</div-->
-    <div class="grid_12">
-        <div id="user-items-listed-container" class="container">
-            @if (Model.Count() <= 0)
-            {
-                <span>Your Rambla inbox is empty.</span>
-            }
-            else{
-                <table class="user_items_listed">
-                    <thead>
-                        <tr>
-                            <th>
-                                Message From
-                            </th>
-                            <th>
-                                Subject
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var message in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @{
-                            otr_project.Models.MarketPlaceEntities db = new otr_project.Models.MarketPlaceEntities();
-                            var fromUser = db.Users.Find(message.From);
-                                    }
-                                    @(fromUser.FirstName + " " + fromUser.LastName)
-                                </td>
-                                <td>
-                                    @if (message.isRead == false)
-                                    {
-                                        <strong>
-                                            <a href="#" id="msgSubject-@message.Id" class="msgSubject" data-id="@message.Id">@message.Subject</a>
-                                        </strong>
-                                    }
-                                    else
-                                    {
-                                        <a href="#" id="msgSubject-@message.Id" class="msgSubject" data-id="@message.Id">@message.Subject</a>
-                                    }
-                                    <div id="msgDetail-@message.Id" class="msgDetail">
-                                        @{Html.RenderAction("GetMessage", "User", new { id = message.Id });}
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                }
+<div class="row-fluid">
+    <div class="span12 msgs_tab">
+        <!--ul class="nav nav-tabs">
+            <li id="active_listings" class="active"><a href="#">Active Listings</a></li>
+            <li id="other_listings" ><a href="#">Other Listings</a></li>
+        </ul-->
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12 msgs_body">
+        <div class="loading_text row-fluid msgs_row_item">
+            <div class="span12">
+                Loading ... 
+            </div>
         </div>
+        @if (Model.Count() <= 0)
+        {
+            <div class="loading_text row-fluid msgs_row_item">
+                <div class="span12">
+                    Your Rambla inbox is empty
+                </div>
+            </div>
+        }
+        else
+        {
+            <div id="messages_list">
+                @foreach (var message in Model)
+                {
+                    <div class="row-fluid msgs_row_item">
+                        @{
+                            var fromUser = db.Users.Find(message.From);
+                            var toUser = db.Users.Find(message.To);
+                        }
+                        
+                        <div class="span3">
+                            @if (User.Identity.Name != fromUser.Email)
+                            {
+                                if (fromUser.isFacebookUser)
+                                {
+                                    <img src="http://graph.facebook.com/@fromUser.FacebookUserId/picture?type=large" class="msg_pic" />
+                                }
+                                else if (fromUser.ProfilePicture != null)
+                                {
+                                    <img src="@Url.Content("~/User/GetProfilePicture&imageId=" + fromUser.ProfilePicture.Id)" class="msg_pic" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/images/empty_profile_picture.png")" class="msg_pic" />
+                                }
+                                
+                                <div>
+                                    <strong>@(fromUser.FirstName + " " + fromUser.LastName)</strong>
+                                </div>
+                            }
+                            else
+                            {
+                                if (toUser.isFacebookUser)
+                                {
+                                    <img src="http://graph.facebook.com/@toUser.FacebookUserId/picture?type=large" class="msg_pic" />
+                                }
+                                else if (toUser.ProfilePicture != null)
+                                {
+                                    <img src="@Url.Content("~/User/GetProfilePicture&imageId=" + toUser.ProfilePicture.Id)" class="msg_pic" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/images/empty_profile_picture.png")" class="msg_pic" />
+                                }
+                                
+                                <div>
+                                    <strong>@(toUser.FirstName + " " + toUser.LastName)</strong>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="span9 msg_subject">
+                            @if (message.isRead == false)
+                            {
+                                <strong>
+                                    <a href="#dialog-@message.Id" id="msgSubject-@message.Id" class="msgSubject" data-toggle="modal">@message.Subject</a>
+                                </strong>
+                            }
+                            else
+                            {
+                                <a href="#dialog-@message.Id" id="msgSubject-@message.Id" class="msgSubject" data-toggle="modal">@message.Subject</a>
+                            }    
+                        </div>
+                        
+                        <div class="modal hide fade in" id="dialog-@message.Id">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                @if (User.Identity.Name != fromUser.Email)
+                                {
+                                    <h3>Conversation with @fromUser.FirstName</h3>
+                                }
+                                else
+                                {
+                                    <h3>Conversation with @toUser.FirstName</h3>
+                                }
+                            </div>
+                            <div id="msgDetail-@message.Id" class="modal-body msgDetail">
+                                @{Html.RenderAction("GetMessage", "User", new { id = message.Id });}
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
     </div>
 </div>
 

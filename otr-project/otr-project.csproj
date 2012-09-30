@@ -428,7 +428,7 @@
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Pages\account_borrowed_listed.less" />
+    <Content Include="Content\Pages\account_borrowed_listed_msgs.less" />
     <Content Include="Content\Pages\account_dashboard.less" />
     <Content Include="Content\Pages\account_edit.less" />
     <Content Include="Content\Pages\account_leftpanel.less" />
