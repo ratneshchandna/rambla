@@ -22,6 +22,9 @@ namespace otr_project.Models
         public virtual DateTime Expires { get; set; }
 
         [Required]
+        public virtual bool IsApproved { get; set; }
+
+        [Required]
         [DataType(DataType.EmailAddress)]
         public string UserModelEmail { get; set; }
     }

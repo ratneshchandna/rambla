@@ -54,7 +54,8 @@
                     </a>
                 </div>
                 <div class="span4 offset4">
-                    @if (Request.IsAuthenticated){
+                    @if (Request.IsAuthenticated)
+                    {
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="divider-vertical"></li>
@@ -137,7 +138,7 @@
                             <span class="color-pink">money</span>
                         </h1>
                         <br />
-                        @using (Html.BeginForm("RegisterPrBeta", "Account", FormMethod.Post, new {@class="hpad10"}))
+                        @using (Html.BeginForm("RegisterPrBeta", "Account", FormMethod.Post, new { @class = "hpad10" }))
                         {
                             @Html.ValidationSummary(true)
                             <div class="row-fluid tpad10">
@@ -160,7 +161,7 @@
                             <div class="row-fluid tpad20">
                                 <div class="span12 center" style="padding-left:20px; padding-right: 20px">
                                     <button type="submit" class="btn btn-large btn-info span6 center">Request Access</button>
-                                    <button type="button" class="btn btn-large btn-info span6 center">Facebook Request</button>   
+                                    <button type="button" class="btn btn-large btn-info span6 center" onclick="FB.login(function(response){},{scope: 'email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location'});">Facebook Request</button>
                                 </div>
                             </div>
                         }
@@ -230,6 +231,7 @@
     </div>
 </body>
 </html>
+@{Html.RenderPartial("FacebookInit");}
 <script type="text/javascript">
 
     var _gaq = _gaq || [];
