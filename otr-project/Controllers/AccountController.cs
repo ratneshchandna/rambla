@@ -50,7 +50,7 @@ namespace otr_project.Controllers
         // URL: /Account/LogOn
         // **************************************
 
-        public ActionResult LogOn()
+        public ActionResult LogOn(string ReturnUrl)
         {
             if (FacebookWebContext.Current.IsAuthenticated() && FacebookWebContext.Current.IsAuthorized())
             {
@@ -137,7 +137,14 @@ namespace otr_project.Controllers
                 FormsAuthentication.SetAuthCookie((string)me.email, false);
                 Session["USER_F_NAME"] = (string)me.first_name;
                 log.Info("Account - User logged in (" + (string)me.email + ")");
-                return RedirectToAction("Index", "Home");
+                if (Url.IsLocalUrl(ReturnUrl))
+                {
+                    return Redirect(ReturnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View();
         }
