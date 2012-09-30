@@ -87,10 +87,11 @@ namespace otr_project.Controllers
                     {
                         if (!RegisteredUser.IsApproved)
                         {
+                            //User is in our DB but has already requested access and is pending approval. Let us kick him out.
                             var model = new LogOnModel();
                             ModelState.AddModelError("", "Sorry, your account has not yet been activated. Stay tuned, we're almost ready for you.");
-                            FacebookWebContext.Current.DeleteAuthCookie();
-                            FacebookWebContext.Current.HttpContext.Session.Abandon();
+                            fbClient.Delete(facebookId + "/permissions");
+                            FormsAuthentication.SignOut();
                             return View(model);
                         }
                     }
@@ -124,9 +125,11 @@ namespace otr_project.Controllers
                 {
                     if (!fbUser.IsApproved)
                     {
+                        //User has requested access previously using facebook and is pending approval. Let us kick him out.
                         var model = new LogOnModel();
                         ModelState.AddModelError("", "Sorry, your account has not yet been activated. Stay tuned, we're almost ready for you.");
-                        FacebookWebContext.Current.DeleteAuthCookie();
+                        fbClient.Delete(facebookId + "/permissions");
+                        FormsAuthentication.SignOut();
                         return View(model);
                     }
                 }
@@ -165,6 +168,8 @@ namespace otr_project.Controllers
                         {
                             var model = new RegisterPrBetaViewModel();
                             ModelState.AddModelError("", "Oops, your Facebook profile does not have your location information. Please use the form below to request access.");
+                            fbClient.Delete(facebookId + "/permissions");
+                            FormsAuthentication.SignOut();
                             return View("../Home/Index", model);
                         }
                     }
@@ -173,7 +178,7 @@ namespace otr_project.Controllers
                     string city = address[0].Trim();
                     string prov = address[1].Trim();
                     
-                    //User does not exist in our DB, let us kick him out
+                    //Let us create a new user
                     market.Users.Add(new UserModel
                     {
                         Email = userEmail,
@@ -186,6 +191,7 @@ namespace otr_project.Controllers
                         FacebookUserId = facebookId
                     });
 
+                    //Let us add a facebook user to our DB with isApproved set to false
                     market.FacebookUsers.Add(new FacebookUser
                     {
                         Id = facebookId,
