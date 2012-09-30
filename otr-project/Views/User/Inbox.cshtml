@@ -54,7 +54,7 @@
                                 }
                                 else if (fromUser.ProfilePicture != null)
                                 {
-                                    <img src="@Url.Content("~/User/GetProfilePicture&imageId=" + fromUser.ProfilePicture.Id)" class="msg_pic" />
+                                    <img src="@Url.Content("~/User/GetUserImage/" + fromUser.ProfilePicture.Id)" class="msg_pic" />
                                 }
                                 else
                                 {
@@ -73,7 +73,7 @@
                                 }
                                 else if (toUser.ProfilePicture != null)
                                 {
-                                    <img src="@Url.Content("~/User/GetProfilePicture&imageId=" + toUser.ProfilePicture.Id)" class="msg_pic" />
+                                    <img src="@Url.Content("~/User/GetUserImage/" + toUser.ProfilePicture.Id)" class="msg_pic" />
                                 }
                                 else
                                 {
