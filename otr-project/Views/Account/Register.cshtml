@@ -83,6 +83,10 @@
             DoManual();
             RegionColour();
         });
+
+        $.get("@Url.Content("~/Search/Index/1")", function(data){
+            $('#popular-items').html(data);
+        });
     });
 </script>
 
@@ -92,11 +96,20 @@
             @if (Session["REGISTERED_USER"] != null)
             {
                 Session["REGISTERED_USER"] = null;
-                <h2>Thank you for signing up for Rambla!</h2>
-                <div>
-                    <fieldset>
-                        Please check your email inbox for the account activation link.
-                    </fieldset>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h2>Awesome! Thank you for requesting access.</h2>
+                        <h4>
+                            Please stay tuned. We will send you an email confirming your access when we are ready.
+                        </h4>
+                    </div>
+                </div> 
+                <hr />
+                <div class="row-fluid tpad20">
+                    <h3>Checkout some popular listings:</h3>
+                </div>
+                <div id="popular-items" class="row-fluid">
+                    
                 </div>
             }
             else

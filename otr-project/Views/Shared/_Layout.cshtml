@@ -50,7 +50,7 @@
             
         </script>
     </head>
-    <body>
+    <body style="height:100%">
     
     @{ 
         otr_project.Models.RentalCart cart = otr_project.Models.RentalCart.GetCart(this.Context);
@@ -110,7 +110,7 @@
                         </li>
                         <li class="divider-vertical"></li>
                         <li class="">
-                            <form class="navbar-search" action="@Url.Content("~/Search/Index/1")" method="post">
+                            <form class="navbar-search tpad10" action="@Url.Content("~/Search/Index/1")" method="post">
                                 <h4>Search for items</h4>
                                 <input id="search_box" name="search" type="text" class="search-query span3" placeholder="Eg. Drill, tent, basketball etc." />
                             </form>
