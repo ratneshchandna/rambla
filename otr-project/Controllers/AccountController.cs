@@ -30,6 +30,7 @@ namespace otr_project.Controllers
         private IUserMailer _userMailer = new UserMailer();
         ErrorMessageViewModel ErrorMessage = new ErrorMessageViewModel();
         private static readonly ILog log = LogManager.GetLogger("otr_project.MvcApplication.Controllers");
+        private static readonly string prBetaTempPass = Guid.NewGuid().ToString().Substring(0, 10);
 
         public IUserMailer UserMailer
         {
@@ -49,18 +50,52 @@ namespace otr_project.Controllers
         // URL: /Account/LogOn
         // **************************************
 
-        public ActionResult LogOn()
+        public ActionResult LogOn(string ReturnUrl)
         {
             if (FacebookWebContext.Current.IsAuthenticated() && FacebookWebContext.Current.IsAuthorized())
             {
                 FacebookClient fbClient = new FacebookClient(FacebookWebContext.Current.AccessToken);
                 dynamic me = fbClient.Get("me");
                 string facebookId = (string)me.id;
+                string userEmail = (string)me.email;
 
+                if (facebookId == null || userEmail == null)
+                {
+                    throw new FacebookOAuthException();
+                }
+
+                var user = market.Users.SingleOrDefault(u => u.Email == userEmail);
+
+                if (user == null)
+                {
+                    //User does not exist in our DB, let us kick him out
+                    var model = new LogOnModel();
+                    ModelState.AddModelError("", "Oops! Looks like you have not yet registered for an account.");
+                    fbClient.Delete(facebookId + "/permissions");
+                    FormsAuthentication.SignOut();
+                    //fbClient.Delete(Url.Action("LogOn", "Account", null, Request.Url.Scheme, Request.Url.Host));
+                    return View(model);
+                }
+                
                 var fbUser = market.FacebookUsers.SingleOrDefault(f => f.Id == facebookId);
 
                 if (fbUser == null)
                 {
+                    MembershipUser RegisteredUser = Membership.GetUser(user.Email.ToLower());
+
+                    if (RegisteredUser != null)
+                    {
+                        if (!RegisteredUser.IsApproved)
+                        {
+                            //User is in our DB but has already requested access and is pending approval. Let us kick him out.
+                            var model = new LogOnModel();
+                            ModelState.AddModelError("", "Sorry, your account has not yet been activated. Stay tuned, we're almost ready for you.");
+                            fbClient.Delete(facebookId + "/permissions");
+                            FormsAuthentication.SignOut();
+                            return View(model);
+                        }
+                    }
+
                     var location = me.location;
                     if (location == null)
                     {
@@ -74,55 +109,63 @@ namespace otr_project.Controllers
                     string city = address[0].Trim();
                     string prov = address[1].Trim();
 
-                    //User doesnt exist. Let us create one
-                    //Creating a regular user profile
-                    market.Users.Add(new UserModel
-                    {
-                        Email = (string)me.email,
-                        FirstName = (string)me.first_name,
-                        LastName = (string)me.last_name,
-                        City = city,
-                        RegionId = market.Regions.SingleOrDefault(r=> r.Name.Contains(prov)).Id,
-                        CountryId = 1,
-                        isFacebookUser = true,
-                        FacebookUserId = facebookId
-                    });
-
-                    //market.SaveChanges();
-
                     //Now creating the facebook user profile. We can wire this to the regular user by using a foreign key
                     market.FacebookUsers.Add(new FacebookUser
                     {
                         Id = facebookId,
                         UserModelEmail = (string)me.email,
                         AccessToken = FacebookWebContext.Current.AccessToken,
+                        IsApproved = true,
                         Expires = FacebookWebContext.Current.Session.Expires
                     });
                     log.Info("Account - Creating new Facebook user (" + (string)me.first_name + " " + (string)me.last_name + ")");
                     market.SaveChanges();
                 }
-
+                else
+                {
+                    if (!fbUser.IsApproved)
+                    {
+                        //User has requested access previously using facebook and is pending approval. Let us kick him out.
+                        var model = new LogOnModel();
+                        ModelState.AddModelError("", "Sorry, your account has not yet been activated. Stay tuned, we're almost ready for you.");
+                        fbClient.Delete(facebookId + "/permissions");
+                        FormsAuthentication.SignOut();
+                        return View(model);
+                    }
+                }
                 //User is either created or he/she exists. Let us sign them in using email as the username.
                 FormsAuthentication.SetAuthCookie((string)me.email, false);
                 Session["USER_F_NAME"] = (string)me.first_name;
                 log.Info("Account - User logged in (" + (string)me.email + ")");
-                return RedirectToAction("Index", "Home");
+                if (Url.IsLocalUrl(ReturnUrl))
+                {
+                    return Redirect(ReturnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View();
         }
 
-        public ActionResult LogOnAjaxFacebook()
+        public ActionResult RegisterFBPrivateBeta()
         {
-            var result = new LogOnAjaxViewModel();
             if (FacebookWebContext.Current.IsAuthenticated() && FacebookWebContext.Current.IsAuthorized())
             {
                 FacebookClient fbClient = new FacebookClient(FacebookWebContext.Current.AccessToken);
                 dynamic me = fbClient.Get("me");
                 string facebookId = (string)me.id;
+                string userEmail = (string)me.email;
 
-                var fbUser = market.FacebookUsers.SingleOrDefault(f => f.Id == facebookId);
+                if (facebookId == null || userEmail == null)
+                {
+                    throw new FacebookOAuthException();
+                }
 
-                if (fbUser == null)
+                var user = market.Users.SingleOrDefault(u => u.Email == userEmail);
+
+                if (user == null)
                 {
                     var location = me.location;
                     if (location == null)
@@ -130,22 +173,24 @@ namespace otr_project.Controllers
                         location = me.hometown;
                         if (location == null)
                         {
-                            result.Error = true;
-                            result.Message = "Facebook authentication failed.";
-                            return Json(result);
+                            var model = new RegisterPrBetaViewModel();
+                            ModelState.AddModelError("", "Oops, your Facebook profile does not have your location information. Please use the form below to request access.");
+                            fbClient.Delete(facebookId + "/permissions");
+                            FormsAuthentication.SignOut();
+                            return View("../Home/Index", model);
                         }
                     }
+                    
                     string[] address = ((string)location.name).Split(',');
                     string city = address[0].Trim();
                     string prov = address[1].Trim();
-
-                    //User doesnt exist. Let us create one
-                    //Creating a regular user profile
+                    
+                    //Let us create a new user
                     market.Users.Add(new UserModel
                     {
-                        Email = (string)me.email,
-                        FirstName = (string)me.first_name,
-                        LastName = (string)me.last_name,
+                        Email = userEmail,
+                        FirstName = "Rambla",
+                        LastName = "User",
                         City = city,
                         RegionId = market.Regions.SingleOrDefault(r => r.Name.Contains(prov)).Id,
                         CountryId = 1,
@@ -153,34 +198,33 @@ namespace otr_project.Controllers
                         FacebookUserId = facebookId
                     });
 
-                    //market.SaveChanges();
-
-                    //Now creating the facebook user profile. We can wire this to the regular user by using a foreign key
+                    //Let us add a facebook user to our DB with isApproved set to false
                     market.FacebookUsers.Add(new FacebookUser
                     {
                         Id = facebookId,
                         UserModelEmail = (string)me.email,
                         AccessToken = FacebookWebContext.Current.AccessToken,
+                        IsApproved = false,
                         Expires = FacebookWebContext.Current.Session.Expires
                     });
-                    log.Info("Account - Creating new Facebook user (" + (string)me.first_name + " " + (string)me.last_name + ")");
-                    market.SaveChanges();
-                }
 
-                //User is either created or he/she exists. Let us sign them in using email as the username.
-                FormsAuthentication.SetAuthCookie((string)me.email, false);
-                Session["USER_F_NAME"] = (string)me.first_name;
-                log.Info("Account - User logged in (" + (string)me.email + ")");
-                result.Error = false;
-                return Json(result);
+                    market.SaveChanges();
+                    Session["REGISTERED_USER"] = true;
+                    log.Info("Account - New user registered (" + userEmail.ToLower() + ")");
+                    return View("Register");
+                }
+                
+                Session["REGISTERED_USER"] = true;
+                return View("Register");
             }
-            result.Error = true;
-            result.Message = "Facebook authentication failed.";
-            return Json(result);
+            
+            var regModel = new RegisterPrBetaViewModel();
+            ModelState.AddModelError("", "Oops, your Facebook profile does not have your location information. Please use the form below to request access.");
+            return View("../Home/Index", regModel);
         }
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(LogOnModel model, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -189,9 +233,9 @@ namespace otr_project.Controllers
                     FormsService.SignIn(model.Email.ToLower(), model.RememberMe);
                     Session["USER_F_NAME"] = market.Users.Find(model.Email.ToLower()).FirstName;
                     log.Info("Account - User logged in (" + model.Email.ToLower() + ")");
-                    if (Url.IsLocalUrl(returnUrl))
+                    if (Url.IsLocalUrl(ReturnUrl))
                     {
-                        return Redirect(returnUrl);
+                        return Redirect(ReturnUrl);
                     }
                     else
                     {
@@ -268,6 +312,52 @@ namespace otr_project.Controllers
             ViewBag.PasswordLength = MembershipService.MinPasswordLength;
             ViewBag.RegionId = new SelectList(market.Regions, "Id", "Name");
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult RegisterPrBeta(RegisterPrBetaViewModel model)
+        {
+            ViewBag.RegionId = new SelectList(market.Regions, "Id", "Name");
+
+            if (ModelState.IsValid)
+            {
+                UserModel user = new UserModel();
+                // Attempt to register the user
+                MembershipCreateStatus createStatus = MembershipService.CreateUser(prBetaTempPass, model.Email.ToLower());
+
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    user.ActivationId = System.Guid.NewGuid().ToString();
+                    MembershipUser RegisteredUser = Membership.GetUser(model.Email.ToLower());
+                    RegisteredUser.IsApproved = false;
+                    Membership.UpdateUser(RegisteredUser);
+                    user.Email = model.Email.ToLower();
+                    user.FirstName = "Rambla";
+                    user.LastName = "User";
+                    user.City = model.City;
+                    user.RegionId = model.RegionId;
+                    user.CountryId = 1;
+                    market.Badges.SingleOrDefault(b => b.Name == "Individual").Users.Add(user);
+                    market.Users.Add(user);
+                    market.SaveChanges();
+
+                    //Use MvcMailer to send welcome email to newly registered user.
+                    //UserMailer.Welcome(newUser: user).Send();
+                    Session["REGISTERED_USER"] = true;
+                    log.Info("Account - New user registered (" + model.Email.ToLower() + ")");
+                    return View("Register");
+                }
+                else
+                {
+                    log.Error("Account - Error registering new user. " + createStatus.ToString());
+                    ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
+                }
+            }
+
+            log.Error("Account - RegisterModel Error.");
+            // If we got this far, something failed, redisplay form
+            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            return View("../Home/Index", model);
         }
 
         [HttpPost]

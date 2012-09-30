@@ -181,6 +181,7 @@
     <Compile Include="ViewModels\BasicSearchViewModel.cs" />
     <Compile Include="ViewModels\LogOnAjaxViewModel.cs" />
     <Compile Include="ViewModels\ErrorMessageViewModel.cs" />
+    <Compile Include="ViewModels\RegisterPrBetaViewModel.cs" />
     <Compile Include="ViewModels\SearchItemViewModel.cs" />
     <Compile Include="ViewModels\ProcessSecurityCodeViewModel.cs" />
     <Compile Include="ViewModels\RentalCartUpdateViewModel.cs" />
