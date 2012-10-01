@@ -1,0 +1,13 @@
+syntax: glob
+*.suo
+*.user
+*.MDF
+*.LDF
+*.cache
+*.[Pp]ublish.xml
+Logs/
+obj/
+[Bb]in
+Debug/
+Release/
+Uploads/
