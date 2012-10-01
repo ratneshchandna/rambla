@@ -74,7 +74,8 @@
                                         </h3>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="@Url.Content("~/User")">Dashboard</a></li>
+                                    <!-- No dashboard for Private Beta -->
+                                    <!--li><a href="@Url.Content("~/User")">Dashboard</a></li-->
                                         <li><a href="@Url.Content("~/User/MessageBox")">Inbox</a></li>
                                         <li><a href="@Url.Content("~/User/Items")">Items Listed</a></li>
                                         <li><a href="@Url.Content("~/User/ItemsBorrowed")">Items Borrowed</a></li>
@@ -181,7 +182,7 @@
                                 </div>
                                 <div class="span8 pull-left">
                                     <div class="input-append">
-                                        <input id="home-search" type="text" class="input-xxlarge search-query input-super-fatty" />
+                                        <input id="home-search" name="search" type="text" class="input-xxlarge search-query input-super-fatty" />
                                         <button id="home-search-btn" type="submit" class="btn btn-large btn-primary">Search</button>
                                     </div>
                                 </div>

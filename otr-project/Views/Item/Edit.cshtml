@@ -125,7 +125,7 @@
                         else
                         {
                             <p>
-                                You've not uploaded any images of @Model.Name
+                                <span class="no_images_left_message">You've not uploaded any images of @Model.Name</span>
                             </p>
                         }
                     }
@@ -324,7 +324,7 @@
                     if (data.Value == false) {
                         $("#image-" + imageToDelete).parent().fadeOut('slow', function () {
                             if (imageCount == 0) {
-                                $('#item_thumbnail_container_last').html("<p id=\"no_images_left_message\">You've deleted all images of @Model.Name</p>");
+                                $('#item_thumbnail_container_last').html("<p class=\"no_images_left_message\"><strong>You've deleted all images of @Model.Name</strong></p>");
                             }
                         });
                         /*$("#image-" + imageToDelete).parent().fadeOut('slow', function () {
