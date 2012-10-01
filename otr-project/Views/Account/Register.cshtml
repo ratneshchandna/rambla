@@ -89,9 +89,9 @@
         });
     });
 </script>
-@if (Session["REGISTERED_USER"] != null)
+@if (Session["REQUESTED_ACCESS_USER"] != null)
 {
-    Session["REGISTERED_USER"] = null;
+    Session["REQUESTED_ACCESS_USER"] = null;
     <div class="row-fluid">
         <div class="span12">
             <h2>Awesome! Thank you for requesting access.</h2>
@@ -108,12 +108,31 @@
                     
     </div>
 }
+else if (Session["REGISTERED_USER"] != null)
+{
+    Session["REGISTERED_USER"] = null;
+    <div class="row-fluid">
+        <div class="span12">
+            <h2>Awesome! Thank you for signing up with Rambla.</h2>
+            <h4>
+                Please check you email inbox for an activation link. We're excited to have you onboard!
+            </h4>
+        </div>
+    </div> 
+    <hr />
+    <div class="row-fluid tpad20">
+        <h3>In the meanwhile, here are some popular listings:</h3>
+    </div>
+    <div id="popular-items" class="row-fluid">
+                    
+    </div>
+}
 else
 {
     <div class="row">
         <div class="span6 offset3 center">
             <h2>Sign up for Rambla</h2>
-                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {@class="form-vertical well"}))
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-vertical well" }))
                 {
                     <div id="login_facebook">
                         <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Sign up with Facebook</fb:login-button>
@@ -160,7 +179,7 @@ else
                     <div class="controls tpad20">
                         <button type="submit" class="btn btn-primary btn-large" style="width:50%">Free Sign Up</button>
                     </div>                        
-            }
+                }
         </div>
     </div>
 }
