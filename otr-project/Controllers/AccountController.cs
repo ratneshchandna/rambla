@@ -209,12 +209,12 @@ namespace otr_project.Controllers
                     });
 
                     market.SaveChanges();
-                    Session["REGISTERED_USER"] = true;
+                    Session["REQUESTED_ACCESS_USER"] = true;
                     log.Info("Account - New user registered (" + userEmail.ToLower() + ")");
                     return View("Register");
                 }
-                
-                Session["REGISTERED_USER"] = true;
+
+                Session["REQUESTED_ACCESS_USER"] = true;
                 return View("Register");
             }
             
@@ -343,7 +343,7 @@ namespace otr_project.Controllers
 
                     //Use MvcMailer to send welcome email to newly registered user.
                     //UserMailer.Welcome(newUser: user).Send();
-                    Session["REGISTERED_USER"] = true;
+                    Session["REQUESTED_ACCESS_USER"] = true;
                     log.Info("Account - New user registered (" + model.Email.ToLower() + ")");
                     return View("Register");
                 }
