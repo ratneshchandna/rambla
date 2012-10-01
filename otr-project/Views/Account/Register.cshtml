@@ -89,90 +89,78 @@
         });
     });
 </script>
-
-<div class="container_12">
-    <div class="grid_4 push_3">
-        <div id="login_container">
-            @if (Session["REGISTERED_USER"] != null)
-            {
-                Session["REGISTERED_USER"] = null;
-                <div class="row-fluid">
-                    <div class="span12">
-                        <h2>Awesome! Thank you for requesting access.</h2>
-                        <h4>
-                            Please stay tuned. We will send you an email confirming your access when we are ready.
-                        </h4>
-                    </div>
-                </div> 
-                <hr />
-                <div class="row-fluid tpad20">
-                    <h3>Checkout some popular listings:</h3>
-                </div>
-                <div id="popular-items" class="row-fluid">
+@if (Session["REGISTERED_USER"] != null)
+{
+    Session["REGISTERED_USER"] = null;
+    <div class="row-fluid">
+        <div class="span12">
+            <h2>Awesome! Thank you for requesting access.</h2>
+            <h4>
+                Please stay tuned. We will send you an email confirming your access when we are ready.
+            </h4>
+        </div>
+    </div> 
+    <hr />
+    <div class="row-fluid tpad20">
+        <h3>Checkout some popular listings:</h3>
+    </div>
+    <div id="popular-items" class="row-fluid">
                     
-                </div>
-            }
-            else
-            {
-                <h2>Sign up for Rambla</h2>
-                <div id="login_facebook">
-                    <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Sign up with Facebook</fb:login-button>
-                </div>
-                <p>or</p>
-                using (Html.BeginForm())
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="span6 offset3 center">
+            <h2>Sign up for Rambla</h2>
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {@class="form-vertical well"}))
                 {
-                    @Html.ValidationSummary(true)
-                    <div>
-                        <fieldset>
-                            <div class="form_field">
-                                @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First Name" })
-                                @Html.ValidationMessageFor(m => m.FirstName)
-                            </div>
-                            <div class="form_field">
-                                @Html.TextBoxFor(m => m.LastName, new { placeholder = "Last Name" })
-                                @Html.ValidationMessageFor(m => m.LastName)
-                            </div>
-                            <div class="form_field">
-                                @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address" })
-                                @Html.ValidationMessageFor(m => m.Email)
-                            </div>
-                            <div id="auto-location">
-                                <div class="form_field">
-                                    <a id="location" href="#"></a>
-                                </div>
-                            </div>
-                            <div id="manual-location">
-                                <div class="form_field">
-                                    @Html.TextBoxFor(m => m.City, new { placeholder = "City" })
-                                    @Html.ValidationMessageFor(m => m.City)
-                                </div>
-                                <div class="form_dropdown">
-                                    @Html.DropDownList("RegionId", regionList, "Province", new { onchange = "RegionColour()" })
-                                    @Html.ValidationMessageFor(m => m.RegionId)
-                                </div>
-                            </div>
-                            <div class="form_field">
-                                @Html.PasswordFor(m => m.Password, new { placeholder = "Password", type = "password" })
-                                @Html.ValidationMessageFor(m => m.Password)
-                            </div>
-                            <div class="form_field">
-                                @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password", type = "password" })
-                                @Html.ValidationMessageFor(m => m.ConfirmPassword)
-                            </div>
-                            <div class="btn_submit">
-                                <input id="SignUpButton" type="submit" value="Free Sign Up">
-                            </div>
-                            <div id="forgot_pwd">@Html.ActionLink("Already have an account?", "LogOn", "Account")</div>
-                        </fieldset>
+                    <div id="login_facebook">
+                        <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Sign up with Facebook</fb:login-button>
                     </div>
-                
-                }
+                    <div class="span2"><hr /></div>
+                    <div class="span1 tpad10"><h4><em>Or</em></h4></div>
+                    <div class="span2"><hr /></div>
+                    @Html.ValidationSummary(true)
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First Name", @class = "span4 input-fatty" })
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </div>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.LastName, new { placeholder = "Last Name", @class = "span4 input-fatty" })
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address", @class = "span4 input-fatty" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                    <div id="auto-location" class="controls vpad10">
+                        <div class="form_field">
+                            <a id="location" href="#"></a>
+                        </div>
+                    </div>
+                    <div id="manual-location">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.City, new { placeholder = "City", @class = "span4 input-fatty" })
+                            @Html.ValidationMessageFor(m => m.City)
+                        </div>
+                        <div class="controls">
+                            @Html.DropDownList("RegionId", regionList, "Province", new { onchange = "RegionColour()", @class = "span4 input-fatty" })
+                            @Html.ValidationMessageFor(m => m.RegionId)
+                        </div>
+                    </div>
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Password", type = "password", @class = "span4 input-fatty" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password", type = "password", @class = "span4 input-fatty" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+                    <div class="controls tpad20">
+                        <button type="submit" class="btn btn-primary btn-large" style="width:50%">Free Sign Up</button>
+                    </div>                        
             }
         </div>
-    </div>    
-    <div class="grid_5">
     </div>
-    <div class="clear">
-        &nbsp;</div>
-
-</div>
+}
