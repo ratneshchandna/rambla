@@ -53,7 +53,7 @@
                         <img class="tpad5" src="@Url.Content("~/Content/images/Rambla_Logo.png")" />
                     </a>
                 </div>
-                <div class="span4 offset4">
+                <div class="span5 offset3">
                     @if (Request.IsAuthenticated)
                     {
                         <div class="nav-collapse">
@@ -66,23 +66,23 @@
                                 </li>
                                 <li class="divider-vertical"></li>
                             </ul>
+                            <ul class="nav pull-right">
+                                <li class="dropdown header-elements tpad10">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <h3>Hi @Session["USER_F_NAME"]
+                                        <b class="caret"></b>
+                                        </h3>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="@Url.Content("~/User")">Dashboard</a></li>
+                                        <li><a href="@Url.Content("~/User/MessageBox")">Inbox</a></li>
+                                        <li><a href="@Url.Content("~/User/Items")">Items Listed</a></li>
+                                        <li><a href="@Url.Content("~/User/ItemsBorrowed")">Items Borrowed</a></li>
+                                        <li><a href="@Url.Content("~/Account/LogOff")">Sign Out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
-                        <ul class="nav">
-                            <li class="dropdown header-elements tpad10">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <h3>Hi, @Session["USER_F_NAME"]
-                                    <b class="caret"></b>
-                                    </h3>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="@Url.Content("~/User")">Dashboard</a></li>
-                                    <li><a href="@Url.Content("~/User/MessageBox")">Inbox</a></li>
-                                    <li><a href="@Url.Content("~/User/Items")">Items Listed</a></li>
-                                    <li><a href="@Url.Content("~/User/ItemsBorrowed")">Items Borrowed</a></li>
-                                    <li><a href="@Url.Content("~/Account/LogOff")">Sign Out</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                     }
                     else
                     {
