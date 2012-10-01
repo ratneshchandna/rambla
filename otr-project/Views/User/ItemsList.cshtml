@@ -1,0 +1,75 @@
+﻿@model IEnumerable<otr_project.Models.ItemModel>
+
+@if (Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="row-fluid row_listed_item">
+            <div class="span3">
+                @if (item.ItemImages.Count > 0)
+                {
+                    <img class="listed_image" src="@Url.Content("~/Item/GetItemImage/" + item.ItemImages.ToList()[0].Id)" />
+                }
+                else
+                {
+                    <img class="listed_image" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                }
+            </div>
+            <div class="span6">
+                <div class="item_name">
+                    @if (item.isActive)
+                    {
+                        <h3>@Html.ActionLink(item.Name, "Details", "Item", new { id = item.Id }, null)</h3>
+                    }
+                    else
+                    {
+                        <h3>@item.Name (Deleted)</h3>
+                    }
+                </div>
+                <div class="item_location">
+                    <div class="listed_label">Pickup Location</div>
+                    @item.PickupLocation.StreetAddress1.Trim()
+                    @if (item.PickupLocation.StreetAddress2 != null)
+                    {
+                        if (item.PickupLocation.StreetAddress2.Length > 0)
+                        {
+                            <br />
+                            @item.PickupLocation.StreetAddress2.Trim()<span>,</span>
+                        }
+                    }
+                    <br />
+                    @item.PickupLocation.City.Trim(), @item.ItemRegion.Name @item.PickupLocation.PostalCode.Trim(),
+                    <br />
+                    @item.ItemRegion.Country.Name
+                </div>
+                <div class="item_cost">
+                    <br />
+                    <span class="listed_label">Price: </span>@item.CostPerDay.ToString("C") per day &nbsp&nbsp&nbsp
+                    <span class="listed_label">Security Deposit: </span>@item.SecurityDeposit.ToString("C")
+                </div>
+                <!--div class="item_description">
+                    <br />
+                    @if (item.Desc.Length > 70)
+                    {
+                        @(item.Desc.Substring(0, 70) + "...")
+                    }
+                    else
+                    {
+                        @item.Desc
+                    }
+                </div-->
+            </div>
+            <div class="span3">
+                @if(item.isActive)
+                {
+                    <a href="@Url.Content("~/Item/Edit/" + item.Id)" class="btn btn-success"><i class="icon-edit icon-white"></i>Edit</a>
+                    <a href="@Url.Content("~/Item/Delete/" + item.Id)" class="btn btn-danger"><i class="icon-trash icon-white"></i>Delete</a>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="row-fluid no_listed_items">Uh oh, looks like you have not yet listed any item on Rambla.</div>
+}
