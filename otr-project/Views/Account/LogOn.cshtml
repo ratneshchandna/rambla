@@ -20,7 +20,9 @@
                 <div class="controls">
                     <fb:login-button size="xlarge" perms="email,user_birthday,user_likes,user_education_history,user_hometown,user_interests,user_activities,user_location">Login with Facebook</fb:login-button>
                 </div>
-                <hr />
+                <div class="span2"><hr /></div>
+                <div class="span1 tpad10"><h4><em>Or</em></h4></div>
+                <div class="span2"><hr /></div>
                 <div class="controls">
                     @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address", @class = "span4 input-fatty" })
                     @Html.ValidationMessageFor(m => m.Email)
