@@ -524,7 +524,8 @@ namespace otr_project.Controllers
                         Session["USER_F_NAME"] = user.FirstName;
                         log.Info("Account - User account activated (" + user.Email + ")");
                     }
-                    return RedirectToAction("Index", "Home");
+                    Session["ACTIVATED_USER"] = true;
+                    return View();
                 }
 
                 MembershipUser RegisteredUser = Membership.GetUser(user.Email);
@@ -537,14 +538,16 @@ namespace otr_project.Controllers
                         {
                             Email = user.Email
                         };
-
+                        return View(model);
                     }
                     //RegisteredUser.pa
                     RegisteredUser.IsApproved = true;
                     Membership.UpdateUser(RegisteredUser);
                     FormsService.SignIn(user.Email, false /* createPersistentCookie */);
                     Session["USER_F_NAME"] = user.FirstName;
+                    Session["ACTIVATED_USER"] = true;
                     log.Info("Account - User account activated (" + user.Email + ")");
+                    return View();
                 }
             }
             else
@@ -554,7 +557,35 @@ namespace otr_project.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        public ActionResult ActivateAccount(string id, RegisterModel model)
+        {
+            var user = market.Users.SingleOrDefault(u => u.ActivationId == id);
+            if (user != null)
+            {
+                MembershipUser RegisteredUser = Membership.GetUser(user.Email);
 
+                if (RegisteredUser.IsApproved == false)
+                {
+                    RegisteredUser.IsApproved = true;
+                    RegisteredUser.ChangePassword(prBetaTempPass, model.Password);
+                    Membership.UpdateUser(RegisteredUser);
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    market.Entry(user).State = EntityState.Modified;
+                    market.SaveChanges();
+                    Session["USER_F_NAME"] = model.FirstName;
+                    Session["ACTIVATED_USER"] = true;
+                    log.Info("Account - User account activated (" + user.Email + ")");
+                    FormsService.SignIn(user.Email, false /* createPersistentCookie */);
+                    return View();
+                }
+                Session["ACTIVATED_USER"] = true;
+                return View();
+            }
+            ModelState.AddModelError("", "Oops! The activation ID is invalid.");
+            return View(model);
+        }
         // **************************************
         // URL: /Account/ChangePassword
         // **************************************
