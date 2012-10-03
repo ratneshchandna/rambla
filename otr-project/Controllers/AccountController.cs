@@ -506,6 +506,10 @@ namespace otr_project.Controllers
         
         public ActionResult ActivateAccount(string id)
         {
+            if (Session["ACTIVATED_USER"] != null)
+                return View();
+
+            ViewBag.RegionId = new SelectList(market.Regions, "Id", "Name");
             var user = market.Users.SingleOrDefault(u => u.ActivationId == id);
             if (user != null)
             {
@@ -525,7 +529,7 @@ namespace otr_project.Controllers
                         log.Info("Account - User account activated (" + user.Email + ")");
                     }
                     Session["ACTIVATED_USER"] = true;
-                    return View();
+                    return RedirectToAction("ActivateAccount", new { id = id });
                 }
 
                 MembershipUser RegisteredUser = Membership.GetUser(user.Email);
@@ -547,7 +551,7 @@ namespace otr_project.Controllers
                     Session["USER_F_NAME"] = user.FirstName;
                     Session["ACTIVATED_USER"] = true;
                     log.Info("Account - User account activated (" + user.Email + ")");
-                    return View();
+                    return RedirectToAction("ActivateAccount", new { id = id });
                 }
             }
             else
@@ -568,8 +572,9 @@ namespace otr_project.Controllers
                 if (RegisteredUser.IsApproved == false)
                 {
                     RegisteredUser.IsApproved = true;
-                    RegisteredUser.ChangePassword(prBetaTempPass, model.Password);
                     Membership.UpdateUser(RegisteredUser);
+                    MembershipService.ChangePassword(user.Email, prBetaTempPass, model.Password);
+                    //RegisteredUser.ChangePassword(prBetaTempPass, model.Password);
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     market.Entry(user).State = EntityState.Modified;
@@ -578,10 +583,10 @@ namespace otr_project.Controllers
                     Session["ACTIVATED_USER"] = true;
                     log.Info("Account - User account activated (" + user.Email + ")");
                     FormsService.SignIn(user.Email, false /* createPersistentCookie */);
-                    return View();
+                    return RedirectToAction("ActivateAccount", new { id = id });
                 }
                 Session["ACTIVATED_USER"] = true;
-                return View();
+                return RedirectToAction("ActivateAccount", new { id = id });
             }
             ModelState.AddModelError("", "Oops! The activation ID is invalid.");
             return View(model);
