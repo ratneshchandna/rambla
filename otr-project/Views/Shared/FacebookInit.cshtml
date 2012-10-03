@@ -11,7 +11,8 @@
             if (window.location.href == '@Url.Action("Index", "Home", null, Request.Url.Scheme, Request.Url.Host)') {
                 window.location = '@Url.Content("~/Account/RegisterFBPrivateBeta")';
             }
-            else if (window.location.href == '@Url.Action("LogOn", "Account", null, Request.Url.Scheme, Request.Url.Host)') {
+            else if (window.location.href == '@Url.Action("LogOn", "Account", null, Request.Url.Scheme, Request.Url.Host)' ||
+                        window.location.href == '@Url.Action("Register", "Account", null, Request.Url.Scheme, Request.Url.Host)') {
                 window.location.reload();
             }
         }
