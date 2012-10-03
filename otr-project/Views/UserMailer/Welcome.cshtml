@@ -1,11 +1,26 @@
-Hello @ViewData.Model.FirstName,<br /><br />
-
-Thank you for signing up for Rambla! You have taken the first step towards expanding your rentability.<br /><br />
 @{
     string URL = Url.Action("activateaccount", "Account", new RouteValueDictionary(new { id = ViewData.Model.ActivationId }), Request.Url.Scheme.ToString(), Request.Url.Host);
 }
+<p>Hi @ViewData.Model.FirstName,</p>
 
-Please click <a href="@URL">here</a> to activate your account.<br /><br />
+<p>Welcome to <strong>Rambla</strong>, a marketplace that facilitates sharing of items between you and your community members. We're excited to have you as a member and can't wait to see what you have to share.</p>
 
-Regards,<br />
-Rambla Team
+<p>As a new member, here are a few suggestions to get you started with Rambla:</p>
+
+<ul>
+    <li>
+        Dig out that hammer drill that you do not need right now or that snowboard that you do not use too often and post it on <strong>Rambla</strong>. In fact, any unused item in your house can be of use to someone belonging to your community.
+    </li>
+    <li>
+        Need a sleeping bag for your annual camping trip or an outdoor patio heater for your Christmas party? Search for it on <strong>Rambla</strong> There is always someone who has an item you are looking for and is willing to share it with you.
+    </li>
+    <li>
+        Help your fellow community members find your stuff by using big images, writing thoughtful descriptions and addressing their queries promptly. You might just get rewarded for your exceptional conduct with a small gift from us. :-)
+    </li>
+</ul>
+
+<p>To get started with your <strong>Rambla</strong> experience, please click <a href="@URL">here</a> to activate your account.</p>
+
+<p>Thanks for joining and happy sharing!</p>
+
+<p>- The Rambla Team</p>
