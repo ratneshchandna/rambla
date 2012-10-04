@@ -205,6 +205,7 @@
     <Content Include="Content\images\empty_profile_picture.png" />
     <Content Include="Content\images\Fail_whale_bg.jpg" />
     <Content Include="Content\images\home_form_bg.png" />
+    <Content Include="Content\images\how_it_works.jpg" />
     <Content Include="Content\images\Logo.png" />
     <Content Include="Content\images\rambla_bg\img1.jpg" />
     <Content Include="Content\images\rambla_bg\img2.jpg" />
