@@ -1,26 +1,23 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 
 @{
+    Layout = Layout = "~/Views/Shared/_LayoutError.cshtml";
     ViewBag.Title = "Rambla | Error";
 }
 
-<div class="container_12">
-    <div class="header_to_body_gap"></div>
-    <div class="grid_12">
-        <div>
-            <div id="Error_Title" class="title_container">
-                <h1>
-                    Bit by the beta bug
-                </h1>
-                <h2 id="Error_Subtitle" class="page_subtitle">
-                    We're in beta and we're working diligently to fix such errors.
-                </h2>
-            </div>
+<div class="row error-canvas">
+    <div class="span12">
+        <h2 class="center">@ViewBag.ErrorHeading</h2>
+    </div>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="span12">
+            <h4 class="center">@ViewBag.ErrorMessage</h4>
         </div>
-        <div class="container">
-            <p>
-                If this problem persists, please drop us a line using the feedback button.
-            </p>
-        </div>
+    }
+    <div class="span12 center">
+        <a class="center" href="@ViewBag.GoBack">
+            <button type="button" class="btn btn-primary">Go Back</button>
+        </a>
     </div>
 </div>
