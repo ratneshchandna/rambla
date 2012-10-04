@@ -5,7 +5,22 @@
     foreach (var item in Model)
     {
         <div class="row-fluid row_listed_item">
-            <div class="span3">
+            <div class="span3 listed_thumb" onclick="document.location='@Url.Action("Details", "Item", new { id = item.Id })';">
+                <div class="row-fluid">
+                    <div class="span12 item_name">
+                        <div class="item_name_text">
+                            @if (item.isActive)
+                            {
+                                <!--h4>@Html.ActionLink(item.Name, "Details", "Item", new { id = item.Id }, null)</h4-->
+                                <h4>@item.Name</h4>
+                            }
+                            else
+                            {
+                                <h4>@item.Name (Deleted)</h4>
+                            }
+                        </div>
+                    </div>
+                </div>
                 @if (item.ItemImages.Count > 0)
                 {
                     <img class="listed_image" src="@Url.Content("~/Item/GetItemImage/" + item.ItemImages.ToList()[0].Id)" />
@@ -16,16 +31,6 @@
                 }
             </div>
             <div class="span6">
-                <div class="item_name">
-                    @if (item.isActive)
-                    {
-                        <h3>@Html.ActionLink(item.Name, "Details", "Item", new { id = item.Id }, null)</h3>
-                    }
-                    else
-                    {
-                        <h3>@item.Name (Deleted)</h3>
-                    }
-                </div>
                 <div class="item_location">
                     <div class="listed_label">Pickup Location</div>
                     @item.PickupLocation.StreetAddress1.Trim()
@@ -60,11 +65,34 @@
                 </div-->
             </div>
             <div class="span3">
-                @if(item.isActive)
-                {
-                    <a href="@Url.Content("~/Item/Edit/" + item.Id)" class="btn btn-success"><i class="icon-edit icon-white"></i>Edit</a>
-                    <a href="@Url.Content("~/Item/Delete/" + item.Id)" class="btn btn-danger"><i class="icon-trash icon-white"></i>Delete</a>
-                }
+                <!-- Removing for private beta
+                <div class="row-fluid">
+                    <div class="span12">
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                    </div>
+                </div>
+                -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        @if (item.isActive)
+                        {
+                            <a href="@Url.Content("~/Item/Edit/" + item.Id)" class="btn btn-success"><i class="icon-edit icon-white"></i>Edit</a>
+                            <a href="@Url.Content("~/Item/Delete/" + item.Id)" class="btn btn-danger"><i class="icon-trash icon-white"></i>Delete</a>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     }
