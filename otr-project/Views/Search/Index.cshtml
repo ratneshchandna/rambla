@@ -330,7 +330,7 @@
                 else{
                     var htmlStr = "<h5>$" + ui.value + "</h5>";
                 }
-                $(this).prev().prev().val("$" + ui.value);
+                $("#securitydeposit").val("$" + ui.value);
                 $("#max-securitydeposit-label").html(htmlStr);
             },
             stop: function (event, ui) {

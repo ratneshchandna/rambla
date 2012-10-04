@@ -67,8 +67,9 @@ namespace otr_project.Controllers
                 if (string.IsNullOrEmpty(search) == false)
                 {
                     Session["SEARCH_KEYWORD"] = search;
-                    items = items.Where(i => i.Item.Name.ToUpper().Contains(search.ToUpper())
-                        || i.Item.Desc.ToUpper().Contains(search.ToUpper())).ToList();
+                    items = items.Where(i => i.Item.Name.ToUpper().Contains(search.ToUpper())).ToList();
+                    /* items = items.Where(i => i.Item.Name.ToUpper().Contains(search.ToUpper())
+                        || i.Item.Desc.ToUpper().Contains(search.ToUpper())).ToList();*/
                 }
                 else if (Request.IsAjaxRequest() || search == null)
                 {
