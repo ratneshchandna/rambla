@@ -1,0 +1,27 @@
+﻿@model otr_project.Models.MessageModel
+
+@foreach (var item in Model.Messages)
+{
+    <div class="row-fluid">
+        <div class="span12">
+            <strong>[@item.Author.FirstName @item.Author.LastName]</strong> @item.Message
+            <hr />
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("SubmitReply", "User", FormMethod.Post))
+{
+    <div class="row-fluid center msg_input">
+        <div class="span12">
+            <textarea id="Reply" name="Reply" placeholder="Message" rows="4"></textarea>
+        </div>
+    </div>
+    <input type="hidden" id="Id" name="Id" value="@Model.Id" /><br />
+        
+    <div class="row-fluid center">
+        <div class="span12">
+            <input class="btn btn-large" type="submit" value="Reply" />
+        </div>
+    </div>
+}

@@ -1,0 +1,75 @@
+﻿@model otr_project.Models.UserModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    ViewBag.Title = "Rambla | Edit Your Profile";
+    ViewBag.AccountPageTitle = "Edit Your Profile";
+}
+
+<div id="edit-user-modal" class="modal">
+    <div class="modal-header">
+        <h3>Edit Profile</h3>
+    </div>
+  
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="span6">
+                    @Html.ValidationSummary(true)
+                    @if (Model.isFacebookUser == true)
+                    {
+                        <img src="https://graph.facebook.com/@Model.FacebookProfile.Id/picture?type=large" class="span12" />
+                    }
+                    else if (Model.ProfilePicture != null)
+                    {
+                        <img src="@Url.Content("~/User/GetProfilePicture")" class="span12" />
+                        <strong>Upload a new profile picture</strong>
+                        <div class="input_field">
+                            <input type="file" name="file" id="file"/>
+                            (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
+                        </div>
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/images/empty_profile_picture.png")" class="span12" />
+                        <strong>Upload a profile picture</strong>
+                        <div class="input_field">
+                            <input type="file" name="file" id="file"/>
+                            (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
+                        </div>
+                    }
+                </div>
+                <div class="span6">
+                    @Html.TextBoxFor(model => model.FirstName, new { placeholder = "First Name" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                        @Html.TextBoxFor(model => model.LastName, new { placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(model => model.LastName)
+                        @Html.TextBoxFor(model => model.Address1, new { placeholder = "Address Line 1" })
+                        @Html.ValidationMessageFor(model => model.Address1)
+                        @Html.TextBoxFor(model => model.Address2, new { placeholder = "Address Line 2" })
+                        @Html.ValidationMessageFor(model => model.Address2)
+                        @Html.TextBoxFor(model => model.City, new { placeholder = "City" })
+                        @Html.ValidationMessageFor(model => model.City)
+                        @Html.DropDownList("RegionId", null, "Province", new { onchange = "RegionColour()" })
+                        @Html.TextBoxFor(model => model.PostalCode, new { placeholder = "Postal Code" })
+                        @Html.ValidationMessageFor(model => model.PostalCode)
+                        @Html.TextBoxFor(model => model.CellPhone, new { placeholder = "Cell Phone # eg. 4161231234" })
+                        @Html.ValidationMessageFor(model => model.CellPhone)
+                        @Html.TextBoxFor(model => model.HomePhone, new { placeholder = "Home Phone # eg. 4161231234" })
+                        @Html.ValidationMessageFor(model => model.HomePhone)
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="@Url.Content("~/User")" class="btn">Cancel</a>
+            <input class="btn btn-primary" type="submit" value="Save" />
+        </div>
+    }
+</div>
+
+<script>
+    $(function () {
+        $('#edit-user-modal').modal('toggle');
+    });
+</script>

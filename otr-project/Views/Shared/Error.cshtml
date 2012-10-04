@@ -1,0 +1,23 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    Layout = Layout = "~/Views/Shared/_LayoutError.cshtml";
+    ViewBag.Title = "Rambla | Error";
+}
+
+<div class="row error-canvas">
+    <div class="span12">
+        <h2 class="center">@ViewBag.ErrorHeading</h2>
+    </div>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="span12">
+            <h4 class="center">@ViewBag.ErrorMessage</h4>
+        </div>
+    }
+    <div class="span12 center">
+        <a class="center" href="@ViewBag.GoBack">
+            <button type="button" class="btn btn-primary">Go Back</button>
+        </a>
+    </div>
+</div>

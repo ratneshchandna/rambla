@@ -1,0 +1,63 @@
+﻿@model otr_project.ViewModels.ErrorMessageViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutError.cshtml";
+    ViewBag.Title = "Rambla | Error Message";
+    if (Model.Header == null)
+    {
+        Model.Header = Model.Headers[(int)Model.ErrorCode];
+    }
+    if (Model.Description == null)
+    {
+        Model.Description = Model.Descriptions[(int)Model.ErrorCode];
+    }
+}
+
+@if (
+    Model.ErrorCode == ErrorCode.PAYPAL_ERROR ||
+    Model.ErrorCode == ErrorCode.UNKNOWN ||
+    Model.ErrorCode == ErrorCode.IMAGE_UPLOAD_FAILED ||
+    Model.ErrorCode == ErrorCode.ITEM_DELETE_FAILED
+    )
+{
+    <div class="row error-canvas">
+        <div class="span12">
+            <h2 class="center">Oops! @Model.Header</h2>
+        </div>
+        <div class="span12">
+            <h4 class="center">We're in beta and we're working diligently to fix such errors. If this problem persists, please drop us a line using the feedback button.</h4>
+        </div>
+
+        <div class="span12 center">
+            <a class="center" href="@Url.Action("Index", "Home")">
+                <button type="button" class="btn btn-primary">Go Back</button>
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row error-canvas">
+        <div class="span12">
+            <h2 class="center">Oops! @Model.Header</h2>
+        </div>
+        <div class="span12">
+            <h4 class="center">@Model.Description <p>If you feel this error is unexpected, please let us know using the feedback button.</p></h4>
+        </div>
+
+        <div class="span12 center">
+            @if (Model.ErrorCode == ErrorCode.OWNER_ITEM_IN_CART)
+            {
+                <a class="center" href="@Url.Action("Index", "RentalCart")">
+                    <button type="button" class="btn btn-primary">Go Back</button>
+                </a>
+            }
+            else
+            {
+                <a class="center" href="@Url.Action("Index", "Home")">
+                    <button type="button" class="btn btn-primary">Go Back</button>
+                </a>
+            }
+        </div>
+    </div>
+}
