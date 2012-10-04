@@ -7,6 +7,7 @@
     <div class="span12 vbottom">
         <ul class="nav nav-pills no-margin">
             <li><h1>@Model.Name</h1></li>
+           <!-- Removing for private beta
             <li class="vpad10 hpad10">
                 <i class="icon-star"></i>
                 <i class="icon-star"></i>
@@ -14,6 +15,7 @@
                 <i class="icon-star"></i>
                 <i class="icon-star"></i>
             </li>
+            -->
         </ul>
     </div>
 </div>
@@ -65,7 +67,7 @@
                                 if (img_count == 0)
                                 {
                                     <li class="span12">
-                                        <div class="thumbnail">
+                                        <div class="thumbnail thumbnail-main">
                                             <img class="main-image" src="@Url.Content("~/Item/GetItemImage/" + i.Id)" />
                                         </div>
                                     </li>
