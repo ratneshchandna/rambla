@@ -177,92 +177,100 @@ namespace otr_project.Controllers
         [HttpPost]
         [Authorize]
         public ActionResult Create(ItemModel item)
-        {         
-            // So somehow by setting Session here as well prevents fatal exceptions. Don't ask me how. 
+        {
             Session["CategoryId"] = new SelectList(market.Categories, "Id", "Name");
             Session["AgreementId"] = new SelectList(market.Agreements.Where(a => a.UserModelEmail == User.Identity.Name), "Id", "FileName");
             Session["RegionId"] = new SelectList(market.Regions, "Id", "Name");
-
-            var user = market.Users.SingleOrDefault(u => u.Email == User.Identity.Name);
-
-            string itemID = System.Guid.NewGuid().ToString();
-            string blackOutDates = Request.Params.Get("datepicker");
-            string upload_result = string.Empty;
-
-            item.Id = itemID;
-
-            if (Request.Files.Count > 0)
+            if (ModelState.IsValid)
             {
-                for (int i = 0; i < Request.Files.Count; i++)
-                {
-                    if (Request.Files[i].ContentLength <= 0)
-                        continue;
+                // So somehow by setting Session here as well prevents fatal exceptions. Don't ask me how. 
+                
 
-                    upload_result = UploadPicture(Request.Files[i], itemID);
-                    if (upload_result == "valid")
+                var user = market.Users.SingleOrDefault(u => u.Email == User.Identity.Name);
+
+                string itemID = System.Guid.NewGuid().ToString();
+                string blackOutDates = Request.Params.Get("datepicker");
+                string upload_result = string.Empty;
+
+                item.Id = itemID;
+
+                if (Request.Files.Count > 0)
+                {
+                    for (int i = 0; i < Request.Files.Count; i++)
                     {
-                        item.ImageCount += 1;
-                    }
-                    else if (upload_result == "exception_wrong_format")
-                    {
-                        ErrorMessage.ErrorCode = ErrorCode.IMAGE_FORMAT_NOT_SUPPORTED;
-                        return View("ErrorMessage", ErrorMessage);
-                    }
-                    else if (upload_result == "exception_image_too_big")
-                    {
-                        ErrorMessage.ErrorCode = ErrorCode.IMAGE_SIZE_TOO_BIG;
-                        return View("ErrorMessage", ErrorMessage);
-                    }   
-                    else if (upload_result == "exception")
-                    {
-                        ErrorMessage.ErrorCode = ErrorCode.IMAGE_UPLOAD_FAILED;
-                        return View("ErrorMessage", ErrorMessage);
+                        if (Request.Files[i].ContentLength <= 0)
+                            continue;
+
+                        upload_result = UploadPicture(Request.Files[i], itemID);
+                        if (upload_result == "valid")
+                        {
+                            item.ImageCount += 1;
+                        }
+                        else if (upload_result == "exception_wrong_format")
+                        {
+                            ErrorMessage.ErrorCode = ErrorCode.IMAGE_FORMAT_NOT_SUPPORTED;
+                            return View("ErrorMessage", ErrorMessage);
+                        }
+                        else if (upload_result == "exception_image_too_big")
+                        {
+                            ErrorMessage.ErrorCode = ErrorCode.IMAGE_SIZE_TOO_BIG;
+                            return View("ErrorMessage", ErrorMessage);
+                        }
+                        else if (upload_result == "exception")
+                        {
+                            ErrorMessage.ErrorCode = ErrorCode.IMAGE_UPLOAD_FAILED;
+                            return View("ErrorMessage", ErrorMessage);
+                        }
                     }
                 }
-            }
 
-            if (String.IsNullOrEmpty(blackOutDates) == false)
-            {
-                string[] dates = blackOutDates.Split(',');
-                foreach (string d in dates)
+                if (String.IsNullOrEmpty(blackOutDates) == false)
                 {
-                    DateTime bOutDate = DateTime.Parse(d);
-                    market.BlackoutDates.Add(new BlackoutDate { Date = bOutDate, ItemModelId = item.Id });
+                    string[] dates = blackOutDates.Split(',');
+                    foreach (string d in dates)
+                    {
+                        DateTime bOutDate = DateTime.Parse(d);
+                        market.BlackoutDates.Add(new BlackoutDate { Date = bOutDate, ItemModelId = item.Id });
+                    }
                 }
-            }
 
-            item.UserModelEmail = User.Identity.Name;
-            item.DateCreated = System.DateTime.Now;
-            item.isActive = true;
+                item.UserModelEmail = User.Identity.Name;
+                item.DateCreated = System.DateTime.Now;
+                item.isActive = true;
 
-            item.CountryId = 1;
+                item.CountryId = 1;
 
-            market.Addresses.Add(new Address
-            {
-                ItemModelId = itemID,
-                StreetAddress1 = Request.Params.Get("PickupLocation.StreetAddress1"),
-                StreetAddress2 = Request.Params.Get("PickupLocation.StreetAddress2"),
-                City = Request.Params.Get("PickupLocation.City"),
-                PostalCode = Request.Params.Get("PickupLocation.PostalCode")
-            });
+                market.Addresses.Add(new Address
+                {
+                    ItemModelId = itemID,
+                    StreetAddress1 = Request.Params.Get("PickupLocation.StreetAddress1"),
+                    StreetAddress2 = Request.Params.Get("PickupLocation.StreetAddress2"),
+                    City = Request.Params.Get("PickupLocation.City"),
+                    PostalCode = Request.Params.Get("PickupLocation.PostalCode")
+                });
 
-            market.Items.Add(item);
-            market.SaveChanges();
-
-            // Save item's pickup location to user profile if requested by user
-            if (String.IsNullOrEmpty(Request.Params.Get("saveLocationToProfile")) == false)
-            {
-                user.Address1 = Request.Params.Get("PickupLocation.StreetAddress1");
-                user.Address2 = Request.Params.Get("PickupLocation.StreetAddress2");
-                user.City = Request.Params.Get("PickupLocation.City");
-                user.PostalCode = Request.Params.Get("PickupLocation.PostalCode");
-                user.RegionId = item.RegionId;
-                user.CountryId = item.CountryId;
-                market.Entry(user).State = EntityState.Modified;
+                market.Items.Add(item);
                 market.SaveChanges();
+
+                // Save item's pickup location to user profile if requested by user
+                if (String.IsNullOrEmpty(Request.Params.Get("saveLocationToProfile")) == false)
+                {
+                    user.Address1 = Request.Params.Get("PickupLocation.StreetAddress1");
+                    user.Address2 = Request.Params.Get("PickupLocation.StreetAddress2");
+                    user.City = Request.Params.Get("PickupLocation.City");
+                    user.PostalCode = Request.Params.Get("PickupLocation.PostalCode");
+                    user.RegionId = item.RegionId;
+                    user.CountryId = item.CountryId;
+                    market.Entry(user).State = EntityState.Modified;
+                    market.SaveChanges();
+                }
+                log.Info("Item - New item " + item.Id + " created by user " + User.Identity.Name);
+                return RedirectToAction("Details", new { id = item.Id });
             }
-            log.Info("Item - New item " + item.Id + " created by user " + User.Identity.Name);
-            return RedirectToAction("Details", new { id = item.Id });
+            else
+            {
+                return View(item);
+            }
         }
 
         [Authorize]

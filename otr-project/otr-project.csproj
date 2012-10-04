@@ -146,6 +146,7 @@
     <Compile Include="ActionFilters\LoggingFilter.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CheckOutController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PostCheckOutController.cs" />
@@ -202,6 +203,7 @@
     <Content Include="Content\images\default_item_image.jpg" />
     <Content Include="Content\images\empty_cart.jpg" />
     <Content Include="Content\images\empty_profile_picture.png" />
+    <Content Include="Content\images\Fail_whale_bg.jpg" />
     <Content Include="Content\images\home_form_bg.png" />
     <Content Include="Content\images\Logo.png" />
     <Content Include="Content\images\rambla_bg\img1.jpg" />
@@ -470,6 +472,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\ActivateAccount.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Pages\error.less" />
+    <Content Include="Views\Shared\_LayoutError.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
