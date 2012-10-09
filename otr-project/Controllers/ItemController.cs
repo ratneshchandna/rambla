@@ -191,6 +191,7 @@ namespace otr_project.Controllers
                 string itemID = System.Guid.NewGuid().ToString();
                 string blackOutDates = Request.Params.Get("datepicker");
                 string upload_result = string.Empty;
+                int valid_file_count = 0;
 
                 item.Id = itemID;
 
@@ -200,6 +201,8 @@ namespace otr_project.Controllers
                     {
                         if (Request.Files[i].ContentLength <= 0)
                             continue;
+
+                        valid_file_count++;
 
                         upload_result = UploadPicture(Request.Files[i], itemID);
                         if (upload_result == "valid")
@@ -222,6 +225,12 @@ namespace otr_project.Controllers
                             return View("ErrorMessage", ErrorMessage);
                         }
                     }
+                }
+
+                if (valid_file_count == 0)
+                {
+                    ErrorMessage.ErrorCode = ErrorCode.NO_IMAGE_UPLOADED;
+                    return View("ErrorMessage", ErrorMessage);
                 }
 
                 if (String.IsNullOrEmpty(blackOutDates) == false)
@@ -279,6 +288,7 @@ namespace otr_project.Controllers
         {
             var errorResult = Json(new KeyValuePair<string, bool>("isError", true));
             var goodResult = Json(new KeyValuePair<string, bool>("isError", false));
+            //var lastImage = Json(new KeyValuePair<string, string>("result", "lastImage"));
 
             if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(image))
             {
@@ -295,6 +305,13 @@ namespace otr_project.Controllers
             if (item.Owner.Email != User.Identity.Name)
                 return errorResult;
 
+            /*
+            if (item.ItemImages.Count() == 1)
+            {
+                return lastImage;
+            }
+            */
+
             foreach (var i in item.ItemImages)
             {
                 if (i.Id == image)
@@ -307,6 +324,7 @@ namespace otr_project.Controllers
                     return goodResult;
                 }
             }
+
             return errorResult;
         }
         //
@@ -388,7 +406,7 @@ namespace otr_project.Controllers
                         }
                     }
                 }
-                    
+
                 List<BlackoutDate> currentDates = market.BlackoutDates.Where(b => b.ItemModelId == mItem.Id).ToList();
                     
                 foreach (BlackoutDate bd in currentDates)
