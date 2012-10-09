@@ -442,9 +442,15 @@ namespace otr_project.Controllers
                     Date = DateTime.Now
                 };
 
-                ValidateModel(msgThread);
-                db.Threads.Add(msgThread);
-                db.SaveChanges();
+                if (!String.IsNullOrEmpty(msgThread.Message))
+                {
+                    db.Threads.Add(msgThread);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return RedirectToAction("MessageBox");
+                }
             }
             catch (Exception ex)
             {

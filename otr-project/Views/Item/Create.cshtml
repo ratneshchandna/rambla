@@ -38,7 +38,7 @@
                 </div>
                 <div class="span8">
                     <div class="input_field">
-                        @Html.DropDownList("CategoryId", categoryList, "Select One", new { onchange = "CategoryColour()" })
+                        @Html.DropDownList("CategoryId", categoryList, "Select One", new { onchange = "CategoryColour()", @class="shadow_select" })
                         @Html.ValidationMessageFor(m => m.CategoryId)
                     </div>
                 </div>
@@ -85,7 +85,8 @@
                 <div class="span8">
                     <div class="input_field">
                         <input type="file" name="file" id="upload_item_picture_input"/>
-                        (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
+                        <span class="image_requirement">At lease one image of your item is required. 
+                        Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO</span>
                     </div>
                 </div>
             </div>
@@ -148,7 +149,7 @@
                 </div>
                 <div class="span8">
                     <div class="input_field">
-                        @Html.DropDownList("RegionId", regionList, "Select One", new { onchange = "RegionColour()" })
+                        @Html.DropDownList("RegionId", regionList, "Select One", new { onchange = "RegionColour()", @class = "shadow_select" })
                         @Html.ValidationMessageFor(m => m.RegionId)
                     </div>
                 </div>
