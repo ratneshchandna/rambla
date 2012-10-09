@@ -15,6 +15,7 @@ namespace otr_project.ViewModels
                 "Cannot Checkout", 
                 "Could not upload your image",
                 "Could not upload your image",
+                "Item image required", 
                 "An error occured when trying to upload your image",
                 "An error occured when deleting the item"
             };
@@ -27,6 +28,7 @@ namespace otr_project.ViewModels
                 "You can't proceed to checkout because one of the items in your cart is owned by you. ", 
                 "The image format you tried to upload is not supported. We support the following image formats: JPEG, PNG, GIF, BMP and ICO. Please go back and upload an image of a supported format. ",
                 "The image you tried to upload exceeds the maximum requirements. Please go back and try uploading an image less than 500 KB. ",
+                "You need to upload at least one image of your item. Please go back and upload an image of your item. ",
                 "",
                 ""
             };
@@ -45,6 +47,7 @@ public enum ErrorCode
     OWNER_ITEM_IN_CART = 3, 
     IMAGE_FORMAT_NOT_SUPPORTED = 4, 
     IMAGE_SIZE_TOO_BIG = 5, 
-    IMAGE_UPLOAD_FAILED = 6, 
-    ITEM_DELETE_FAILED = 7
+    NO_IMAGE_UPLOADED = 6, 
+    IMAGE_UPLOAD_FAILED = 7, 
+    ITEM_DELETE_FAILED = 8
 }

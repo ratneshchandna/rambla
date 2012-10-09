@@ -6,7 +6,13 @@
 <div class="row-fluid">
     <div class="span12 vbottom">
         <ul class="nav nav-pills no-margin">
+        @if (Model.isActive)
+        {
             <li><h1>@Model.Name</h1></li>
+        }
+        else{
+            <li><h1>@Model.Name (Deleted)</h1></li>
+        }
            <!-- Removing for private beta
             <li class="vpad10 hpad10">
                 <i class="icon-star"></i>
@@ -29,7 +35,7 @@
         <div class="row-fluid">
             <div class="span8"></div>
             <div class="span2 center">
-                <iframe src="//www.facebook.com/plugins/like.php?href=@Url.Action("Details", "Item", new RouteValueDictionary( new { @id = Model.Id }), Request.Url.Scheme, Request.Url.Host)&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
+                <iframe src="//www.facebook.com/plugins/like.php?href=@Url.Action("Details", "Item", new RouteValueDictionary(new { @id = Model.Id }), Request.Url.Scheme, Request.Url.Host)&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
             </div>
             <div class="span2 center">
                 <div class="g-plusone" data-size="tall" data-annotation="none" data-width="120"></div>
@@ -46,7 +52,7 @@
                 <div class="pull-right hpad10 tpad10">
                     @if (Request.IsAuthenticated)
                     {
-                        if (Model.UserModelEmail == User.Identity.Name)
+                        if (Model.UserModelEmail == User.Identity.Name && Model.isActive)
                         {
                             <a href="@Url.Content("~/Item/Edit/" + Model.Id)" class="btn btn-success">
                                 <i class="icon-edit icon-white"></i>
@@ -58,7 +64,7 @@
             </ul>
             <div class="tab-content min-height-control">
                 <div class="tab-pane active" id="tab1">
-                    @if (Model.ImageCount > 0)
+                    @if (Model.ItemImages.Count() > 0)
                     {
                         int img_count = 0;
                         <ul class="thumbnails hpad10">
@@ -76,7 +82,7 @@
                                 {
                                     <li class="span3">
                                         <a href="#" class="thumbnail sub-image">
-                                            <img src="@Url.Content("~/Item/GetItemImage/" + i.Id)" alt="">
+                                            <img src="@Url.Content("~/Item/GetItemImage/" + i.Id)" alt="" />
                                         </a>
                                     </li>
                                 }
@@ -84,6 +90,17 @@
                             }
                         </ul>
                     }
+                    else
+                    {
+                        <ul class="thumbnails hpad10">
+                            <li class="span12">
+                                <div class="thumbnail thumbnail-main">
+                                    <img class="main-image" src="@Url.Content("~/Content/images/default_item_image.jpg")" />
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    
                 </div>
                 <div class="tab-pane" id="tab2">
                     <ul class="thumbnails hpad10">
@@ -147,10 +164,12 @@
                             <ul class="thumbnails no-margin">
                                 <li class="span12">
                                 <div class="thumbnail">
-                                    @if (Model.Owner.ProfilePicture == null){
+                                    @if (Model.Owner.ProfilePicture == null)
+                                    {
                                         <img src="@Url.Content("~/Content/images/empty_profile_picture.png")" alt="" />
                                     }
-                                    else{
+                                    else
+                                    {
                                         <img src="@Url.Content("~/User/GetProfilePicture/" + Model.Id)" alt="" />
                                     }
                                 </div>

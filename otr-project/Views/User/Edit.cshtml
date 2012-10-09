@@ -28,7 +28,7 @@
                         <strong>Upload a new profile picture</strong>
                         <div class="input_field">
                             <input type="file" name="file" id="file"/>
-                            (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
+                            <span class="image_requirement">Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO</span>
                         </div>
                     }
                     else
@@ -37,7 +37,7 @@
                         <strong>Upload a profile picture</strong>
                         <div class="input_field">
                             <input type="file" name="file" id="file"/>
-                            (Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO)
+                            <span class="image_requirement">Images should be lesser than 500 KB. Acceptable formats are JPEG, PNG, GIF, BMP and ICO</span>
                         </div>
                     }
                 </div>
@@ -64,7 +64,7 @@
         </div>
         <div class="modal-footer">
             <a href="@Url.Content("~/User")" class="btn">Cancel</a>
-            <input class="btn btn-primary" type="submit" value="Save" />
+            <button class="btn btn-primary" type="submit">Save</button>
         </div>
     }
 </div>
