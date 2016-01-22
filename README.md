@@ -4,7 +4,7 @@ Rambla is a prototype web application that serves as an online community marketp
 
 ![Rambla Rental Model](https://raw.githubusercontent.com/ratneshchandna/rambla/master/Rambla%20Rental%20Model.png "Rambla Rental Model")
 
-It was created during the private beta phase of an earlier startup that didn't end up taking off. While building this web application, a lot was learnt about ASP.NET web development and web development in general. We thought it would be a good idea, thus, to open source this web application, especially for those who want to learn how to build ASP.NET MVC web apps. 
+It was created during the private beta phase of an earlier startup that didn't end up taking off. While building this web application, a lot was learnt about ASP.NET web development and web development in general. We thought it would be a good idea, thus, to open source this web application, especially for those who want to learn how to build ASP.NET MVC web applications. 
 
 ## Technologies and Frameworks Used
 
