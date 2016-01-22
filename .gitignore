@@ -1,0 +1,14 @@
+*.suo
+*.user
+*.MDF
+*.LDF
+*.cache
+*.[Pp]ublish.xml
+Logs/
+bin/
+obj/
+[Bb]in
+Debug/
+Release/
+Uploads/
+packages/*WindowsAzure*
