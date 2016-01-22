@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>MvcMailer</id>
+    <version>1.1</version>
+    <title>MvcMailer</title>
+    <authors>S. M. SOHAN</authors>
+    <owners>S. M. SOHAN</owners>
+    <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
+    <projectUrl>https://github.com/smsohan/MvcMailer</projectUrl>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/MvcMailer.1.1.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MvcMailer lets you use your MVC Views to produce stunning emails. See the project site to find more about this.</description>
+    <summary>MvcMailer sends emails using the MVC views as Email Body with no effort. Here's a quick list of features: a) Use Razor/WebForms views b) Use Master pages c) Write Testable Code d) Pass values to your view using ViewBag or ViewModel and e) Generate Absolute URL using Url.Abs method and f) create multi-part emails by just adding a view file, g) scaffold your mailers. MvcMailer has a MailerBase class that extends ControllerBase class. So, Mailers are just like your Controllers. As a result, you can use all the controller goodies without any learning curve, period. The end result is a professional looking HTML email body ready for your to send to your website users. Visit the Project site for a comprehensive tutorial on MvcMailer.</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <tags>Email MVC ASP.Net Views Razor Ruby on Rails ActionMailer Mailer Template</tags>
+    <dependencies>
+      <dependency id="T4Scaffolding" version="0.9.7" />
+    </dependencies>
+  </metadata>
+</package>

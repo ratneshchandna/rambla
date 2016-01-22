@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>T4Scaffolding</id>
+    <version>0.9.9</version>
+    <title>T4Scaffolding</title>
+    <authors>David Fowler,  Scott Hanselman,  Steve Sanderson</authors>
+    <owners>David Fowler,  Scott Hanselman,  Steve Sanderson</owners>
+    <licenseUrl>http://www.opensource.org/licenses/ms-pl.html</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A fast and customizable way to build parts of your .NET application via templates</description>
+    <summary>A fast and customizable way to build parts of your .NET application via templates</summary>
+    <copyright>(c) Microsoft</copyright>
+    <tags>t4 scaffolding</tags>
+    <dependencies>
+      <dependency id="EntityFramework" version="4.1.10311.0" />
+    </dependencies>
+  </metadata>
+</package>
