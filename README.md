@@ -1,3 +1,5 @@
+![Rambla](https://raw.githubusercontent.com/ratneshchandna/rambla/master/otr-project/Content/images/Logo.png "Rambla")
+
 # Rambla v1.0.0
 
 Rambla is a prototype web application that serves as an online community marketplace, enabling individuals and businesses to make money by renting almost any item to anyone. The following image illustrates the rental model better: 
